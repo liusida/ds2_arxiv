@@ -57,6 +57,8 @@ def main():
         g_source += 1
         if g_source%10000==0:
             print(f"main> {g_source}/{g_source_total} processed. ")
+            print(f"exit to safe-restart.")
+            exit(0)
         sys.stdout.flush()
         with open(filename, "r") as f:
             record_xml = f.read()
