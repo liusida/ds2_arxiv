@@ -6,9 +6,11 @@ import json
 import xmltodict # to convert the raw metadata from xml format to dict
 
 import wandb
+import socket
+local_debug = socket.gethostname()!="star-lab"
 
 from ds2_arxiv.tools.my_proxy import MyProxy
-myproxy = MyProxy(proxy_txt_filename="config/vip.proxy.txt", proxy_disabled=True)
+myproxy = MyProxy(proxy_txt_filename="config/vip.proxy.txt", proxy_disabled=local_debug)
 
 def get_remote_content_through_a_proxy(url, time_sleep=0.1):
     """ 

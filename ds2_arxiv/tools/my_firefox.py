@@ -19,10 +19,11 @@ class MyFirefox():
         if not self.proxy_disabled:
             with open(self.proxy_txt_filename, "r") as f:
                 proxy = f.read().strip()
-            ip, port = proxy.split(':')
-            profile.set_preference('network.proxy.type', 1)
-            profile.set_preference('network.proxy.socks', ip)
-            profile.set_preference('network.proxy.socks_port', int(port))
+            if proxy.find(":")!=-1:
+                ip, port = proxy.split(':')
+                profile.set_preference('network.proxy.type', 1)
+                profile.set_preference('network.proxy.socks', ip)
+                profile.set_preference('network.proxy.socks_port', int(port))
         self.browser = webdriver.Firefox(profile, options=opts)
 
     def get(self, url):

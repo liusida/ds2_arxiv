@@ -5,9 +5,11 @@ from collections import defaultdict
 import json
 import xmltodict # to convert the raw metadata from xml format to dict
 import wandb
+import socket
+local_debug = socket.gethostname()!="star-lab"
 
 from ds2_arxiv.tools.my_firefox import MyFirefox
-g_firefox = MyFirefox(proxy_txt_filename="config/vip.proxy.txt", proxy_disabled=True)
+g_firefox = MyFirefox(proxy_txt_filename="config/vip.proxy.txt", proxy_disabled=local_debug)
 
 def get_citation_count(arxiv_id):
     ret = None
