@@ -5,6 +5,7 @@ from collections import defaultdict
 import json
 import xmltodict # to convert the raw metadata from xml format to dict
 import wandb
+import random
 import socket
 local_debug = socket.gethostname()!="star-lab"
 
@@ -46,7 +47,8 @@ def get_citation_count(arxiv_id):
 def main():
     global g_error, g_count, g_source, g_source_total
 
-    filenames = sorted(glob.glob("data/harvest_LG_AI/*.xml"))[::-1]
+    filenames = glob.glob("data/harvest_LG_AI/*.xml")
+    random.shuffle(filenames)
     g_source_total = len(filenames)
     g_source = 0
 
