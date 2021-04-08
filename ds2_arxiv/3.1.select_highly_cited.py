@@ -25,6 +25,9 @@ for i, filename in enumerate(filenames):
     if not os.path.exists(s2_filename):
         print(f"Error: {s2_filename} doesn't exist.")
         continue
+    if os.stat(s2_filename).st_size<10:
+        print(f"Error: empty file. {s2_filename}")
+        continue
     with open(s2_filename, "r") as f:
         s2_info = json.load(f)
     num_citations = len(s2_info['citations'])
