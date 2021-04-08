@@ -8,7 +8,7 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from transformers import FeatureExtractionPipeline
 import wandb
 wandb.init("DS2")
-torch.cuda.empty_cache()
+# torch.cuda.empty_cache()
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--skip", type=int, default=0)
