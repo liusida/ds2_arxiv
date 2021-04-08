@@ -12,6 +12,10 @@ local_debug = socket.gethostname()!="star-lab"
 from ds2_arxiv.tools.my_proxy import MyProxy
 myproxy = MyProxy(proxy_txt_filename="config/vip.proxy.txt", proxy_disabled=local_debug)
 
+os.makedirs("data/citations_s2", exist_ok=True)
+with open(f"shared/s2_bad_citation.txt", "a"):
+    pass
+
 def get_remote_content_through_a_proxy(url, time_sleep=0.1):
     """ 
     Return bytes.
@@ -36,8 +40,8 @@ def main():
     for __c in _c:
         bad_citation.append(__c.strip())
 
-    # filenames = sorted(glob.glob("data/harvest_LG_AI/*.xml"))[::-1]
-    filenames = sorted(glob.glob("data/harvest_LG_AI/1807.02110.xml"))[::-1]
+    filenames = sorted(glob.glob("data/harvest_LG_AI/*.xml"))[::-1]
+    # filenames = sorted(glob.glob("data/harvest_LG_AI/1807.02110.xml"))[::-1]
     g_source_total = len(filenames)
     g_source = 0
 

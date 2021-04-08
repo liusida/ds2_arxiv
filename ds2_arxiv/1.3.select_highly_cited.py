@@ -7,8 +7,9 @@ parser.add_argument("--threshold", type=int, default=100)
 args = parser.parse_args()
 
 os.makedirs(f"data/harvest_LG_AI_{args.threshold}", exist_ok=True)
-# filenames = glob.glob("data/harvest_LG_AI/*.xml")
-filenames = sorted(glob.glob("data/harvest_LG_AI/1807.02110.xml"))[::-1]
+
+filenames = glob.glob("data/harvest_LG_AI/*.xml")
+# filenames = sorted(glob.glob("data/harvest_LG_AI/1807.02110.xml"))[::-1]
 l = len(filenames)
 for i, filename in enumerate(filenames):
     with open(filename, "r") as f:

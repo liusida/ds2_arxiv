@@ -5,6 +5,8 @@ from sickle import Sickle # to retrieve data from the OAI arxiv interface
 from requests import HTTPError
 from datetime import datetime, timedelta
 
+os.makedirs("data/harvest", exist_ok=True)
+
 def main(from_date, to_date):
     connection = Sickle('http://export.arxiv.org/oai2')
 

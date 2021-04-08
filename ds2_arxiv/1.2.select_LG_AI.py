@@ -1,6 +1,8 @@
 import glob, os
 import xmltodict
 
+os.makedirs("data/harvest_LG_AI", exist_ok=True)
+
 filenames = glob.glob("data/harvest/*.xml")
 for filename in filenames:
     with open(filename, "r") as f:
