@@ -19,7 +19,9 @@ class MyProxy:
         return self.proxy
 
 if __name__ == "__main__":
-    myproxy = MyProxy()
+    import socket
+    local_debug = socket.gethostname()!="star-lab"
+    myproxy = MyProxy(proxy_disabled=local_debug)
     url = "https://star-lab.ai/"
     url = "https://api.semanticscholar.org/v1/paper/arXiv:2103.04727"
     c = myproxy.current_proxy().request('GET', url, timeout=3).data
