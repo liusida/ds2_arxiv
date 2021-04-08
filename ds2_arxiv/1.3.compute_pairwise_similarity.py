@@ -78,7 +78,10 @@ if args.skip<=1:
             if i==0:
                 print(f"ret.last_hidden_state.shape: {ret.last_hidden_state.shape}\nret.pooler_output.shape: {ret.pooler_output.shape}")
             print(f"BERT_batch_{total_batch} : {i}", flush=True)
-            wandb.log({f"BERT_batch_{total_batch}": i})
+            try:
+                wandb.log({f"BERT_batch_{total_batch}": i})
+            except Exception as e:
+                print(f"WandB caused an error: {e}.")
         torch.save(rets, "data/features/BERT.pt") # size: O(N) x 512 x 768
 if args.skip<=2:
     with torch.no_grad():
@@ -92,7 +95,10 @@ if args.skip<=2:
                 if i==j:
                     ret = torch.tril(ret)
                 cos_sim[i*batch_size:(i+1)*batch_size, j*batch_size:(j+1)*batch_size] = ret.cpu().numpy()
-                wandb.log({f"cosine_similarity_step_{total_loop}": i})
+                try:
+                    wandb.log({f"cosine_similarity_step_{total_loop}": i})
+                except Exception as e:
+                    print(f"WandB caused an error: {e}.")
         with open("data/features/BERT_pairwise_compare.np", "wb") as f:
             np.save(f, cos_sim) # size: O(N x N)
 if args.skip<=3:
