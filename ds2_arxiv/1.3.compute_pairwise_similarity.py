@@ -11,6 +11,7 @@ wandb.init("DS2")
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--skip", type=int, default=0)
+parser.add_argument("--batch-size", type=int, default=60)
 args = parser.parse_args()
 
 if args.skip<=0:
@@ -45,7 +46,7 @@ if args.skip<=1:
 
     corpus = abstracts 
 
-    batch_size = 60 # 60 is due to the limitation of the GPU memory
+    batch_size = args.batch_size # 60 is due to the limitation of the GPU memory
     total_length = len(corpus)
     total_batch = int((total_length-1)/batch_size) # throw away the last little bit
 
