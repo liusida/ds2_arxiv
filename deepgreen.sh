@@ -9,10 +9,10 @@
 #SBATCH --mem 24G
 #SBATCH --gres gpu:1
 #SBATCH -c 1
-#SBATCH --output /gpfs2/scratch/sliu1/slurm.out/erl-%j
+#SBATCH --output /gpfs2/scratch/sliu1/slurm.out/%j
 
 cd ${SLURM_SUBMIT_DIR}
 
-source activate erl
+source activate ds2
 
 time $@

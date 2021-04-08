@@ -11,8 +11,9 @@ wandb.init("DS2")
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--skip", type=int, default=0)
-parser.add_argument("--batch-size", type=int, default=60)
+parser.add_argument("--batch-size", type=int, default=60, help="DG can support 240")
 args = parser.parse_args()
+wandb.config.update(args)
 
 if args.skip<=0:
     arxiv_ids = []
