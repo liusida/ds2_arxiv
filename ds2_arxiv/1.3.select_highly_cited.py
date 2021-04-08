@@ -22,7 +22,7 @@ for i, filename in enumerate(filenames):
     s2_filename = f"data/citations_s2/{arxiv_id}.json"
     if not os.path.exists(s2_filename):
         print(f"Error: {s2_filename} doesn't exist.")
-        break
+        # break
     with open(s2_filename, "r") as f:
         s2_info = json.load(f)
     num_citations = len(s2_info['citations'])
