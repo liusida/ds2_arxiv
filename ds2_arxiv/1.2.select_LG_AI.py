@@ -19,4 +19,4 @@ for filename in filenames:
 
     # print(f"move {filename}, {new_filename}")
     os.rename(filename, new_filename)
-    break
+    # break
