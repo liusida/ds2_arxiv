@@ -26,7 +26,7 @@ def get_remote_content_through_a_proxy(url, time_sleep=0.1):
         try:
             time.sleep(time_sleep)
             print(f"requesting {url}")
-            r = myproxy.current_proxy().request('GET', url, timeout=3).data
+            r = myproxy.current_proxy().request('GET', url, timeout=3, verify=False).data
         except Exception as e:
             print(f"HTTPError: {e}")
             # myproxy.rotate_proxy(report_bad_proxy=False)    
