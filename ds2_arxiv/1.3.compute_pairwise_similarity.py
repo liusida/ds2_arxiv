@@ -13,12 +13,12 @@ parser.add_argument("--skip", type=int, default=0)
 parser.add_argument("--batch-size", type=int, default=60, help="DG can support 240")
 parser.add_argument("--wandb", action="store_true")
 args = parser.parse_args()
-if wandb:
+if args.wandb:
     import wandb
     wandb.init("DS2")
     wandb.config.update(args)
 def wandb_log(x):
-    if wandb:
+    if args.wandb:
         try:
             wandb.log(x)
         except Exception as e:
