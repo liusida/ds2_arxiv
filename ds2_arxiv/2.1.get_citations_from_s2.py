@@ -5,12 +5,12 @@ from collections import defaultdict
 import json
 import xmltodict # to convert the raw metadata from xml format to dict
 
-import wandb
-import socket
-local_debug = socket.gethostname()!="star-lab"
+# # import wandb
+# import socket
+# local_debug = socket.gethostname()!="star-lab"
 
-from ds2_arxiv.tools.my_proxy import MyProxy
-myproxy = MyProxy(proxy_disabled=local_debug)
+# from ds2_arxiv.tools.my_proxy import MyProxy
+# myproxy = MyProxy(proxy_disabled=local_debug)
 
 os.makedirs("data/citations_s2", exist_ok=True)
 with open(f"shared/s2_bad_citation.txt", "a"):
@@ -104,15 +104,15 @@ def log():
     g_n_calls += 1
     if g_n_calls%100==0:
         g_count = len(glob.glob("data/citations_s2/*.json"))
-    wandb.log({
-        "count": g_count,
-        "error": g_error,
-        "source_processed": g_source,
-        "source_total": g_source_total,
-    })
+    # wandb.log({
+    #     "count": g_count,
+    #     "error": g_error,
+    #     "source_processed": g_source,
+    #     "source_total": g_source_total,
+    # })
 
 if __name__=="__main__":
-    wandb.init(project="get_citation_s2")
+    # wandb.init(project="get_citation_s2")
     
     g_count = len(glob.glob("data/citations_s2/*.json"))
     g_error = 0
@@ -120,10 +120,10 @@ if __name__=="__main__":
     g_source_total = 0
 
     print(f"Start with g_count={g_count}")
-    wandb.log({
-        "count": g_count,
-        "error": g_error,
-    })
+    # wandb.log({
+    #     "count": g_count,
+    #     "error": g_error,
+    # })
     while True:
         try:
             main()
