@@ -23,7 +23,7 @@ for i, filename in enumerate(filenames):
 
     s2_filename = f"data/citations_s2/{arxiv_id}.json"
     if not os.path.exists(s2_filename):
-        print(f"Error: {s2_filename} doesn't exist.")
+        # print(f"Error: {s2_filename} doesn't exist.")
         continue
     if os.stat(s2_filename).st_size<10:
         print(f"Error: empty file. {s2_filename}")
