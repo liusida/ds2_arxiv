@@ -68,7 +68,8 @@ if args.skip<=1:
     total_batch = int((total_length-1)/batch_size) # throw away the last little bit
     with open("data/features/settings.pickle", "wb") as f:
         pickle.dump([batch_size, total_length, total_batch], f)
-
+    print("settings saved.", flush=True)
+    
     model_name = "nlptown/bert-base-multilingual-uncased-sentiment"
     model = AutoModelForSequenceClassification.from_pretrained(model_name)
     tokenizer = AutoTokenizer.from_pretrained(model_name)
