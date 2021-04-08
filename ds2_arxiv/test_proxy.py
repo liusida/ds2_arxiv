@@ -1,6 +1,8 @@
 import time
 import socket
 local_debug = socket.gethostname()!="star-lab"
+import wandb
+wandb.init(project="get_citation_s2")
 
 from ds2_arxiv.tools.my_proxy import MyProxy
 myproxy = MyProxy(proxy_disabled=local_debug)
