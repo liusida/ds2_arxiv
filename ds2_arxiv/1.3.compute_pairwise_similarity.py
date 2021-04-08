@@ -26,6 +26,11 @@ def wandb_log(x):
     else:
         print(x)
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device_id = 0 if torch.cuda.is_available() else -1 # only support one GPU
+print('Using device:', device)
+print()
+
 if args.skip<=0:
     arxiv_ids = []
     abstracts = []
@@ -62,11 +67,6 @@ if args.skip<=1:
     total_length = len(corpus)
     total_batch = int((total_length-1)/batch_size) # throw away the last little bit
 
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    device_id = 0 if torch.cuda.is_available() else -1 # only support one GPU
-    print('Using device:', device)
-    print()
-
     model_name = "nlptown/bert-base-multilingual-uncased-sentiment"
     model = AutoModelForSequenceClassification.from_pretrained(model_name)
     tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -87,8 +87,8 @@ if args.skip<=1:
             rets.append(output_1.cpu())
             if i==0:
                 print(f"ret.last_hidden_state.shape: {ret.last_hidden_state.shape}\nret.pooler_output.shape: {ret.pooler_output.shape}")
-            print(f"BERT_batch_{total_batch} : {i}", flush=True)
-            wandb_log({f"BERT_batch_{total_batch}": i})
+            print(f"BERT_batch_{total_batch} : {i+1}", flush=True)
+            wandb_log({f"BERT_batch_{total_batch}": i+1})
         torch.save(rets, "data/features/BERT.pt") # size: O(N) x 512 x 768
 if args.skip<=2:
     with torch.no_grad():
@@ -102,6 +102,7 @@ if args.skip<=2:
                 if i==j:
                     ret = torch.tril(ret)
                 cos_sim[i*batch_size:(i+1)*batch_size, j*batch_size:(j+1)*batch_size] = ret.cpu().numpy()
+                print(f"cosine_similarity_step_{total_loop} : {i}", flush=True)
                 wandb_log({f"cosine_similarity_step_{total_loop}": i})
         with open("data/features/BERT_pairwise_compare.np", "wb") as f:
             np.save(f, cos_sim) # size: O(N x N)
