@@ -22,11 +22,10 @@ def get_remote_content_through_a_proxy(url, time_sleep=0.1):
     Return None if something is wrong. 
     """
     r = None
-    for retry in range(3):
+    for retry in range(1):
         try:
             time.sleep(time_sleep)
             print(f"requesting {url}")
-            myproxy = MyProxy()
             r = myproxy.current_proxy().request('GET', url, timeout=3).data
         except Exception as e:
             print(f"HTTPError: {e}")
