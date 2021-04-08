@@ -88,19 +88,20 @@ if args.skip<=1:
             output_2 = ret.pooler_output
             output_3 = torch.cat([ret.last_hidden_state[:,0],ret.last_hidden_state[:,-1]], dim=1)
             rets.append(output_1.cpu())
-            print(f"rets[-1].shape = {rets[-1].shape}", flush=True)
             if i==0:
+                print(f"rets[-1].shape = {rets[-1].shape}", flush=True)
                 print(f"ret.last_hidden_state.shape: {ret.last_hidden_state.shape}\nret.pooler_output.shape: {ret.pooler_output.shape}")
             print(f"BERT_batch_{total_batch} : {i+1}", flush=True)
             wandb_log({f"BERT_batch_{total_batch}": i+1})
         torch.save(rets, "data/features/BERT.pt") # size: O(N) x 512 x 768
 if args.skip<=2:
-    with open("data/features/settings.pickle", "rb") as f:
-        batch_size, total_length, total_batch = pickle.load(f)
     with torch.no_grad():
-        print("loading vectors.", flush=True)
-        rets = torch.load("data/features/BERT.pt")
-        print("vectors loaded.", flush=True)
+        if args.skip<=1: # no need to reload
+            with open("data/features/settings.pickle", "rb") as f:
+                batch_size, total_length, total_batch = pickle.load(f)
+            print("loading vectors.", flush=True)
+            rets = torch.load("data/features/BERT.pt")
+            print("vectors loaded.", flush=True)
         cos_sim = np.zeros([total_batch*batch_size, total_batch*batch_size])
         print("cos_sim initialized.", flush=True)
         total_loop = int(len(rets) * (len(rets)+1) / 2)
