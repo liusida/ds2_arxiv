@@ -1,6 +1,5 @@
 import glob, pickle, argparse
 from smart_open import open
-from tqdm import tqdm
 import xmltodict
 import numpy as np
 import matplotlib.pyplot as plt
@@ -19,7 +18,8 @@ if args.skip<=0:
     abstracts = []
     categories = []
     filenames = glob.glob("data/harvest_LG_AI/*.xml")
-    for filename in filenames:
+    l = len(filenames)
+    for i, filename in enumerate(filenames):
         with open(filename, "r") as f:
             record_xml = f.read()
         if len(record_xml)<10:
@@ -35,7 +35,7 @@ if args.skip<=0:
         arxiv_ids.append(arxiv_id)
         categories.append(category)
         abstracts.append(abstract)
-
+        wandb.log({f"read_step_{l}": i})
     with open("data/features/input.pickle", "wb") as f:
         pickle.dump([arxiv_ids, categories,abstracts], f) # size: O(N)
 
@@ -61,7 +61,7 @@ if args.skip<=1:
 
     with torch.no_grad():
         rets = []
-        for i in tqdm(range(total_batch)):
+        for i in range(total_batch):
             batch_corpus = corpus[i*batch_size: (i+1)*batch_size]
             inputs = pp.tokenizer(batch_corpus, return_tensors=pp.framework, padding='max_length', max_length=512, truncation=True)
             inputs = pp.ensure_tensor_on_device(**inputs)
@@ -72,10 +72,9 @@ if args.skip<=1:
             output_2 = ret.pooler_output
             output_3 = torch.cat([ret.last_hidden_state[:,0],ret.last_hidden_state[:,-1]], dim=1)
             rets.append(output_1.cpu())
-            # print(f"BERT: {i}")
             if i==0:
                 print(f"ret.last_hidden_state.shape: {ret.last_hidden_state.shape}\nret.pooler_output.shape: {ret.pooler_output.shape}")
-            wandb.log({"BERT_batch": i})
+            wandb.log({f"BERT_batch_{total_batch}": i})
         torch.save(rets, "data/features/BERT.pt") # size: O(N) x 512 x 768
 if args.skip<=2:
     with torch.no_grad():
@@ -83,15 +82,13 @@ if args.skip<=2:
 
         cos_sim = np.zeros([total_batch*batch_size, total_batch*batch_size])
         total_loop = int(len(rets) * (len(rets)+1) / 2)
-        with tqdm(total=total_loop) as pbar:
-            for i in range(len(rets)):
-                for j in range(i+1):
-                    pbar.update(1)
-                    ret = torch.nn.functional.cosine_similarity(rets[i][:,:,None].to(device), rets[j].t()[None,:,:].to(device))
-                    if i==j:
-                        ret = torch.tril(ret)
-                    cos_sim[i*batch_size:(i+1)*batch_size, j*batch_size:(j+1)*batch_size] = ret.cpu().numpy()
-                    wandb.log({"cosine_similarity_step": i})
+        for i in range(len(rets)):
+            for j in range(i+1):
+                ret = torch.nn.functional.cosine_similarity(rets[i][:,:,None].to(device), rets[j].t()[None,:,:].to(device))
+                if i==j:
+                    ret = torch.tril(ret)
+                cos_sim[i*batch_size:(i+1)*batch_size, j*batch_size:(j+1)*batch_size] = ret.cpu().numpy()
+                wandb.log({f"cosine_similarity_step_{total_loop}": i})
         with open("data/features/BERT_pairwise_compare.np", "wb") as f:
             np.save(f, cos_sim) # size: O(N x N)
 if args.skip<=3:
