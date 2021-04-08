@@ -30,7 +30,7 @@ def get_remote_content_through_a_proxy(url, time_sleep=0.1):
 def main():
     global g_error, g_count, g_source, g_source_total
 
-    with open(f"data/s2_bad_citation.txt", "r") as f:
+    with open(f"shared/s2_bad_citation.txt", "r") as f:
         _c = f.readlines()
     bad_citation = []
     for __c in _c:
@@ -80,7 +80,7 @@ def main():
                 if r.decode('utf-8').find("Forbidden")!=-1:
                     time.sleep(10)
                 if r.decode('utf-8').find("Paper not found")!=-1:
-                    with open(f"data/s2_bad_citation.txt", "a") as f:
+                    with open(f"shared/s2_bad_citation.txt", "a") as f:
                         print(arxiv_id, file=f)
                     g_error += 1
                 continue
