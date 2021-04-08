@@ -66,6 +66,8 @@ if args.skip<=1:
     batch_size = args.batch_size # 60 is due to the limitation of the GPU memory
     total_length = len(corpus)
     total_batch = int((total_length-1)/batch_size) # throw away the last little bit
+    with open("data/features/settings.pickle", "wb") as f:
+        pickle.dump([batch_size, total_length, total_batch], f)
 
     model_name = "nlptown/bert-base-multilingual-uncased-sentiment"
     model = AutoModelForSequenceClassification.from_pretrained(model_name)
@@ -91,6 +93,8 @@ if args.skip<=1:
             wandb_log({f"BERT_batch_{total_batch}": i+1})
         torch.save(rets, "data/features/BERT.pt") # size: O(N) x 512 x 768
 if args.skip<=2:
+    with open("data/features/settings.pickle", "rb") as f:
+        batch_size, total_length, total_batch = pickle.read(f)
     with torch.no_grad():
         print("loading model.", flush=True)
         rets = torch.load("data/features/BERT.pt")
