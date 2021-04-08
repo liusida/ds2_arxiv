@@ -25,10 +25,9 @@ def get_remote_content_through_a_proxy(url, time_sleep=0.1):
     for retry in range(3):
         try:
             time.sleep(time_sleep)
-            url = "https://star-lab.ai/"
             print(f"requesting {url}")
             myproxy = MyProxy(proxy_disabled=local_debug)
-            r = myproxy.current_proxy().request('GET', url, timeout=3, verify=True).data
+            r = myproxy.current_proxy().request('GET', url, timeout=3).data
         except Exception as e:
             print(f"HTTPError: {e}")
             # myproxy.rotate_proxy(report_bad_proxy=False)    
