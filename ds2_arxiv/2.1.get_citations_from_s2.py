@@ -6,11 +6,11 @@ import json
 import xmltodict # to convert the raw metadata from xml format to dict
 
 # # import wandb
-# import socket
-# local_debug = socket.gethostname()!="star-lab"
+import socket
+local_debug = socket.gethostname()!="star-lab"
 
-# from ds2_arxiv.tools.my_proxy import MyProxy
-# myproxy = MyProxy(proxy_disabled=local_debug)
+from ds2_arxiv.tools.my_proxy import MyProxy
+myproxy = MyProxy(proxy_disabled=local_debug)
 
 os.makedirs("data/citations_s2", exist_ok=True)
 with open(f"shared/s2_bad_citation.txt", "a"):
