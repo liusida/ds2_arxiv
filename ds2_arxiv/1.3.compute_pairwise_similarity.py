@@ -93,7 +93,7 @@ if args.skip<=1:
 if args.skip<=2:
     with torch.no_grad():
         rets = torch.load("data/features/BERT.pt")
-
+        print("model loaded.", flush=True)
         cos_sim = np.zeros([total_batch*batch_size, total_batch*batch_size])
         total_loop = int(len(rets) * (len(rets)+1) / 2)
         for i in range(len(rets)):
