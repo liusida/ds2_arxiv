@@ -105,14 +105,15 @@ if args.skip<=2:
         cos_sim = np.zeros([total_batch*batch_size, total_batch*batch_size])
         print("cos_sim initialized.", flush=True)
         total_loop = int(len(rets) * (len(rets)+1) / 2)
+        l = len(rets)
         for i in range(len(rets)):
             for j in range(i+1):
                 ret = torch.nn.functional.cosine_similarity(rets[i][:,:,None].to(device), rets[j].t()[None,:,:].to(device))
                 if i==j:
                     ret = torch.tril(ret)
                 cos_sim[i*batch_size:(i+1)*batch_size, j*batch_size:(j+1)*batch_size] = ret.cpu().numpy()
-                print(f"cosine_similarity_step_{total_loop} : {i}", flush=True)
-                wandb_log({f"cosine_similarity_step_{total_loop}": i})
+                print(f"cosine_similarity_step_{l} : {i}", flush=True)
+                wandb_log({f"cosine_similarity_step_{l}": i})
         with open("data/features/BERT_pairwise_compare.np", "wb") as f:
             np.save(f, cos_sim) # size: O(N x N)
 if args.skip<=3:
