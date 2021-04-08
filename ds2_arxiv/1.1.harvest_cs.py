@@ -38,7 +38,7 @@ def main(from_date, to_date):
                 continue
             print(f"writing {path}")
             with open(path, "w") as f:
-                f.write(data.next().raw)
+                f.write(record_xml)
             errors = 0
             iters +=1
             

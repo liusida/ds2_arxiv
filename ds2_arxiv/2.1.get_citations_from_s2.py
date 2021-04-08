@@ -36,7 +36,8 @@ def main():
     for __c in _c:
         bad_citation.append(__c.strip())
 
-    filenames = sorted(glob.glob("data/harvest_LG_AI/*.xml"))[::-1]
+    # filenames = sorted(glob.glob("data/harvest_LG_AI/*.xml"))[::-1]
+    filenames = sorted(glob.glob("data/harvest_LG_AI/1807.02110.xml"))[::-1]
     g_source_total = len(filenames)
     g_source = 0
 
