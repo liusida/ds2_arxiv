@@ -6,7 +6,7 @@
 # sbatch deepgreen.sh python run.py --total_timesteps=1e8
 
 #SBATCH --partition dggpu
-#SBATCH --mem 128G
+#SBATCH --mem 256G
 #SBATCH --gres gpu:1
 #SBATCH -c 1
 #SBATCH --output /gpfs2/scratch/sliu1/slurm.out/%j
