@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from transformers import FeatureExtractionPipeline
+import wandb
+wandb.init("DS2")
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--skip", type=int, default=0)
@@ -73,7 +75,7 @@ if args.skip<=1:
             # print(f"BERT: {i}")
             if i==0:
                 print(f"ret.last_hidden_state.shape: {ret.last_hidden_state.shape}\nret.pooler_output.shape: {ret.pooler_output.shape}")
-        
+            wandb.log({"BERT_batch": i})
         torch.save(rets, "data/features/BERT.pt") # size: O(N) x 512 x 768
 if args.skip<=2:
     with torch.no_grad():
@@ -89,6 +91,7 @@ if args.skip<=2:
                     if i==j:
                         ret = torch.tril(ret)
                     cos_sim[i*batch_size:(i+1)*batch_size, j*batch_size:(j+1)*batch_size] = ret.cpu().numpy()
+                    wandb.log({"cosine_similarity_step": i})
         with open("data/features/BERT_pairwise_compare.np", "wb") as f:
             np.save(f, cos_sim) # size: O(N x N)
 if args.skip<=3:
