@@ -92,9 +92,11 @@ if args.skip<=1:
         torch.save(rets, "data/features/BERT.pt") # size: O(N) x 512 x 768
 if args.skip<=2:
     with torch.no_grad():
+        print("loading model.", flush=True)
         rets = torch.load("data/features/BERT.pt")
         print("model loaded.", flush=True)
         cos_sim = np.zeros([total_batch*batch_size, total_batch*batch_size])
+        print("cos_sim initialized.", flush=True)
         total_loop = int(len(rets) * (len(rets)+1) / 2)
         for i in range(len(rets)):
             for j in range(i+1):
