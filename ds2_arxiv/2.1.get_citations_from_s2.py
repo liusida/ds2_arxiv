@@ -25,10 +25,11 @@ def get_remote_content_through_a_proxy(url, time_sleep=0.1):
     for retry in range(3):
         try:
             time.sleep(time_sleep)
+            print(f"requesting {url}")
             r = myproxy.current_proxy().request('GET', url, timeout=3).data
         except Exception as e:
             print(f"HTTPError: {e}")
-            myproxy.rotate_proxy(report_bad_proxy=False)    
+            # myproxy.rotate_proxy(report_bad_proxy=False)    
     return r
 
 def main():
@@ -81,7 +82,7 @@ def main():
             data = json.loads(r)
             if 'citations' not in data:
                 print(f"Error: {r}\n arxiv_id: {arxiv_id}")
-                myproxy.rotate_proxy(report_bad_proxy=False)
+                # myproxy.rotate_proxy(report_bad_proxy=False)
                 if r.decode('utf-8').find("Forbidden")!=-1:
                     time.sleep(10)
                 if r.decode('utf-8').find("Paper not found")!=-1:
