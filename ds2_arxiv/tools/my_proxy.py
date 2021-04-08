@@ -9,13 +9,14 @@ class MyProxy:
         self.proxy_disabled = proxy_disabled
         self.bad_proxies = []
         self.proxy_string = f"socks5://{proxy_str}"
-
+        self.proxy = None
     def current_proxy(self):
-        if self.proxy_disabled:
-            self.proxy = urllib3.PoolManager()
-        else:
-            print(f"Using proxy: {self.proxy_string}")
-            self.proxy = SOCKSProxyManager(self.proxy_string)
+        if self.proxy is None:
+            if self.proxy_disabled:
+                self.proxy = urllib3.PoolManager()
+            else:
+                print(f"Using proxy: {self.proxy_string}")
+                self.proxy = SOCKSProxyManager(self.proxy_string)
         return self.proxy
 
 if __name__ == "__main__":
