@@ -10,7 +10,7 @@ import socket
 local_debug = socket.gethostname()!="star-lab"
 
 from ds2_arxiv.tools.my_proxy import MyProxy
-myproxy = MyProxy(proxy_txt_filename="config/vip.proxy.txt", proxy_disabled=local_debug)
+myproxy = MyProxy(proxy_disabled=local_debug)
 
 os.makedirs("data/citations_s2", exist_ok=True)
 with open(f"shared/s2_bad_citation.txt", "a"):
