@@ -69,7 +69,7 @@ if args.skip<=1:
     with open("data/features/settings.pickle", "wb") as f:
         pickle.dump([batch_size, total_length, total_batch], f)
     print("settings saved.", flush=True)
-    
+
     model_name = "nlptown/bert-base-multilingual-uncased-sentiment"
     model = AutoModelForSequenceClassification.from_pretrained(model_name)
     tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -95,7 +95,7 @@ if args.skip<=1:
         torch.save(rets, "data/features/BERT.pt") # size: O(N) x 512 x 768
 if args.skip<=2:
     with open("data/features/settings.pickle", "rb") as f:
-        batch_size, total_length, total_batch = pickle.read(f)
+        batch_size, total_length, total_batch = pickle.load(f)
     with torch.no_grad():
         print("loading model.", flush=True)
         rets = torch.load("data/features/BERT.pt")
