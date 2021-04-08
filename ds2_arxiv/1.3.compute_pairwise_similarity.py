@@ -77,6 +77,7 @@ if args.skip<=1:
             rets.append(output_1.cpu())
             if i==0:
                 print(f"ret.last_hidden_state.shape: {ret.last_hidden_state.shape}\nret.pooler_output.shape: {ret.pooler_output.shape}")
+            print(f"BERT_batch_{total_batch} : {i}", flush=True)
             wandb.log({f"BERT_batch_{total_batch}": i})
         torch.save(rets, "data/features/BERT.pt") # size: O(N) x 512 x 768
 if args.skip<=2:
