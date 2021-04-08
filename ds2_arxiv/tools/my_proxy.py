@@ -21,6 +21,6 @@ class MyProxy:
 if __name__ == "__main__":
     myproxy = MyProxy()
     url = "https://star-lab.ai/"
-    url = "https://api.semanticscholar.org/v1/paper/arXiv:1812.10398"
+    url = "https://api.semanticscholar.org/v1/paper/arXiv:2103.04727"
     c = myproxy.current_proxy().request('GET', url, timeout=3).data
     print(c)
