@@ -12,6 +12,8 @@ args = parser.parse_args()
 arxiv_ids = []
 created_dates = []
 cites = []
+titles = []
+authors = []
 
 filenames = glob.glob(f"data/harvest_LG_AI_{args.threshold}/*.xml")
 for filename in filenames:
@@ -26,7 +28,7 @@ for filename in filenames:
     arxiv_id_1 = record_dict["id"]
     title = record_dict["title"]
     created_date = record_dict["created"]
-
+    first_author = record_dict["authors"]["author"][0]["keyname"]
     assert arxiv_id == arxiv_id_1, f"arxiv id error: {filename}"
 
     s2_filename = f"data/citations_s2/{arxiv_id}.json"
@@ -43,11 +45,15 @@ for filename in filenames:
     arxiv_ids.append(arxiv_id)
     created_dates.append(created_date)
     cites.append(num_citations)
+    titles.append(title)
+    authors.append(first_author)
 
 obj = {
     "arxiv_ids": arxiv_ids, 
     "created_dates": created_dates, 
     "cites": cites,
+    "titles": titles,
+    "authors": authors,
 }
 with open(f"shared/top_{args.threshold}.pickle", "wb") as f:
     pickle.dump(obj, f)
