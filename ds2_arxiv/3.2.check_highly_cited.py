@@ -15,6 +15,7 @@ created_dates = []
 cites = []
 titles = []
 authors = []
+years = []
 
 filenames = glob.glob(f"data/harvest_LG_AI_{args.threshold}/*.xml")
 for filename in filenames:
@@ -30,6 +31,7 @@ for filename in filenames:
     title = record_dict["title"]
     created_date = record_dict["created"]
     author_list = record_dict["authors"]["author"]
+    year = record_dict["year"]
     if isinstance(author_list, OrderedDict):
         first_author = author_list
     else:
@@ -53,6 +55,7 @@ for filename in filenames:
     cites.append(num_citations)
     titles.append(title)
     authors.append(first_author)
+    years.append(year)
 
 obj = {
     "arxiv_ids": arxiv_ids, 
@@ -60,6 +63,7 @@ obj = {
     "cites": cites,
     "titles": titles,
     "authors": authors,
+    "years": years,
 }
 with open(f"shared/top_{args.threshold}.pickle", "wb") as f:
     pickle.dump(obj, f)
