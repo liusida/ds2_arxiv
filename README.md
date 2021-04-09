@@ -8,3 +8,5 @@
 
 (4). select papers with >100 citations. (4,422 papers)
 
+(5). pass (4) through a pretrained BERT network. (6 GB activations (4422x))
+

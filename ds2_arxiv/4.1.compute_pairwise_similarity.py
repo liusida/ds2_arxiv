@@ -87,7 +87,7 @@ if args.skip<=1:
             output_1 = torch.flatten(ret.last_hidden_state, start_dim=1)
             output_2 = ret.pooler_output
             output_3 = torch.cat([ret.last_hidden_state[:,0],ret.last_hidden_state[:,-1]], dim=1)
-            rets.append(output_1.cpu())
+            rets.append(output_2.cpu())
             if i==0:
                 print(f"rets[-1].shape = {rets[-1].shape}", flush=True)
                 print(f"ret.last_hidden_state.shape: {ret.last_hidden_state.shape}\nret.pooler_output.shape: {ret.pooler_output.shape}")
