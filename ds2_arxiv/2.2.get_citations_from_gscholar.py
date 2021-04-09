@@ -47,7 +47,7 @@ def get_citation_count(arxiv_id):
 def main():
     global g_error, g_count, g_source, g_source_total
 
-    filenames = glob.glob("data/harvest_LG_AI/*.xml")
+    filenames = glob.glob("data/harvest_LG_AI_100/*.xml")
     random.shuffle(filenames)
     g_source_total = len(filenames)
     g_source = 0
