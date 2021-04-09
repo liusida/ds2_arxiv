@@ -14,6 +14,7 @@ arxiv_ids = []
 created_dates = []
 cites = []
 titles = []
+abstracts = []
 authors = []
 years = []
 categories = [] # 0 for none, 1 for LG, 2 for AI, 3 for both (think of a binary number XX)
@@ -32,6 +33,7 @@ for filename in filenames:
     arxiv_id = filename.split("/")[-1].split(".xml")[0]
     arxiv_id_1 = record_dict["id"]
     title = record_dict["title"]
+    abstract = record_dict["abstract"]
     created_date = record_dict["created"]
     author_list = record_dict["authors"]["author"]
     category_str = record_dict["categories"]
@@ -70,6 +72,7 @@ for filename in filenames:
     created_dates.append(created_date)
     cites.append(num_citations)
     titles.append(title)
+    abstracts.append(abstract)
     authors.append(first_author)
     years.append(year)
     categories.append(category)
@@ -81,6 +84,7 @@ obj = {
     "created_dates": created_dates, 
     "cites": cites,
     "titles": titles,
+    "abstracts": abstracts,
     "authors": authors,
     "years": years,
     "topic_lists": topic_lists,

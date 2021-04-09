@@ -1,7 +1,7 @@
 import re
 import pickle
 import numpy as np
-with open("shared/top_100.pickle", "rb") as f:
+with open("shared/cited_100.pickle", "rb") as f:
     data = pickle.load(f)
 
 idx = np.argsort(data["cites"])[::-1]
