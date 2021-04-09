@@ -31,7 +31,6 @@ for filename in filenames:
     title = record_dict["title"]
     created_date = record_dict["created"]
     author_list = record_dict["authors"]["author"]
-    year = record_dict["year"]
     if isinstance(author_list, OrderedDict):
         first_author = author_list
     else:
@@ -49,6 +48,7 @@ for filename in filenames:
     with open(s2_filename, "r") as f:
         s2_info = json.load(f)
     num_citations = len(s2_info['citations'])
+    year = s2_info['year']
     # print(f"{title} ({created_date}) Cited by {num_citations}")
     arxiv_ids.append(arxiv_id)
     created_dates.append(created_date)
