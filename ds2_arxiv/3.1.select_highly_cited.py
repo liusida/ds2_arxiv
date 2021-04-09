@@ -33,5 +33,6 @@ for i, filename in enumerate(filenames):
     num_citations = len(s2_info['citations'])
     if num_citations>=args.threshold:
         dest_path = f"data/harvest_LG_AI_{args.threshold}/{arxiv_id}.xml"
-        print(f"copy {arxiv_id}")
-        shutil.copy(filename, dest_path)
+        if not os.path.exists(dest_path):
+            print(f"copy {arxiv_id}")
+            shutil.copy(filename, dest_path)
