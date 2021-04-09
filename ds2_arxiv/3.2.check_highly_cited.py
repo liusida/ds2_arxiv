@@ -1,15 +1,23 @@
-import glob, argparse, os, json
+import glob
+import argparse
+import os
+import json
+import pickle
 import xmltodict
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--threshold", type=int, default=100)
 args = parser.parse_args()
 
+arxiv_ids = []
+created_dates = []
+cites = []
+
 filenames = glob.glob(f"data/harvest_LG_AI_{args.threshold}/*.xml")
 for filename in filenames:
     with open(filename, "r") as f:
         record_xml = f.read()
-    if len(record_xml)<10:
+    if len(record_xml) < 10:
         # must be bad record
         print(f"Bad record {filename}")
         continue
@@ -17,18 +25,29 @@ for filename in filenames:
     arxiv_id = filename.split("/")[-1].split(".xml")[0]
     arxiv_id_1 = record_dict["id"]
     title = record_dict["title"]
-    created_date  = record_dict["created"]
+    created_date = record_dict["created"]
 
-    assert arxiv_id==arxiv_id_1, f"arxiv id error: {filename}"
+    assert arxiv_id == arxiv_id_1, f"arxiv id error: {filename}"
 
     s2_filename = f"data/citations_s2/{arxiv_id}.json"
     if not os.path.exists(s2_filename):
         # print(f"Error: {s2_filename} doesn't exist.")
         continue
-    if os.stat(s2_filename).st_size<10:
+    if os.stat(s2_filename).st_size < 10:
         print(f"Error: empty file. {s2_filename}")
         continue
     with open(s2_filename, "r") as f:
         s2_info = json.load(f)
     num_citations = len(s2_info['citations'])
-    print(f"{title} ({created_date}) Cited by {num_citations}")
+    # print(f"{title} ({created_date}) Cited by {num_citations}")
+    arxiv_ids.append(arxiv_id)
+    created_dates.append(created_date)
+    cites.append(num_citations)
+
+obj = {
+    "arxiv_ids": arxiv_ids, 
+    "created_dates": created_dates, 
+    "cites": cites,
+}
+with open(f"shared/top_{args.threshold}.pickle", "wb") as f:
+    pickle.dump(obj, f)
