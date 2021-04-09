@@ -29,11 +29,11 @@ for filename in filenames:
     arxiv_id_1 = record_dict["id"]
     title = record_dict["title"]
     created_date = record_dict["created"]
-    authors = record_dict["authors"]["author"]
-    if isinstance(authors, OrderedDict):
-        first_author = authors
+    author_list = record_dict["authors"]["author"]
+    if isinstance(author_list, OrderedDict):
+        first_author = author_list
     else:
-        first_author = authors[0]
+        first_author = author_list[0]
     first_author = first_author["keyname"]
     assert arxiv_id == arxiv_id_1, f"arxiv id error: {filename}"
 
