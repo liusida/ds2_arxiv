@@ -17,7 +17,7 @@ for filename in filenames:
     arxiv_id = filename.split("/")[-1].split(".xml")[0]
     arxiv_id_1 = record_dict["id"]
     title = record_dict["title"]
-    year  = record_dict["year"]
+    created_date  = record_dict["created"]
 
     assert arxiv_id==arxiv_id_1, f"arxiv id error: {filename}"
 
@@ -31,4 +31,4 @@ for filename in filenames:
     with open(s2_filename, "r") as f:
         s2_info = json.load(f)
     num_citations = len(s2_info['citations'])
-    print(f"{title} ({year}) Cited by {num_citations}")
+    print(f"{title} ({created_date}) Cited by {num_citations}")
