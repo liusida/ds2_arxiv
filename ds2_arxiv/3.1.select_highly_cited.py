@@ -36,3 +36,7 @@ for i, filename in enumerate(filenames):
         if not os.path.exists(dest_path):
             print(f"copy {arxiv_id}")
             shutil.copy(filename, dest_path)
+        s2_dest_path = f"data/citations_s2_{args.threshold}/{arxiv_id}.json"
+        if not os.path.exists(s2_dest_path):
+            print(f"copy {arxiv_id}")
+            shutil.copy(s2_filename, s2_dest_path)

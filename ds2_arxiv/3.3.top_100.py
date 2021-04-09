@@ -15,6 +15,9 @@ with open("shared/top_100.txt", "w") as f:
         cite = data['cites'][j]
         created_date = data['created_dates'][j]
         author = data['authors'][j]
+        topics = data['topic_lists'][j]
+
         print(f"{url} \t {title} ({author}, {year})", file=f) 
         print(f"start at: {created_date}, cited by {cite}", file=f)
+        print(f"topics: {topics}", file=f)
         print("", file=f)
