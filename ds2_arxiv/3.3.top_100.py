@@ -13,4 +13,8 @@ with open("shared/top_100.txt", "w") as f:
         title = re.sub(r'\s+', r' ', title)
         year = data['years'][j]
         cite = data['cites'][j]
-        print(f"{url} \t {title} ({year})[{cite}]", file=f) 
+        created_date = data['created_dates'][j]
+        author = data['authors'][j]
+        print(f"{url} \t {title} ({author}, {year})", file=f) 
+        print(f"start at: {created_date}, cited by {cite}", file=f)
+        print("", file=f)

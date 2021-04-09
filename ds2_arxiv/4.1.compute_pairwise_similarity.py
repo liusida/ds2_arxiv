@@ -35,7 +35,7 @@ if args.skip<=0:
     arxiv_ids = []
     abstracts = []
     categories = []
-    filenames = glob.glob("data/harvest_LG_AI/*.xml")
+    filenames = glob.glob("data/harvest_LG_AI_100/*.xml")
     l = len(filenames)
     for i, filename in enumerate(filenames):
         with open(filename, "r") as f:
