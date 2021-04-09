@@ -3,6 +3,7 @@ import argparse
 import os
 import json
 import pickle
+from typing import OrderedDict
 import xmltodict
 
 parser = argparse.ArgumentParser()
@@ -28,7 +29,12 @@ for filename in filenames:
     arxiv_id_1 = record_dict["id"]
     title = record_dict["title"]
     created_date = record_dict["created"]
-    first_author = record_dict["authors"]["author"][0]["keyname"]
+    authors = record_dict["authors"]["author"]
+    if isinstance(authors, OrderedDict):
+        first_author = authors
+    else:
+        first_author = authors[0]
+    first_author = first_author["keyname"]
     assert arxiv_id == arxiv_id_1, f"arxiv id error: {filename}"
 
     s2_filename = f"data/citations_s2/{arxiv_id}.json"
