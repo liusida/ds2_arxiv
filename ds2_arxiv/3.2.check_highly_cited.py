@@ -48,7 +48,7 @@ for filename in filenames:
     first_author = first_author["keyname"]
     assert arxiv_id == arxiv_id_1, f"arxiv id error: {filename}"
 
-    s2_filename = f"data/citations_s2/{arxiv_id}.json"
+    s2_filename = f"data/citations_s2_{args.threshold}/{arxiv_id}.json"
     if not os.path.exists(s2_filename):
         # print(f"Error: {s2_filename} doesn't exist.")
         continue
@@ -86,5 +86,5 @@ obj = {
     "topic_lists": topic_lists,
     "topic_id_lists": topic_id_lists,
 }
-with open(f"shared/top_{args.threshold}.pickle", "wb") as f:
+with open(f"shared/cited_{args.threshold}.pickle", "wb") as f:
     pickle.dump(obj, f)
