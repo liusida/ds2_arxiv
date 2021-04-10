@@ -87,6 +87,7 @@ obj = {
     "abstracts": abstracts,
     "authors": authors,
     "years": years,
+    "categories": categories,
     "topic_lists": topic_lists,
     "topic_id_lists": topic_id_lists,
 }

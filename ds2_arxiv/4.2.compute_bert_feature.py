@@ -43,7 +43,9 @@ if args.skip<=1:
         abstract = re.sub(r'\s+', ' ', abstract)                 # remove unnecessary returns
         abstract = re.sub(r'\$([a-zA-Z0-9])\$', r'\1', abstract) # $d$ -> d
         abstract = re.sub(r'\$[^\$]+\$', '*', abstract)          # $xyz$ -> *
-        desc = f"This paper is about {', '.join(data['topic_lists'][i])}. {abstract}"
+        # this time, let's exclude the abstract.
+        # desc = f"This paper is about {', '.join(data['topic_lists'][i])}. {abstract}"
+        desc = f"This paper is about {', '.join(data['topic_lists'][i])}."
         arxiv_ids.append(arxiv_id)
         descriptions.append(desc)
 
@@ -62,10 +64,20 @@ if args.skip<=1:
     pp = FeatureExtractionPipeline(model=model, tokenizer=tokenizer, device=device_id) # 0: use GPU:0
 
     with torch.no_grad():
+        # measure the max length of the input sequences
+        max_length = 512
+        inputs = pp.tokenizer(corpus, return_tensors=pp.framework, padding='max_length', max_length=512, truncation=True)
+        for i in range(512):
+            match = (inputs['input_ids'][:,i] != 0).sum()
+            if match==0:
+                print(f"max length {i}")
+                max_length = i
+                break
+
         rets = []
         for i in range(total_batch):
             batch_corpus = corpus[i*batch_size: (i+1)*batch_size]
-            inputs = pp.tokenizer(batch_corpus, return_tensors=pp.framework, padding='max_length', max_length=512, truncation=True)
+            inputs = pp.tokenizer(batch_corpus, return_tensors=pp.framework, padding='max_length', max_length=max_length, truncation=True)
             if True:
                 print(f"Original: \n{batch_corpus[0]}")
                 print(f"Transformed:")
@@ -90,4 +102,4 @@ if args.skip<=1:
             wandb_log({f"BERT_batch_{total_batch}": i+1})
 
         rets = torch.cat(rets, dim=0)
-        torch.save(rets, "data/features/BERT_features.pt") # size: O(N) x 768
+        torch.save(rets, "data/features/features_bert_topics.pt") # size: O(N) x 768
