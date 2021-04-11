@@ -6,3 +6,5 @@ matplotlib
 torch
 transformers
 wandb
+sklearn
+pandas
