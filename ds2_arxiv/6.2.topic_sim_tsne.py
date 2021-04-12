@@ -44,7 +44,7 @@ def tsne(perplexity, learning_rate, run, verbose=False, visual_check=False):
 
 if __name__ == '__main__':
     # after sweep for hyperparameters, perplexity=500, learning_rate=10 is the best.
-    if True:
+    if False:
         jobs = []
         for perplexity in [64, 128, 256, 512, 1024, 2048]:
             for learning_rate in [10, 20, 40, 80, 160]:
@@ -61,5 +61,5 @@ if __name__ == '__main__':
         df.to_pickle("shared/sweep_sscore_results.df")
         print(df)
 
-    # indices,_,_,_ = tsne(512,20,0,1,1)
-    # np.save("shared/topic_similarity_indices.npy", indices)
+    indices,_,_,_ = tsne(256,20,0,1,1)
+    np.save("shared/topic_similarity_indices.npy", indices)
