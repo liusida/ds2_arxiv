@@ -38,6 +38,9 @@ for i in range(total_length):
             sim[i,j] = 0        # define similarity as 0 if both papers have no topics associated.
         else:
             sim[i,j] = 2*s/(n1+n2)  # similarity score \in [0,1]
+        # try tf–idf?
+        
+
 
 sim = sim.T + sim
 np.fill_diagonal(sim,1)

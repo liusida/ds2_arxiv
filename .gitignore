@@ -2,6 +2,7 @@ data/
 wandb/
 tmp_*
 nohup.out
+tmp/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
