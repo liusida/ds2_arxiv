@@ -5,6 +5,7 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-n", type=int, default=1000, help="total time steps")
+parser.add_argument("--seed", type=int, default=0, help="random seed")
 args = parser.parse_args()
 
 @njit
@@ -40,10 +41,10 @@ def is_good_swap(elements, target_i, target_j):
     return ret>ret_1
 
 @njit
-def search(elements, total_steps=100):
+def search(elements, seed=0, total_steps=100):
     current_loss = loss(elements)
     l = elements.shape[0]
-    np.random.seed(0)
+    np.random.seed(seed)
     # print(f"loss: {current_loss}")
     for step in prange(total_steps):
         i,j = int(np.random.random() * l), int(np.random.random() * l)
@@ -72,7 +73,7 @@ def save_pic(elements, title=""):
     plt.savefig(f"tmp/9.1.{title}.png")
     plt.close
 
-random = np.random.default_rng(seed=0)
+random = np.random.default_rng(seed=args.seed)
 
 # small sample dataset:
 # elements = np.zeros(shape=[10,10])
