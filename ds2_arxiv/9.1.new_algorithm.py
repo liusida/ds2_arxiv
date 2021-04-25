@@ -1,6 +1,11 @@
 import numpy as np
 from numba import prange, njit
 import matplotlib.pyplot as plt
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-n", type=int, default=1000, help="total time steps")
+args = parser.parse_args()
 
 @njit
 def loss(elements):
@@ -89,7 +94,7 @@ elements = elements[:,i]
 save_pic(elements, "shuffled")
 
 # will take about 2 mins
-elements = search(elements, total_steps=10000000)
+elements = search(elements, total_steps=args.n)
 
 save_pic(elements, "end")
 # print(elements)
