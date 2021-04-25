@@ -2,7 +2,8 @@ import numpy as np
 from numba import prange, njit
 import matplotlib.pyplot as plt
 import argparse
-
+import wandb
+wandb.init(project="block_diagonal")
 def dummy_wrapper(func):
     """
     use this decorator to disable njit for debug
@@ -18,6 +19,7 @@ parser.add_argument("--seed", type=int, default=0, help="random seed")
 parser.add_argument("--start_bin_size", type=int, default=10, help="scheduling bin size, from 10 to 1")
 args = parser.parse_args()
 args.n = int(args.n)
+wandb.config = args
 
 @njit
 def loss(elements):
@@ -86,6 +88,10 @@ def search(elements, indices, bin_size=1, seed=0, total_steps=100):
 def save_pic(elements, title=""):
     plt.figure(figsize=[20,20])
     ret = loss(elements)
+    record = {
+        "loss": ret,
+    }
+    wandb.log(record)
     print(f"loss: {ret}")
     plt.title(f"loss: {ret}")
     # plt.figure(figsize=[5,5])
@@ -119,11 +125,12 @@ indices = indices[i]
 # print(elements)
 save_pic(elements, "shuffled")
 
-# will take about 2 mins
+total_step = 0
 for bin_size in range(args.start_bin_size,0,-1): # decrease bin_size
     print(f"current bin size: {bin_size}")
     elements, indices = search(elements, indices, bin_size=bin_size, seed=args.seed, total_steps=args.n)
-
+    total_step += args.n
+    wandb.log({"bin_size": bin_size, "total_step": total_step})
     save_pic(elements, f"end_n{args.n}_s{args.seed}_b{bin_size}")
 
 np.save(f"tmp/end_n{args.n}_s{args.seed}.npy", indices)
