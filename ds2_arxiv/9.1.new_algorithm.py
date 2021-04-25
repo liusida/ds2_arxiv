@@ -41,7 +41,7 @@ def is_good_swap(elements, target_i, target_j):
     return ret>ret_1
 
 @njit
-def search(elements, seed=0, total_steps=100):
+def search(elements, indices, seed=0, total_steps=100):
     current_loss = loss(elements)
     l = elements.shape[0]
     np.random.seed(seed)
@@ -59,8 +59,12 @@ def search(elements, seed=0, total_steps=100):
             _tmp = elements[:,i].copy()
             elements[:,i] = elements[:,j]
             elements[:,j] = _tmp
+
+            _tmp = indices[i]
+            indices[i] = indices[j]
+            indices[j] = _tmp
         
-    return elements
+    return elements, indices
 
 def save_pic(elements, title=""):
     plt.figure(figsize=[20,20])
@@ -84,18 +88,30 @@ random = np.random.default_rng(seed=args.seed)
 
 # real dataset:
 elements = np.load("shared/author_similarity_matrix.npy")
-
+indices = np.arange(elements.shape[0])
 save_pic(elements, "start")
 # shuffle
 i = random.permutation(np.arange(elements.shape[0]))
 elements = elements[i]
 elements = elements[:,i]
+indices = indices[i]
 
 # print(elements)
 save_pic(elements, "shuffled")
 
 # will take about 2 mins
-elements = search(elements, total_steps=args.n)
+elements, indices = search(elements, indices, seed=args.seed, total_steps=args.n)
 
 save_pic(elements, f"end_n{args.n}_s{args.seed}")
+np.save(f"tmp/end_n{args.n}_s{args.seed}.npy", indices)
 # print(elements)
+
+
+def test():
+    elements = np.load("shared/author_similarity_matrix.npy")
+    indices = np.load(f"tmp/end_n{args.n}_s{args.seed}.npy")
+    elements = elements[indices, :]
+    elements = elements[:, indices]
+    save_pic(elements, f"test_n{args.n}_s{args.seed}")
+
+test()
