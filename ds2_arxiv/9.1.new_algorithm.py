@@ -97,5 +97,5 @@ save_pic(elements, "shuffled")
 # will take about 2 mins
 elements = search(elements, total_steps=args.n)
 
-save_pic(elements, f"end_{args.n}")
+save_pic(elements, f"end_n{args.n}_s{args.seed}")
 # print(elements)
