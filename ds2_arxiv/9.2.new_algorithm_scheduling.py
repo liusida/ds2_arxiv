@@ -19,7 +19,7 @@ parser.add_argument("--seed", type=int, default=0, help="random seed")
 parser.add_argument("--start_bin_size", type=int, default=10, help="scheduling bin size, from 10 to 1")
 args = parser.parse_args()
 args.n = int(args.n)
-wandb.config = args
+wandb.config.update(args)
 
 @njit
 def loss(elements):
@@ -135,8 +135,8 @@ for bin_size in range(args.start_bin_size,0,-1): # decrease bin_size
 
 np.save(f"tmp/end_n{args.n}_s{args.seed}.npy", indices)
 # print(elements)
-
-
+wandb.save(f"tmp/end_n{args.n}_s{args.seed}.npy")
+wandb.save(f"tmp/9.1.end_n{args.n}_s{args.seed}_b{bin_size}.png")
 def test():
     elements = elements_save_for_test.copy()
     indices = np.load(f"tmp/end_n{args.n}_s{args.seed}.npy")
