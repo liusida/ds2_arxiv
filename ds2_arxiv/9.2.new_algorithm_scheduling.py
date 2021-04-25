@@ -15,6 +15,7 @@ def dummy_wrapper(func):
 parser = argparse.ArgumentParser()
 parser.add_argument("-n", type=float, default=1e3, help="time steps at each epoch (10 epoch in total)")
 parser.add_argument("--seed", type=int, default=0, help="random seed")
+parser.add_argument("--start_bin_size", type=int, default=10, help="scheduling bin size, from 10 to 1")
 args = parser.parse_args()
 args.n = int(args.n)
 
@@ -50,11 +51,9 @@ def is_good_swap(elements, target_i, target_j, bin_size=1):
                 m_b = m+b
                 m_inv_b = m_inv+b
                 if elements[m_b,n]>0:
-                    ret += abs(m_b-n) * elements[m_b,n]
-                    ret_1 += abs(m_inv_b-n) * elements[m_b,n]
-                if elements[n,m_b]>0:
-                    ret += abs(m_b-n) * elements[n,m_b]
-                    ret_1 += abs(m_inv_b-n) * elements[n,m_b]
+                    if m_b!=n:
+                        ret += abs(m_b-n) * elements[m_b,n]
+                        ret_1 += abs(m_inv_b-n) * elements[m_b,n]
     return ret>ret_1
 
 @njit
@@ -90,7 +89,7 @@ def save_pic(elements, title=""):
     print(f"loss: {ret}")
     plt.title(f"loss: {ret}")
     # plt.figure(figsize=[5,5])
-    plt.imshow(elements)
+    plt.imshow(elements, interpolation="nearest")
     plt.colorbar()
     plt.savefig(f"tmp/9.1.{title}.png")
     plt.close
@@ -98,14 +97,17 @@ def save_pic(elements, title=""):
 random = np.random.default_rng(seed=args.seed)
 
 # small sample dataset:
-# elements = np.zeros(shape=[10,10])
-# elements[3:5, 3:5] = 0.5
-# elements[0:4, 0:4] = 0.5
-# for i in range(elements.shape[0]):
-#     elements[i,i] = 1
+if False:
+    elements = np.zeros(shape=[10,10])
+    elements[3:5, 3:5] = 0.5
+    elements[0:4, 0:4] = 0.5
+    for i in range(elements.shape[0]):
+        elements[i,i] = 1
 
 # real dataset:
 elements = np.load("shared/author_similarity_matrix.npy")
+
+elements_save_for_test = elements.copy()
 indices = np.arange(elements.shape[0])
 save_pic(elements, "start")
 # shuffle
@@ -118,7 +120,7 @@ indices = indices[i]
 save_pic(elements, "shuffled")
 
 # will take about 2 mins
-for bin_size in range(10,0,-1): # decrease bin_size
+for bin_size in range(args.start_bin_size,0,-1): # decrease bin_size
     print(f"current bin size: {bin_size}")
     elements, indices = search(elements, indices, bin_size=bin_size, seed=args.seed, total_steps=args.n)
 
@@ -129,7 +131,7 @@ np.save(f"tmp/end_n{args.n}_s{args.seed}.npy", indices)
 
 
 def test():
-    elements = np.load("shared/author_similarity_matrix.npy")
+    elements = elements_save_for_test.copy()
     indices = np.load(f"tmp/end_n{args.n}_s{args.seed}.npy")
     elements = elements[indices, :]
     elements = elements[:, indices]

@@ -5,6 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "toy test",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "args": [
+                "--seed=0",
+                "-n=100000",
+                "--start_bin_size=1",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
