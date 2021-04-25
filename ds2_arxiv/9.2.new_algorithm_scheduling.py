@@ -13,9 +13,10 @@ def dummy_wrapper(func):
 # njit = dummy_wrapper
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-n", type=int, default=1000, help="total time steps")
+parser.add_argument("-n", type=float, default=1e3, help="time steps at each epoch (10 epoch in total)")
 parser.add_argument("--seed", type=int, default=0, help="random seed")
 args = parser.parse_args()
+args.n = int(args.n)
 
 @njit
 def loss(elements):
@@ -122,7 +123,7 @@ for bin_size in range(10,0,-1): # decrease bin_size
     elements, indices = search(elements, indices, bin_size=bin_size, seed=args.seed, total_steps=args.n)
 
     save_pic(elements, f"end_n{args.n}_s{args.seed}_b{bin_size}")
-    
+
 np.save(f"tmp/end_n{args.n}_s{args.seed}.npy", indices)
 # print(elements)
 
