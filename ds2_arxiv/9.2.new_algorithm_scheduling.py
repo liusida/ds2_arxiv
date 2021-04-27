@@ -2,87 +2,45 @@ import numpy as np
 from numba import prange, njit
 import matplotlib.pyplot as plt
 import argparse
+from ds2_arxiv.tools.new_algo import *
+
 import wandb
 wandb.init(project="block_diagonal")
-def dummy_wrapper(func):
-    """
-    use this decorator to disable njit for debug
-    """
-    def wrapper(*args, **kwargs):
-        return func(*args, **kwargs)
-    return wrapper
-# njit = dummy_wrapper
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-n", type=float, default=1e3, help="time steps at each epoch (10 epoch in total)")
 parser.add_argument("--seed", type=int, default=0, help="random seed")
-parser.add_argument("--start_bin_size", type=int, default=10, help="scheduling bin size, from 10 to 1")
+parser.add_argument("--max_int_step", type=int, default=1, help="the allowed maximal intermedia steps.")
 args = parser.parse_args()
 args.n = int(args.n)
 wandb.config.update(args)
 
 @njit
-def loss(elements):
-    """ This file directly optimize this loss function.
-    calculate the whole matrix
-    """
-    ret = 0
-    l = elements.shape[0]
-    _l_1 = 1.0/l
-    for i in range(l):
-        for j in range(i):
-            if elements[i,j]>0:
-                ret += (i-j) * _l_1 * elements[i,j]
-    return ret
-
-@njit
-def is_good_swap(elements, target_i, target_j, bin_size=1):
-    """ This file directly optimize this loss function.
-    only calculate i and j-th row and col
-    """
-    ret = 0
-    ret_1 = 0 # after potential swap
-    l = elements.shape[0]
-
-    if target_i+bin_size>l or target_j+bin_size>l: # not enough space for a bin
-        return False
-
-    for m, m_inv in [[target_i,target_j], [target_j,target_i]]:
-        for n in range(l):
-            for b in range(bin_size):
-                m_b = m+b
-                m_inv_b = m_inv+b
-                if elements[m_b,n]>0:
-                    if m_b!=n:
-                        ret += abs(m_b-n) * elements[m_b,n]
-                        ret_1 += abs(m_inv_b-n) * elements[m_b,n]
-    return ret>ret_1
-
-@njit
-def search(elements, indices, bin_size=1, seed=0, total_steps=100):
-    current_loss = loss(elements)
+def search(elements, indices, max_int_step=1, seed=0, total_steps=100):
     l = elements.shape[0]
     np.random.seed(seed)
-    # print(f"loss: {current_loss}")
     for step in prange(total_steps):
+        # strategy: 
+        # half the time, run for a random number of step, to mediate local optima
+        # half of the time, search at bin size 1, to optimize efficiently.
         i,j = int(np.random.random() * l), int(np.random.random() * l)
-        if i==j:
-            continue
-        if is_good_swap(elements, i, j, bin_size=bin_size):
-            # swap
-            _tmp = elements[i:i+bin_size,:].copy()
-            elements[i:i+bin_size,:] = elements[j:j+bin_size,:]
-            elements[j:j+bin_size,:] = _tmp
-            
-            _tmp = elements[:,i:i+bin_size].copy()
-            elements[:,i:i+bin_size] = elements[:,j:j+bin_size]
-            elements[:,j:j+bin_size] = _tmp
-            
-            # also swap indices to keep track of the direct way from original matrix to final matrix.
-            _tmp = indices[i:i+bin_size].copy()
-            indices[i:i+bin_size] = indices[j:j+bin_size]
-            indices[j:j+bin_size] = _tmp
-        
+        if step%2==0 and max_int_step>1:
+            b = int(np.random.random() * max_int_step) + 1
+            if i==j:
+                continue
+            p1 = loss_partial(elements, i, j)
+            new_elemenets = elements.copy()
+            new_indices = indices.copy()
+            for _ in range(b): # run for a random number of steps
+                swap_inplace(new_elemenets, new_indices, i, j)
+            p2 = loss_partial(new_elemenets, i, j)
+            if p2<p1:
+                elements = new_elemenets
+                indices  = new_indices
+        else:
+            if loss_gradient_if_swap(elements, i, j)>0:
+                swap_inplace(elements, indices, i, j)
+
     return elements, indices
 
 def save_pic(elements, title=""):
@@ -94,7 +52,6 @@ def save_pic(elements, title=""):
     wandb.log(record)
     print(f"loss: {ret}")
     plt.title(f"loss: {ret}")
-    # plt.figure(figsize=[5,5])
     plt.imshow(elements, interpolation="nearest")
     plt.colorbar()
     plt.savefig(f"tmp/9.1.{title}.png")
@@ -102,16 +59,18 @@ def save_pic(elements, title=""):
 
 random = np.random.default_rng(seed=args.seed)
 
-# small sample dataset:
 if False:
-    elements = np.zeros(shape=[10,10])
+    # small sample dataset:
+    np.random.seed(0)
+    elements = np.random.random(size=[10,10])
     elements[3:5, 3:5] = 0.5
     elements[0:4, 0:4] = 0.5
     for i in range(elements.shape[0]):
         elements[i,i] = 1
-
-# real dataset:
-elements = np.load("shared/author_similarity_matrix.npy")
+    elements = (elements+elements.T)/2 # make it a symmetric matrix
+else:
+    # real dataset:
+    elements = np.load("shared/author_similarity_matrix.npy")
 
 elements_save_for_test = elements.copy()
 indices = np.arange(elements.shape[0])
@@ -122,21 +81,17 @@ elements = elements[i]
 elements = elements[:,i]
 indices = indices[i]
 
-# print(elements)
 save_pic(elements, "shuffled")
 
 total_step = 0
-for bin_size in range(args.start_bin_size,0,-1): # decrease bin_size
-    print(f"current bin size: {bin_size}")
-    elements, indices = search(elements, indices, bin_size=bin_size, seed=args.seed, total_steps=args.n)
-    total_step += args.n
-    wandb.log({"bin_size": bin_size, "total_step": total_step})
-    save_pic(elements, f"end_n{args.n}_s{args.seed}_b{bin_size}")
+elements, indices = search(elements, indices, max_int_step=args.max_int_step, seed=args.seed, total_steps=args.n)
+total_step += args.n
+save_pic(elements, f"end_n{args.n}_s{args.seed}_m{args.max_int_step}")
 
 np.save(f"tmp/end_n{args.n}_s{args.seed}.npy", indices)
-# print(elements)
+print(indices)
 wandb.save(f"tmp/end_n{args.n}_s{args.seed}.npy")
-wandb.save(f"tmp/9.1.end_n{args.n}_s{args.seed}_b{bin_size}.png")
+wandb.save(f"tmp/9.1.end_n{args.n}_s{args.seed}_m{args.max_int_step}.png")
 def test():
     elements = elements_save_for_test.copy()
     indices = np.load(f"tmp/end_n{args.n}_s{args.seed}.npy")

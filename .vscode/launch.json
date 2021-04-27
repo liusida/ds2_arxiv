@@ -11,7 +11,7 @@
             "program": "${file}",
             "args": [
                 "--seed=0",
-                "-n=100000",
+                "-n=100",
                 "--start_bin_size=1",
             ],
             "console": "integratedTerminal"
