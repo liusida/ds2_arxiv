@@ -9,7 +9,7 @@ df_last_author = pd.unique(df['last_author'])
 df_first_author = pd.unique(df['first_author'])
 df_authors = np.concatenate([ df_first_author,  df_last_author])
 df_authors = pd.unique(df_authors)
-print(df_authors)
+print(df_authors.shape[0])
 
 def activate_matrix(matrix, df_authors, df):
     """
@@ -23,19 +23,26 @@ def activate_matrix(matrix, df_authors, df):
 
         for i in df_other_author.index:
             for j in df_other_author.index:
-                matrix[i,j] = 2
+                if matrix[i,j]<2:
+                    matrix[i,j] = 2
+                    matrix[j,i] = 2
 
         for i in df_main_author.index:
             for j in df_other_author.index:
-                matrix[i,j] = 5
-                matrix[j,i] = 5
+                if matrix[i,j]<5:
+                    matrix[i,j] = 5
+                    matrix[j,i] = 5
 
         for i in df_main_author.index:
             for j in df_main_author.index:
                 matrix[i,j] = 10
+                matrix[j,i] = 10
 
     return matrix
 
 matrix = activate_matrix(matrix, df_authors, df)
 
+for i in range(matrix.shape[0]):
+    assert(matrix[i,i]==10)
+    
 np.save("shared/author_similarity_matrix.npy", matrix)
