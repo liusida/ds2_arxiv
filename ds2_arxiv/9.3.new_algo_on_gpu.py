@@ -133,11 +133,12 @@ if __name__=="__main__":
             matrix, indices, vec_detected = detect_and_swap_gpu(matrix, indices, seed=i+args.seed, mode=mode)
             if vec_detected<1 and mode=='all':
                 break # finished
-            elif vec_detected<30: # start enumerate mode
+            elif vec_detected<20: # start enumerate mode
                 mode = 'all'
-            else:
-                mode = 'random'
+            # else:
+            #     mode = 'random'
             print(i)
+            wandb.log({"epoch": i})
             p1 = loss_gpu(matrix)
             print(p1)
             save_pic(matrix, f"step_{i:05}")
