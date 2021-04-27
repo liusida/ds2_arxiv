@@ -36,44 +36,41 @@ def loss(elements):
 
 
 @njit
-def loss_partial(elements, target_a, target_b, bin_size=1):
+def loss_partial(elements, target_a, target_b):
     """
     compute only for target_a and target_b, and without scale by 1/l
     @return at the scale: Loss * l / 2
     """
     ret = 0
     l = elements.shape[0]
-    assert target_a+bin_size <= l and target_b+bin_size <= l
     for i, i_inv in [[target_a, target_b], [target_b, target_a]]:
-        for b in range(bin_size):
-            i_b = i+b
-            for j in range(l):
-                if elements[i_b, j] > 0:
-                    if i_b > j:
-                        ret += (i_b-j) * elements[i_b, j]
-                    if i_b < j:
-                        if not i_inv <= j < i_inv+bin_size and not i <= j < i+bin_size:
-                            ret += (j - i_b) * elements[i_b, j]
+        for j in range(l):
+            if elements[i, j] > 0:
+                if i > j:
+                    ret += (i-j) * elements[i, j]
+                elif i < j:
+                    if i_inv!=j:
+                        ret += (j - i) * elements[i, j]
 
     return ret
 
 
 @njit
-def swap_inplace(elements, indices, i, j, bin_size=1):
+def swap_inplace(elements, indices, i, j):
     """ swap the matrix and indices inplace at position i and j """
-    _tmp = elements[i:i+bin_size, :].copy()
-    elements[i:i+bin_size, :] = elements[j:j+bin_size, :]
-    elements[j:j+bin_size, :] = _tmp
+    _tmp = elements[i, :].copy()
+    elements[i, :] = elements[j, :]
+    elements[j, :] = _tmp
 
-    _tmp = elements[:, i:i+bin_size].copy()
-    elements[:, i:i+bin_size] = elements[:, j:j+bin_size]
-    elements[:, j:j+bin_size] = _tmp
+    _tmp = elements[:, i].copy()
+    elements[:, i] = elements[:, j]
+    elements[:, j] = _tmp
 
     # also swap indices to keep track of the direct way from original matrix to final matrix.
     if indices is not None:
-        _tmp = indices[i:i+bin_size].copy()
-        indices[i:i+bin_size] = indices[j:j+bin_size]
-        indices[j:j+bin_size] = _tmp
+        _tmp = indices[i]
+        indices[i] = indices[j]
+        indices[j] = _tmp
 
 
 @njit
@@ -105,15 +102,6 @@ if __name__ == "__main__":
             partial_loss = loss_partial(a, 1, 2)
             assert(np.isclose(full_loss, partial_loss/l))
 
-        def unittest_2():
-            l = 5
-            a = np.eye(l)
-            a[1, 0] = a[0, 1] = 0.5
-            a[4, 0] = a[0, 4] = 0.3
-            full_loss = loss(a)
-            partial_loss = loss_partial(a, 1, 3, 2)
-            assert(np.isclose(full_loss, partial_loss/l))
-
         def unittest_2_5():
             l = 3
             a = np.ones([l, l])
@@ -128,20 +116,6 @@ if __name__ == "__main__":
                 full_loss = loss(a)
                 partial_loss = loss_partial(a, 1, 2)
                 assert(np.isclose(full_loss, partial_loss/l))
-
-        def unittest_4():
-            l = 5
-            a = np.random.random([l, l])
-            a = (a+a.T)/2
-            full_loss = loss(a)
-            partial_loss = loss_partial(a, 1, 3, 2)
-            assert(np.isclose(full_loss, partial_loss/l))
-
-        def unittest_5():
-            l = 10
-            a = np.ones([l, l])
-            partial_loss = loss_partial(a, 1, 5, 2)
-            assert(partial_loss == 102)
 
         def unittest_5_5():
             a = np.array([[0., 0.5, 0.],
@@ -162,11 +136,8 @@ if __name__ == "__main__":
                 assert(np.isclose(p2*0.5, p1_before-p1_after))
 
         unittest_1()
-        unittest_2()
         unittest_2_5()
         unittest_3()
-        unittest_4()
-        unittest_5()
         unittest_5_5()
         unittest_6()
 
