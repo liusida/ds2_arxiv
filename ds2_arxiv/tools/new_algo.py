@@ -20,7 +20,8 @@ if DISABLE_NUMBA: # disable numba to debug
 Loss = sum_i(sum_j(e[i,j] * abs(i-j)/m))
 """
 def loss(matrix):
-    return loss_gpu(matrix) # use GPU
+    # return loss_gpu(matrix) # use GPU
+    return loss_cpu(matrix) # use CPU
 
 @njit
 def loss_cpu(elements):
