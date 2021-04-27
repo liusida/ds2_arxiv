@@ -1,3 +1,4 @@
+from numba.cuda.stubs import grid
 import numpy as np
 from numba import cuda
 from numba.cuda.random import create_xoroshiro128p_states, xoroshiro128p_uniform_float32
@@ -42,6 +43,7 @@ def _detect_gpu(matrix, vec, rng_states):
         if ret>0:
             vec[grid_id,0] = x
             vec[grid_id,1] = y
+            vec[grid_id,2] = ret
 
 @cuda.jit
 def _detect_all_gpu(matrix, index, vec):
@@ -62,15 +64,16 @@ def _detect_all_gpu(matrix, index, vec):
             if i<vec.shape[0]:
                 vec[i,0] = x
                 vec[i,1] = y
+                vec[i,2] = ret
 
 def detect_and_swap_gpu(matrix, indices, seed, mode='random'):
     threads_per_block, blocks = 128, 128
     # wandb.log({"threads_per_block": threads_per_block, "blocks": blocks})
     if mode=='random':
         rng_states = create_xoroshiro128p_states(threads_per_block * blocks, seed=seed)
-        vec = np.zeros([threads_per_block * blocks, 2]).astype(int)
+        vec = np.zeros([threads_per_block * blocks, 3]).astype(int)
     elif mode=='all':
-        vec = np.zeros([4096, 2]).astype(int)
+        vec = np.zeros([4096, 3]).astype(int)
         index = np.zeros([1]).astype(int)
         d_index = cuda.to_device(index)
         threadsperblock = (32,32)
@@ -89,6 +92,8 @@ def detect_and_swap_gpu(matrix, indices, seed, mode='random'):
 
     vec = d_vec.copy_to_host()
     vec = vec[~np.all(vec == 0, axis=1)] # select non-zero rows
+    vec = vec[np.argsort(vec[:, 2])[::-1]] # TODO: greedy?
+    # print(vec[:5])
     vec_detected = vec.shape[0]
     print(vec.shape)
     # remove conflicted rows
