@@ -9,25 +9,18 @@ from sklearn.decomposition import PCA
 from scipy.cluster import hierarchy
 from numba import jit
 
-@jit(nopython=True)
-def loss(elements):
-    """ what about directly optimize this loss function? """
-    ret = 0
-    l = elements.shape[0]
-    _l_1 = 1.0/l
-    for i in range(l):
-        for j in range(i):
-            if elements[i,j]>0:
-                ret += (i-j) * _l_1
-    return ret
+from ds2_arxiv.tools.new_algo import loss
 
 def save_pic(elements, title=""):
-    plt.figure(figsize=[20,20])
     ret = loss(elements)
-    plt.title(f"loss: {ret}")
-    plt.imshow(elements)
-    plt.savefig(f"tmp/{title}.png")
-    plt.close
+    record = {
+        "loss": ret,
+    }
+    # wandb.log(record)
+    print(f"{title} loss: {ret}")
+    im = np.array(elements / elements.max() * 255, dtype = np.uint8)
+    im_color = cv2.applyColorMap(im, cv2.COLORMAP_HOT)
+    cv2.imwrite(f"tmp/9.0.{title}.png", im_color)
 
 # ShowCase I: tsp is not good for clustering.
 # elements = np.zeros([1000, 1000])
@@ -63,7 +56,7 @@ elements = elements[i]
 elements = elements[:,i]
 
 
-# elements = np.load("author_similarity_matrix.npy")
+elements = np.load("shared/author_similarity_matrix.npy")
 print(elements.shape)
 
 save_pic(elements, "randomized")
@@ -112,5 +105,5 @@ for i in range(1):
     elements = elements[indices].T
 
     save_pic(elements, f"processed_{i}_tsp")
-
+    np.save("tmp/author_similarity_matrix_tsp.npy", elements)
 

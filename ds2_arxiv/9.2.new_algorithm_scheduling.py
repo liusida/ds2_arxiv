@@ -81,7 +81,8 @@ if False:
     elements = (elements+elements.T)/2 # make it a symmetric matrix
 else:
     # real dataset:
-    elements = np.load("shared/author_similarity_matrix.npy")
+    # elements = np.load("shared/author_similarity_matrix.npy")
+    elements = np.load("tmp/author_similarity_matrix_tsp.npy") # the results of TSP sariation.
     for i in range(elements.shape[0]):
         assert(elements[i,i]==10)
 
@@ -89,12 +90,13 @@ elements_save_for_test = elements.copy()
 indices = np.arange(elements.shape[0])
 save_pic(elements, "start")
 # shuffle
-i = random.permutation(np.arange(elements.shape[0]))
-elements = elements[i]
-elements = elements[:,i]
-indices = indices[i]
+if False:
+    i = random.permutation(np.arange(elements.shape[0]))
+    elements = elements[i]
+    elements = elements[:,i]
+    indices = indices[i]
 
-save_pic(elements, "shuffled")
+    save_pic(elements, "shuffled")
 
 total_step = 0
 elements, indices = search(elements, indices, max_int_step=args.max_int_step, seed=args.seed, num_epochs=args.num_epochs, epoch_steps=args.epoch_steps)
