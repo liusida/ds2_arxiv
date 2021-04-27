@@ -19,16 +19,16 @@ args.num_epochs = int(args.num_epochs)
 args.epoch_steps = int(args.epoch_steps)
 wandb.config.update(args)
 
-@njit
-def _search(elements, indices, max_int_step=1, seed=0, epoch_steps=10000):
+# @njit
+def _search(elements, indices, max_int_step=1, seed=0, epoch_steps=1000):
     l = elements.shape[0]
     np.random.seed(seed)
     for step in prange(epoch_steps):
         # strategy: 
-        # half the time, run for a random number of step, to mediate local optima
-        # half of the time, fast single step search, to optimize efficiently.
+        # 1/10 the time, run for a random number of step, to mediate local optima
+        # 9/10 of the time, fast single step search, to optimize efficiently.
         i,j = int(np.random.random() * l), int(np.random.random() * l)
-        if step%2==0 and max_int_step>1:
+        if step%10==0 and max_int_step>1:
             b = int(np.random.random() * max_int_step) + 1
             if i==j:
                 continue
