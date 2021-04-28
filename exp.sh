@@ -2,6 +2,15 @@
 set -x
 if true
 then
+    expName="ParallelHillClimber"
+    for seed in 70 71 72 73 74 75 76 77 78 79
+    do
+        sbatch -J $expName  ~/bin/deepgreen.sh ds2 python ds2_arxiv/9.3.new_algo_on_gpu.py --tag=$expName --seed=$seed --pop_size=1000 -n=100
+    done
+fi
+
+if false
+then
     for seed in 70 71 72 73 74 75 76 77 78 79
     do
         sbatch -J gpu93  ~/bin/deepgreen.sh ds2 python ds2_arxiv/9.3.new_algo_on_gpu.py --tag=gpu93 --seed=$seed --num_epochs=1e4
