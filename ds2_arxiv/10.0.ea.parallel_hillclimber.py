@@ -107,7 +107,7 @@ def parallel_hill_climber(matrix, num_cpus=1, pop_size=3, total_steps=100, maste
         num_swapped = {}
         fitness = {}
         for i in range(0, pop_size, num_cpus):
-            jobs = []
+            jobs = [] 
             for j in range(num_cpus):
                 jobs.append((matrix, parent_indices[i+j]))
             with Pool(num_cpus) as p:
