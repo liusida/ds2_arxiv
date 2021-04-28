@@ -5,6 +5,7 @@ from numpy.core.shape_base import block
 from ds2_arxiv.tools.new_algo import loss_gpu, swap_inplace
 import cv2
 import argparse
+from multiprocessing import Pool
 
 import wandb
 
@@ -80,43 +81,49 @@ def save_pic(matrix, title=""):
     cv2.imwrite(f"tmp/{title}.png", im_color)
     wandb.save(f"tmp/{title}.png")
 
-def parallel_hill_climber(matrix, pop_size=3, total_steps=100, master_seed=0):
-    parents = {}
+def load_matrix_from_indices(param):
+    original_matrix, indices = param
+    matrix = original_matrix.copy()
+    matrix = matrix[indices,:]
+    matrix = matrix[:,indices]
+    return matrix
+
+def parallel_hill_climber(matrix, num_cpus=1, pop_size=3, total_steps=100, master_seed=0):
+    assert(pop_size%num_cpus==0), "Population size should be multiples of num_cpus."
     parent_indices = {}
     print("init...")
     rng = np.random.default_rng(seed=master_seed)
     for i in range(pop_size):
-        parents[i] = matrix.copy()
         parent_indices[i] = np.arange(matrix.shape[0])
         # start with random indices
         rng.shuffle(parent_indices[i])
-        # swap according to the random indices
-        parents[i] = parents[i][parent_indices[i],:]
-        parents[i] = parents[i][:,parent_indices[i]]
 
     print("start")
     rng = np.random.default_rng(seed=master_seed)
     for step in range(total_steps):
         possible_swaps = {}
-        children = {}
         children_indices = {}
         num_detected = {}
         num_swapped = {}
         fitness = {}
-        for i in range(pop_size):
-            gpu_random_seed = rng.integers(low=0, high=10000000)
-            possible_swaps[i] = _detect_possible_swaps(parents[i], gpu_random_seed=gpu_random_seed)
-            num_detected[i] = possible_swaps[i].shape[0]
+        for i in range(0, pop_size, num_cpus):
+            jobs = []
+            for j in range(num_cpus):
+                jobs.append((matrix, parent_indices[i+j]))
+            with Pool(num_cpus) as p:
+                parents = p.map(load_matrix_from_indices, jobs) # lazy instantiate to save memory
+            for j in range(num_cpus):
+                index = i+j
+                gpu_random_seed = rng.integers(low=0, high=10000000)
+                possible_swaps[index] = _detect_possible_swaps(parents[j], gpu_random_seed=gpu_random_seed)
+                num_detected[index] = possible_swaps[i].shape[0]
 
-        for i in range(pop_size):
-            swap_random_seed = rng.integers(low=0, high=10000000)
-            children[i], children_indices[i], num_swapped[i] = _apply_swaps(matrix=parents[i], indices=parent_indices[i],
-                                                            detected_pairs=possible_swaps[i], seed=swap_random_seed)
+                swap_random_seed = rng.integers(low=0, high=10000000)
+                child, children_indices[index], num_swapped[index] = _apply_swaps(matrix=parents[j], indices=parent_indices[index],
+                                                                detected_pairs=possible_swaps[index], seed=swap_random_seed)
 
-        for i in range(pop_size):
-            fitness[i] = -loss_gpu(children[i])
+                fitness[index] = -loss_gpu(child)
 
-        parents = children
         parent_indices = children_indices
 
         _f = list(fitness.values())
@@ -134,7 +141,8 @@ def parallel_hill_climber(matrix, pop_size=3, total_steps=100, master_seed=0):
             "num_detected/mean": np.mean(_d),
         }
         wandb.log(record)
-        save_pic(parents[np.argmax(_f)], f"10.0/best_step_{step:04}")
+        bestsofar = load_matrix_from_indices((matrix, parent_indices[np.argmax(_f)]))
+        save_pic(bestsofar, f"10.0/best_step_{step:04}")
         print(f"step {step}: max fitness {np.max(_f)}")
 
 
@@ -144,6 +152,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-n", "--total_steps", type=float, default=1e3, help="")
     parser.add_argument("-p", "--pop_size", type=int, default=10, help="")
+    parser.add_argument("-c", "--num_cpus", type=int, default=5, help="")
     parser.add_argument("--seed", type=int, default=0, help="random seed")
     parser.add_argument("--tag", type=str, default="")
     args = parser.parse_args()
@@ -151,4 +160,4 @@ if __name__ == "__main__":
     wandb.config.update(args)
 
     matrix = np.load("shared/author_similarity_matrix.npy")
-    parallel_hill_climber(matrix, pop_size=args.pop_size, total_steps=args.total_steps, master_seed=args.seed)
+    parallel_hill_climber(matrix, num_cpus=args.num_cpus, pop_size=args.pop_size, total_steps=args.total_steps, master_seed=args.seed)
