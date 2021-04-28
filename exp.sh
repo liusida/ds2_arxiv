@@ -5,7 +5,7 @@ then
     expName="ParallelHillClimber"
     for seed in 70 71 72 73 74 75 76 77 78 79
     do
-        sbatch -J $expName  deepgreen.sh ds2 python ds2_arxiv/10.0.ea.parallel_hillclimber.py --tag=$expName --seed=$seed --pop_size=1000 -n=100
+        sbatch -J $expName ~/bin/deepgreen.sh ds2 python ds2_arxiv/10.0.ea.parallel_hillclimber.py --tag=$expName --seed=$seed --pop_size=1000 -n=100
     done
 fi
 
