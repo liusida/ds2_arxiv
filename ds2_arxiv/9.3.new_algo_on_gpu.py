@@ -1,4 +1,3 @@
-from numba.cuda.stubs import grid
 import numpy as np
 from numba import cuda
 from numba.cuda.random import create_xoroshiro128p_states, xoroshiro128p_uniform_float32
@@ -18,14 +17,17 @@ args = parser.parse_args()
 args.num_epochs = int(args.num_epochs)
 wandb.config.update(args)
 
-# put matrix in device
-# start 10000 threads
-# for each thread
-#   get two random numbers (Howto: http://numba.pydata.org/numba-doc/0.33.0/cuda/random.html)
-#   test if swap will reduce loss
-#   if yes, record two numbers in an array, using an atomic increasing index
-# on host, check for confliction, remove conflicted ones
-# swap all of them on device
+"""
+put matrix in device
+start 10000 threads
+for each thread
+  get two random numbers (Howto: http://numba.pydata.org/numba-doc/0.33.0/cuda/random.html)
+  test if swap will reduce loss
+  if yes, record two numbers in an array, using an atomic increasing index
+on host, check for confliction, remove conflicted ones
+swap all of them on device
+"""
+
 @cuda.jit
 def _detect_gpu(matrix, vec, rng_states):
     grid_id = cuda.grid(1)
@@ -45,6 +47,7 @@ def _detect_gpu(matrix, vec, rng_states):
             vec[grid_id,1] = y
             vec[grid_id,2] = ret
 
+EPSILON = 1e3
 @cuda.jit
 def _detect_all_gpu(matrix, index, vec):
     """
@@ -59,7 +62,7 @@ def _detect_all_gpu(matrix, index, vec):
                 if matrix[m, n] > 0 or matrix[m_inv, n] > 0:
                     if m != n and m_inv != n:
                         ret += (abs(m-n)-abs(m_inv-n)) * (matrix[m, n] - matrix[m_inv, n])
-        if ret>0:
+        if ret>EPSILON:
             i = cuda.atomic.add(index, 0, 1)
             if i<vec.shape[0]:
                 vec[i,0] = x
