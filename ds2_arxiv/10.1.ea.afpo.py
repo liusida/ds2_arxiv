@@ -9,8 +9,13 @@ import argparse
 import wandb
 
 """
-AFPO: Age-Fitness Pareto Optimization
-https://dl.acm.org/doi/pdf/10.1145/1830483.1830584
+Based on Josh's psuedo-code, parallel hill climber:
+parents = {} x pop_size
+while True:
+    for each parents i:
+        possible swap[i] = get possible swap from parents[i] 
+    for each parents i:
+        children[i] = parents[i] apply possible_swap[i]
 """
 
 
@@ -75,43 +80,48 @@ def save_pic(matrix, title=""):
     cv2.imwrite(f"tmp/{title}.png", im_color)
     wandb.save(f"tmp/{title}.png")
 
-def parallel_hill_climber(matrix, pop_size=3, total_steps=100, master_seed=0):
-    parents = {}
+def load_matrix_from_indices(original_matrix, indices):
+    matrix = original_matrix.copy()
+    matrix = matrix[indices,:]
+    matrix = matrix[:,indices]
+    return matrix
+
+def afpo(matrix, pop_size=3, total_steps=100, master_seed=0):
     parent_indices = {}
+    age = {}
     print("init...")
     rng = np.random.default_rng(seed=master_seed)
     for i in range(pop_size):
-        parents[i] = matrix.copy()
         parent_indices[i] = np.arange(matrix.shape[0])
         # start with random indices
         rng.shuffle(parent_indices[i])
-        # swap according to the random indices
-        parents[i] = parents[i][parent_indices[i],:]
-        parents[i] = parents[i][:,parent_indices[i]]
+
+        age[i] = 0
 
     print("start")
     rng = np.random.default_rng(seed=master_seed)
     for step in range(total_steps):
         possible_swaps = {}
-        children = {}
         children_indices = {}
         num_detected = {}
         num_swapped = {}
         fitness = {}
         for i in range(pop_size):
+            parent = load_matrix_from_indices(matrix, parent_indices[i]) # lazy instantiate to save memory
+
             gpu_random_seed = rng.integers(low=0, high=10000000)
-            possible_swaps[i] = _detect_possible_swaps(parents[i], gpu_random_seed=gpu_random_seed)
+            possible_swaps[i] = _detect_possible_swaps(parent, gpu_random_seed=gpu_random_seed)
             num_detected[i] = possible_swaps[i].shape[0]
 
-        for i in range(pop_size):
             swap_random_seed = rng.integers(low=0, high=10000000)
-            children[i], children_indices[i], num_swapped[i] = _apply_swaps(matrix=parents[i], indices=parent_indices[i],
+            child, children_indices[i], num_swapped[i] = _apply_swaps(matrix=parent, indices=parent_indices[i],
                                                             detected_pairs=possible_swaps[i], seed=swap_random_seed)
 
-        for i in range(pop_size):
-            fitness[i] = -loss_gpu(children[i])
+            fitness[i] = -loss_gpu(child)
+            age[i] += 1
+        
+        #TODO: selection
 
-        parents = children
         parent_indices = children_indices
 
         _f = list(fitness.values())
@@ -129,7 +139,8 @@ def parallel_hill_climber(matrix, pop_size=3, total_steps=100, master_seed=0):
             "num_detected/mean": np.mean(_d),
         }
         wandb.log(record)
-        save_pic(parents[np.argmax(_f)], f"10.0/best_step_{step:04}")
+        bestsofar = load_matrix_from_indices(matrix, parent_indices[np.argmax(_f)])
+        save_pic(bestsofar, f"10.0/best_step_{step:04}")
         print(f"step {step}: max fitness {np.max(_f)}")
 
 
@@ -146,4 +157,4 @@ if __name__ == "__main__":
     wandb.config.update(args)
 
     matrix = np.load("shared/author_similarity_matrix.npy")
-    parallel_hill_climber(matrix, pop_size=args.pop_size, total_steps=args.total_steps, master_seed=args.seed)
+    afpo(matrix, pop_size=args.pop_size, total_steps=args.total_steps, master_seed=args.seed)
