@@ -176,7 +176,7 @@ if __name__ == "__main__":
             record = {"step": i, "loss": p1, "detected": vec_detected, "swapped": vec_swapped, "threads_per_block": threads_per_block, "blocks": num_blocks}
             wandb.log(record)
             print(record)
-            save_pic(matrix, indices, f"9.3/step_{i:04}")
+            save_pic(matrix, indices, f"9.3/seed_{args.seed}_step_{i:04}")
 
         old_matrix = old_matrix[indices, :]
         old_matrix = old_matrix[:, indices]
