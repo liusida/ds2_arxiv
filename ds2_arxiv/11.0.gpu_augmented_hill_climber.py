@@ -23,7 +23,7 @@ while True:
     sort choices by the gains, remove the conflicted choices
     swap remain pairs
     if not many pairs found at this step:
-        doulbe the search scale or switch to enumerate all mode.
+        doulbe the search scale up to 8192.
 """
 
 @cuda.jit
@@ -45,49 +45,12 @@ def _detect_gpu(matrix, vec, rng_states):
             vec[grid_id,1] = y
             vec[grid_id,2] = ret
 
-EPSILON = 1e3
-@cuda.jit
-def _detect_all_gpu(matrix, index, vec):
-    """
-    """
-    x,y = cuda.grid(2)
-    l = matrix.shape[0]
-    if x < l and y < l:
-        ret = 0
-        for m in [x, y]:
-            m_inv = x + y - m
-            for n in range(l):
-                if matrix[m, n] > 0 or matrix[m_inv, n] > 0:
-                    if m != n and m_inv != n:
-                        ret += (abs(m-n)-abs(m_inv-n)) * (matrix[m, n] - matrix[m_inv, n])
-        if ret>EPSILON:
-            i = cuda.atomic.add(index, 0, 1)
-            if i<vec.shape[0]:
-                vec[i,0] = x
-                vec[i,1] = y
-                vec[i,2] = ret
-
-def detect_and_swap_gpu(matrix, indices, seed, threads_per_block=128, blocks=128, mode='random'):
-    if mode=='random':
-        rng_states = create_xoroshiro128p_states(threads_per_block * blocks, seed=seed)
-        vec = np.zeros([threads_per_block * blocks, 3]).astype(int)
-    elif mode=='all':
-        vec = np.zeros([4096, 3]).astype(int)
-        index = np.zeros([1]).astype(int)
-        d_index = cuda.to_device(index)
-        threadsperblock = (32,32)
-        blockspergrid_x = ( matrix.shape[0] + threadsperblock[0] -1) // threadsperblock[0]
-        blockspergrid_y = ( matrix.shape[1] + threadsperblock[1] -1) // threadsperblock[1]
-        blockspergrid = (blockspergrid_x, blockspergrid_y)
-
+def detect_and_swap_gpu(matrix, indices, seed, threads_per_block=128, blocks=128):
+    rng_states = create_xoroshiro128p_states(threads_per_block * blocks, seed=seed)
+    vec = np.zeros([threads_per_block * blocks, 3]).astype(int)
     d_matrix = cuda.to_device(matrix)
     d_vec = cuda.to_device(vec)
-
-    if mode=='random':
-        _detect_gpu[blocks, threads_per_block](d_matrix, d_vec, rng_states)
-    elif mode=='all':
-        _detect_all_gpu[blockspergrid, threadsperblock](d_matrix, d_index, d_vec)
-
+    _detect_gpu[blocks, threads_per_block](d_matrix, d_vec, rng_states)
 
     vec = d_vec.copy_to_host()
     vec = vec[~np.all(vec == 0, axis=1)] # select non-zero rows
@@ -134,21 +97,19 @@ if __name__=="__main__":
         matrix = matrix[:, indices]
         # record loss for initial state
         print(loss_gpu(matrix))
-        mode = 'random'
         num_blocks = 256
         threads_per_block = 128
         for i in range(args.num_epochs):
-            matrix, indices, vec_detected, vec_swapped = detect_and_swap_gpu(matrix, indices, threads_per_block=threads_per_block, blocks=num_blocks, seed=i+args.seed, mode=mode)
-            if vec_detected<100: # double the search scale
-                if num_blocks<8192:
-                    num_blocks *= 2 
-            if vec_detected<10: # start enumerate all mode
-                mode='all'
+            matrix, indices, vec_detected, vec_swapped = detect_and_swap_gpu(matrix, indices, threads_per_block=threads_per_block, blocks=num_blocks, seed=i+args.seed)
             p1 = loss_gpu(matrix)
             record= {"step": i, "loss": p1, "detected": vec_detected, "swapped": vec_swapped, "threads_per_block": threads_per_block, "blocks": num_blocks}
             wandb.log(record)
             print(record)
             save_pic(matrix, indices, f"11.0/seed_{args.seed}_step_{i:04}")
+
+            if vec_detected<100: # double the search scale
+                if num_blocks<8192:
+                    num_blocks *= 2 
 
         old_matrix = old_matrix[indices, :]
         old_matrix = old_matrix[:, indices]
