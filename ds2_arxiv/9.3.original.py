@@ -18,14 +18,12 @@ args.num_epochs = int(args.num_epochs)
 wandb.config.update(args)
 
 """
-put matrix in device
-start 10000 threads
-for each thread
-  get two random numbers (Howto: http://numba.pydata.org/numba-doc/0.33.0/cuda/random.html)
-  test if swap will reduce loss
-  if yes, record two numbers in an array, using an atomic increasing index
-on host, check for confliction, remove conflicted ones
-swap all of them on device
+while True:
+    randomly detect swapable pairs (choices) on GPU
+    sort choices by the gains, remove the conflicted choices
+    swap remain pairs
+    if not many pairs found at this step:
+        doulbe the search scale or switch to enumerate all mode.
 """
 
 @cuda.jit
@@ -94,7 +92,6 @@ def detect_and_swap_gpu(matrix, indices, seed, threads_per_block=128, blocks=128
     vec = d_vec.copy_to_host()
     vec = vec[~np.all(vec == 0, axis=1)] # select non-zero rows
     vec = vec[np.argsort(vec[:, 2])[::-1]] # TODO: greedy?
-    # print(vec[:5])
     vec_detected = vec.shape[0]
     # remove conflicted rows
     visited = {}
@@ -142,11 +139,11 @@ if __name__=="__main__":
         threads_per_block = 128
         for i in range(args.num_epochs):
             matrix, indices, vec_detected, vec_swapped = detect_and_swap_gpu(matrix, indices, threads_per_block=threads_per_block, blocks=num_blocks, seed=i+args.seed, mode=mode)
-            if vec_detected<1 and mode=='all':
-                break # finished
-            elif vec_detected<100: # start enumerate mode
+            if vec_detected<100: # start enumerate mode
                 if num_blocks<8192:
-                    num_blocks *= 2
+                    num_blocks *= 2 # double the search scale
+            if vec_detected<10:
+                mode='all'
             p1 = loss_gpu(matrix)
             record= {"step": i, "loss": p1, "detected": vec_detected, "swapped": vec_swapped, "threads_per_block": threads_per_block, "blocks": num_blocks}
             wandb.log(record)
