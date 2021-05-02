@@ -12,10 +12,12 @@ df = df.reset_index(drop=True)
 print(df.columns)
 with open("shared/the_page.html", "w") as f:
     for index, row in df.iterrows():
+        # if row['arxiv_id']=='1606.00776':
+        #     print(row)
         all_authors = authors = row['first_author']
         if row['other_authors']!="":
             authors += ", ..."
-            all_authors += ", " + ", ".join(row['other_authors'].split(":|:"))[1:-2]
+            all_authors += ", " + ", ".join(row['other_authors'].split(":|:"))[1:-1]
         if row['first_author']!=row['last_author']:
             authors += ", "+row['last_author']
             all_authors += ", "+row['last_author']
