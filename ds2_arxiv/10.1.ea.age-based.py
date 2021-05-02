@@ -1,3 +1,4 @@
+from collections import defaultdict
 import numpy as np
 from numba import cuda
 from numba.cuda.random import create_xoroshiro128p_states, xoroshiro128p_uniform_float32
@@ -51,7 +52,7 @@ def _detect_possible_swaps(parent, gpu_random_seed, threads_per_block=128, block
     return detected_pairs
 
 
-def _apply_swaps(matrix, indices, detected_pairs, seed, inplace=False):
+def _apply_swaps(matrix, indices, detected_pairs, seed=0, greedy=True, inplace=False):
     """
     @seed: different seed will lead to different outcome, so if you want multiple directions, use multiple seeds.
     """
@@ -60,7 +61,10 @@ def _apply_swaps(matrix, indices, detected_pairs, seed, inplace=False):
         indices = indices.copy()
 
     rng = np.random.default_rng(seed=seed)
-    rng.shuffle(detected_pairs, axis=0)
+    if greedy:
+        detected_pairs = detected_pairs[np.argsort(detected_pairs[:, 2])][::-1]
+    else:
+        rng.shuffle(detected_pairs, axis=0)
     # remove conflicted rows
     visited = {}
     selected = []
@@ -74,11 +78,20 @@ def _apply_swaps(matrix, indices, detected_pairs, seed, inplace=False):
         swap_inplace(matrix, indices, swap_pairs[i, 0], swap_pairs[i, 1])
     return matrix, indices, swap_pairs.shape[0]
 
-def save_pic(matrix, title=""):
+def save_pic(matrix, indices, title=""):
     im = np.array(matrix / matrix.max() * 255, dtype = np.uint8)
-    im_color = cv2.applyColorMap(im, cv2.COLORMAP_HOT)
-    cv2.imwrite(f"tmp/{title}.png", im_color)
+    im = 255-im
+    border_width = 2
+    a = np.zeros(shape=[im.shape[0], border_width], dtype=np.uint8)
+    im = np.concatenate([a,im,a], axis=1)
+    b = np.zeros(shape=[border_width, border_width+im.shape[0]+border_width ], dtype=np.uint8)
+    im = np.concatenate([b,im,b], axis=0)
+
+    # im_color = cv2.applyColorMap(im, cv2.COLORMAP_HOT)
+    cv2.imwrite(f"tmp/{title}.png", im)
     wandb.save(f"tmp/{title}.png")
+    np.save(f"tmp/{title}_indicies.npy", indices)
+    wandb.save(f"tmp/{title}_indicies.npy")
 
 def load_matrix_from_indices(original_matrix, indices):
     matrix = original_matrix.copy()
@@ -86,70 +99,54 @@ def load_matrix_from_indices(original_matrix, indices):
     matrix = matrix[:,indices]
     return matrix
 
-def afpo(matrix, pop_size=3, total_steps=100, master_seed=0):
-    parent_indices = {}
-    age = {}
-    print("init...")
-    rng = np.random.default_rng(seed=master_seed)
-    for i in range(pop_size):
-        parent_indices[i] = np.arange(matrix.shape[0])
-        # start with random indices
-        rng.shuffle(parent_indices[i])
-
-        age[i] = 0
-
+def parallel_hill_climber(matrix, pop_size=100, total_steps=1000, master_seed=0): # for age based algo, the pop_size is the steps inner optimization works, and the total_steps is the total.
     print("start")
     rng = np.random.default_rng(seed=master_seed)
+    bestatstep = {} # parento-front
+    bestatstepLA = defaultdict(lambda: np.inf) # parento-front
     for step in range(total_steps):
-        possible_swaps = {}
-        children_indices = {}
-        num_detected = {}
-        num_swapped = {}
-        fitness = {}
-        for i in range(pop_size):
-            parent = load_matrix_from_indices(matrix, parent_indices[i]) # lazy instantiate to save memory
-
+        for step1 in range(min(step,pop_size-1),-1,-1):
+            current_parent_index = None
+            if total_steps + step1 - step < pop_size: # they won't be finish in the process, so just skip them
+                continue
+            if step1==0: # start a new thread from random initialization
+                current_parent_index = np.arange(matrix.shape[0])
+                rng.shuffle(current_parent_index)
+            elif step1-1 in bestatstep:
+                current_parent_index = bestatstep[step1-1]
+            parent = load_matrix_from_indices(matrix, current_parent_index) # lazy instantiate to save memory
             gpu_random_seed = rng.integers(low=0, high=10000000)
-            possible_swaps[i] = _detect_possible_swaps(parent, gpu_random_seed=gpu_random_seed)
-            num_detected[i] = possible_swaps[i].shape[0]
+            possible_swaps = _detect_possible_swaps(parent, gpu_random_seed=gpu_random_seed)
+            num_detected = possible_swaps.shape[0]
 
             swap_random_seed = rng.integers(low=0, high=10000000)
-            child, children_indices[i], num_swapped[i] = _apply_swaps(matrix=parent, indices=parent_indices[i],
-                                                            detected_pairs=possible_swaps[i], seed=swap_random_seed)
+            child, children_indices, num_swapped = _apply_swaps(matrix=parent, indices=current_parent_index,
+                                                            detected_pairs=possible_swaps, greedy=False, seed=swap_random_seed)
 
-            fitness[i] = -loss_gpu(child)
-            age[i] += 1
+            LA = loss_gpu(child)
+            print(f"step {step}, step1 {step1}, LA {LA}, comparing to {bestatstepLA[step1]}.")
+            if LA < bestatstepLA[step1]: # replace the parento-front
+                bestatstepLA[step1] = LA
+                bestatstep[step1] = children_indices
         
-        #TODO: selection
-
-        parent_indices = children_indices
-
-        _f = list(fitness.values())
-        _s = list(num_swapped.values())
-        _d = list(num_detected.values())
+        last = min(step,pop_size-1)
         record = {
             "step": step,
-            "fitness/all": wandb.Histogram(_f),
-            "fitness/max": np.max(_f),
-            "fitness/mean": np.mean(_f),
-            "fitness/std": np.std(_f),
-            "num_swapped/all": wandb.Histogram(_s),
-            "num_swapped/mean": np.mean(_s),
-            "num_detected/all": wandb.Histogram(_d),
-            "num_detected/mean": np.mean(_d),
+            "LA/bestsofar": bestatstepLA[last],
         }
         wandb.log(record)
-        bestsofar = load_matrix_from_indices(matrix, parent_indices[np.argmax(_f)])
-        save_pic(bestsofar, f"10.0/best_step_{step:04}")
-        print(f"step {step}: max fitness {np.max(_f)}")
+        bestsofar = load_matrix_from_indices(matrix, bestatstep[last])
+        save_pic(bestsofar, bestatstep[last], f"10.0/best_step_{step:04}")
+        
+        print(f"step {step}: min LAs {bestatstepLA[last]}")
 
 
 if __name__ == "__main__":
     wandb.init(project="block_diagonal_gpu", tags=["ParallelHillClimber"])
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-n", "--total_steps", type=float, default=1e3, help="")
-    parser.add_argument("-p", "--pop_size", type=int, default=10, help="")
+    parser.add_argument("-n", "--total_steps", type=float, default=1e1, help="")
+    parser.add_argument("-p", "--pop_size", type=int, default=2, help="")
     parser.add_argument("--seed", type=int, default=0, help="random seed")
     parser.add_argument("--tag", type=str, default="")
     args = parser.parse_args()
@@ -157,4 +154,5 @@ if __name__ == "__main__":
     wandb.config.update(args)
 
     matrix = np.load("shared/author_similarity_matrix.npy")
-    afpo(matrix, pop_size=args.pop_size, total_steps=args.total_steps, master_seed=args.seed)
+    np.fill_diagonal(matrix,1)
+    parallel_hill_climber(matrix, pop_size=args.pop_size, total_steps=args.total_steps, master_seed=args.seed)

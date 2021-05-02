@@ -74,11 +74,20 @@ def _apply_swaps(matrix, indices, detected_pairs, seed, inplace=False):
         swap_inplace(matrix, indices, swap_pairs[i, 0], swap_pairs[i, 1])
     return matrix, indices, swap_pairs.shape[0]
 
-def save_pic(matrix, title=""):
+def save_pic(matrix, indices, title=""):
     im = np.array(matrix / matrix.max() * 255, dtype = np.uint8)
-    im_color = cv2.applyColorMap(im, cv2.COLORMAP_HOT)
-    cv2.imwrite(f"tmp/{title}.png", im_color)
+    im = 255-im
+    border_width = 2
+    a = np.zeros(shape=[im.shape[0], border_width], dtype=np.uint8)
+    im = np.concatenate([a,im,a], axis=1)
+    b = np.zeros(shape=[border_width, border_width+im.shape[0]+border_width ], dtype=np.uint8)
+    im = np.concatenate([b,im,b], axis=0)
+
+    # im_color = cv2.applyColorMap(im, cv2.COLORMAP_HOT)
+    cv2.imwrite(f"tmp/{title}.png", im)
     wandb.save(f"tmp/{title}.png")
+    np.save(f"tmp/{title}_indicies.npy", indices)
+    wandb.save(f"tmp/{title}_indicies.npy")
 
 def load_matrix_from_indices(original_matrix, indices):
     matrix = original_matrix.copy()
@@ -102,7 +111,7 @@ def parallel_hill_climber(matrix, pop_size=3, total_steps=100, master_seed=0):
         children_indices = {}
         num_detected = {}
         num_swapped = {}
-        fitness = {}
+        LAs = {}
         for i in range(pop_size):
             parent = load_matrix_from_indices(matrix, parent_indices[i]) # lazy instantiate to save memory
 
@@ -114,28 +123,29 @@ def parallel_hill_climber(matrix, pop_size=3, total_steps=100, master_seed=0):
             child, children_indices[i], num_swapped[i] = _apply_swaps(matrix=parent, indices=parent_indices[i],
                                                             detected_pairs=possible_swaps[i], seed=swap_random_seed)
 
-            fitness[i] = -loss_gpu(child)
+            LAs[i] = loss_gpu(child)
 
         parent_indices = children_indices
 
-        _f = list(fitness.values())
+        _f = list(LAs.values())
         _s = list(num_swapped.values())
         _d = list(num_detected.values())
         record = {
             "step": step,
-            "fitness/all": wandb.Histogram(_f),
-            "fitness/max": np.max(_f),
-            "fitness/mean": np.mean(_f),
-            "fitness/std": np.std(_f),
+            "LA/all": wandb.Histogram(_f),
+            "LA/min": np.min(_f),
+            "LA/mean": np.mean(_f),
+            "LA/std": np.std(_f),
             "num_swapped/all": wandb.Histogram(_s),
             "num_swapped/mean": np.mean(_s),
             "num_detected/all": wandb.Histogram(_d),
             "num_detected/mean": np.mean(_d),
         }
         wandb.log(record)
-        bestsofar = load_matrix_from_indices(matrix, parent_indices[np.argmax(_f)])
-        save_pic(bestsofar, f"10.0/best_step_{step:04}")
-        print(f"step {step}: max fitness {np.max(_f)}")
+        bestsofar = load_matrix_from_indices(matrix, parent_indices[np.argmin(_f)])
+        save_pic(bestsofar, parent_indices[np.argmin(_f)], f"10.0/best_step_{step:04}")
+        
+        print(f"step {step}: min LAs {np.min(_f)}")
 
 
 if __name__ == "__main__":
@@ -151,4 +161,13 @@ if __name__ == "__main__":
     wandb.config.update(args)
 
     matrix = np.load("shared/author_similarity_matrix.npy")
+    # matrix = matrix[:200, :200]
+    # np.random.seed(4)
+    # matrix = np.random.random([400,400]) > 0.999
+    # matrix = (matrix+matrix.T)/2
+    # matrix = np.zeros([6,6])
+    # matrix[0:2, 0:2] = 0.5
+    # matrix[3:5, 3:5] = 0.5
+    # matrix[0,4] = matrix[4,0] = 0.8
+    np.fill_diagonal(matrix,1)
     parallel_hill_climber(matrix, pop_size=args.pop_size, total_steps=args.total_steps, master_seed=args.seed)

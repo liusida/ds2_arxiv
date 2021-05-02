@@ -72,7 +72,7 @@ def save_pic(elements, title=""):
     print(f"loss: {ret}")
     plt.title(f"loss: {ret}")
     # plt.figure(figsize=[5,5])
-    plt.imshow(elements)
+    plt.imshow(elements, cmap="gray_r")
     plt.colorbar()
     plt.savefig(f"tmp/9.1.{title}.png")
     plt.close
@@ -88,6 +88,7 @@ random = np.random.default_rng(seed=args.seed)
 
 # real dataset:
 elements = np.load("shared/author_similarity_matrix.npy")
+elements = elements[:100, :100]
 indices = np.arange(elements.shape[0])
 save_pic(elements, "start")
 # shuffle
