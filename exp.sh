@@ -2,8 +2,8 @@
 set -x
 if true
 then
-    expName="GPUHillClimber8"
-    for seed in 80 81 82 83 84 85 86 87 88 89
+    expName="GPUHillClimber100"
+    for seed in {1..100}
     do
         sbatch -J $expName ~/bin/deepgreen.sh ds2 python ds2_arxiv/11.0.gpu_augmented_hill_climber.py --tag=$expName -n=200 --seed=$seed
     done
