@@ -139,16 +139,16 @@ if __name__=="__main__":
         threads_per_block = 128
         for i in range(args.num_epochs):
             matrix, indices, vec_detected, vec_swapped = detect_and_swap_gpu(matrix, indices, threads_per_block=threads_per_block, blocks=num_blocks, seed=i+args.seed, mode=mode)
-            if vec_detected<100: # start enumerate mode
+            if vec_detected<100: # double the search scale
                 if num_blocks<8192:
-                    num_blocks *= 2 # double the search scale
-            if vec_detected<10:
+                    num_blocks *= 2 
+            if vec_detected<10: # start enumerate all mode
                 mode='all'
             p1 = loss_gpu(matrix)
             record= {"step": i, "loss": p1, "detected": vec_detected, "swapped": vec_swapped, "threads_per_block": threads_per_block, "blocks": num_blocks}
             wandb.log(record)
             print(record)
-            save_pic(matrix, indices, f"9.3/seed_{args.seed}_step_{i:04}")
+            save_pic(matrix, indices, f"11.0/seed_{args.seed}_step_{i:04}")
 
         old_matrix = old_matrix[indices, :]
         old_matrix = old_matrix[:, indices]
