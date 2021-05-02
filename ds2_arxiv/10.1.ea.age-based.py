@@ -136,7 +136,7 @@ def parallel_hill_climber(matrix, pop_size=100, total_steps=1000, master_seed=0)
         }
         wandb.log(record)
         bestsofar = load_matrix_from_indices(matrix, bestatstep[last])
-        save_pic(bestsofar, bestatstep[last], f"10.0/best_step_{step:04}")
+        save_pic(bestsofar, bestatstep[last], f"10.1/best_step_{step:04}")
         
         print(f"step {step}: min LAs {bestatstepLA[last]}")
 
