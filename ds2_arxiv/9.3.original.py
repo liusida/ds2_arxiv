@@ -144,6 +144,7 @@ def save_pic(matrix, indices, title=""):
 if __name__=="__main__":
     def main():
         matrix = np.load("shared/author_similarity_matrix.npy")
+        np.random.seed(args.seed)
         # np.random.seed(1)
         # matrix = np.random.random([5000,5000]).astype(np.float_)
         # # matrix = np.arange(25).reshape([5,5])
@@ -168,7 +169,7 @@ if __name__=="__main__":
             record= {"step": i, "loss": p1}
             wandb.log(record)
             print(record)
-            save_pic(matrix, indices, f"9.3/step_{i:04}")
+            save_pic(matrix, indices, f"9.3/seed_{args.seed}_step_{i:04}")
 
         old_matrix = old_matrix[indices, :]
         old_matrix = old_matrix[:, indices]
