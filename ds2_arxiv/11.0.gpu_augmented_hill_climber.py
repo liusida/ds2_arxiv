@@ -104,19 +104,19 @@ if __name__=="__main__":
             p1 = loss_gpu(matrix)
             record= {"step": i, "loss": p1, "detected": vec_detected, "swapped": vec_swapped, "threads_per_block": threads_per_block, "blocks": num_blocks}
             wandb.log(record)
-            print(record)
+            print(record, flush=True)
             save_pic(matrix, indices, f"11.0/seed_{args.seed}_step_{i:04}")
 
             if vec_detected<100: # double the search scale
                 if num_blocks<8192:
                     num_blocks *= 2 
-
-        old_matrix = old_matrix[indices, :]
-        old_matrix = old_matrix[:, indices]
-        p2 = loss_gpu(old_matrix)
-        print(p2)
-        print(np.sum(old_matrix), "=", np.sum(matrix))
+        print("done", flush=True)
+        # old_matrix = old_matrix[indices, :]
+        # old_matrix = old_matrix[:, indices]
+        # p2 = loss_gpu(old_matrix)
+        # print(p2)
+        # print(np.sum(old_matrix), "=", np.sum(matrix))
         
-        assert(np.isclose(p1, p2)), f"{p1} == {p2}"
+        # assert(np.isclose(p1, p2)), f"{p1} == {p2}"
 
     main()
