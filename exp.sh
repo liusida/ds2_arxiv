@@ -2,6 +2,15 @@
 set -x
 if true
 then
+    expName="GPUHillClimber"
+    for seed in 70 71 72 73 74 75 76 77 78 79
+    do
+        sbatch -J $expName ~/bin/deepgreen.sh ds2 python ds2_arxiv/11.0.gpu_augmented_hill_climber.py --tag=$expName -n=200 --seed=$seed
+    done
+fi
+
+if false
+then
     expName="ParallelHillClimber"
     for seed in 70 71 72 73 74 75 76 77 78 79
     do
