@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-filename = "/home/liusida/vacc/ds2/ds2_arxiv/tmp/11.0/seed_70_step_0199"
+filename = "shared/best/seed_51_step_0199"
 png_filename = f"{filename}.png"
 
 indices = np.load(f"{filename}_indicies.npy")
