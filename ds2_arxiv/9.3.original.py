@@ -12,7 +12,7 @@ wandb.init(project="block_diagonal_gpu")
 parser = argparse.ArgumentParser()
 parser.add_argument("-n", "--num_epochs", type=float, default=1e3, help="")
 parser.add_argument("--seed", type=int, default=0, help="random seed")
-parser.add_argument("--tag", type=str, default="")
+parser.add_argument("--tag", type=str, default="original")
 args = parser.parse_args()
 args.num_epochs = int(args.num_epochs)
 wandb.config.update(args)
@@ -70,8 +70,6 @@ def _detect_all_gpu(matrix, index, vec):
                 vec[i,2] = ret
 
 def detect_and_swap_gpu(matrix, indices, seed, threads_per_block=128, blocks=128, mode='random'):
-    # threads_per_block, blocks = 128, 128
-    wandb.log({"threads_per_block": threads_per_block, "blocks": blocks})
     if mode=='random':
         rng_states = create_xoroshiro128p_states(threads_per_block * blocks, seed=seed)
         vec = np.zeros([threads_per_block * blocks, 3]).astype(int)
@@ -98,7 +96,6 @@ def detect_and_swap_gpu(matrix, indices, seed, threads_per_block=128, blocks=128
     vec = vec[np.argsort(vec[:, 2])[::-1]] # TODO: greedy?
     # print(vec[:5])
     vec_detected = vec.shape[0]
-    print(vec.shape)
     # remove conflicted rows
     visited = {}
     selected = []
@@ -108,23 +105,10 @@ def detect_and_swap_gpu(matrix, indices, seed, threads_per_block=128, blocks=128
             visited[vec[i,0]] = 1
             visited[vec[i,1]] = 1
     vec = vec[selected, :]
-    print(vec.shape)
     for i in range(vec.shape[0]):
         swap_inplace(matrix, indices, vec[i,0], vec[i,1])
     vec_swapped = vec.shape[0]
-    wandb.log({"detected": vec_detected, "swapped": vec_swapped})
-    return matrix, indices, vec_detected
-
-# def save_pic(elements, title=""):
-#     ret = loss_gpu(elements)
-#     record = {
-#         "loss": ret,
-#     }
-#     wandb.log(record)
-#     print(f"loss: {ret}")
-#     im = np.array(elements / elements.max() * 255, dtype = np.uint8)
-#     im_color = cv2.applyColorMap(im, cv2.COLORMAP_HOT)
-#     cv2.imwrite(f"tmp/9.3.{title}.png", im_color)
+    return matrix, indices, vec_detected, vec_swapped
 
 def save_pic(matrix, indices, title=""):
     im = np.array(matrix / matrix.max() * 255, dtype = np.uint8)
@@ -145,28 +129,26 @@ if __name__=="__main__":
     def main():
         matrix = np.load("shared/author_similarity_matrix.npy")
         np.random.seed(args.seed)
-        # np.random.seed(1)
-        # matrix = np.random.random([5000,5000]).astype(np.float_)
-        # # matrix = np.arange(25).reshape([5,5])
-        # matrix = (matrix+matrix.T)/2
         indices = np.arange(matrix.shape[0])
         old_matrix = matrix.copy()
+        # random initial state
+        np.random.shuffle(indices)
+        matrix = matrix[indices, :]
+        matrix = matrix[:, indices]
+        # record loss for initial state
         print(loss_gpu(matrix))
         mode = 'random'
         num_blocks = 256
+        threads_per_block = 128
         for i in range(args.num_epochs):
-            matrix, indices, vec_detected = detect_and_swap_gpu(matrix, indices, blocks=num_blocks, seed=i+args.seed, mode=mode)
+            matrix, indices, vec_detected, vec_swapped = detect_and_swap_gpu(matrix, indices, threads_per_block=threads_per_block, blocks=num_blocks, seed=i+args.seed, mode=mode)
             if vec_detected<1 and mode=='all':
                 break # finished
             elif vec_detected<100: # start enumerate mode
-                if num_blocks<4096:
+                if num_blocks<8192:
                     num_blocks *= 2
-        
-            # else:
-            #     mode = 'random'
-            print(i)
             p1 = loss_gpu(matrix)
-            record= {"step": i, "loss": p1}
+            record= {"step": i, "loss": p1, "detected": vec_detected, "swapped": vec_swapped, "threads_per_block": threads_per_block, "blocks": num_blocks}
             wandb.log(record)
             print(record)
             save_pic(matrix, indices, f"9.3/seed_{args.seed}_step_{i:04}")
