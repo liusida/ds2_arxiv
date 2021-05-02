@@ -150,13 +150,20 @@ def save_pic(matrix, indices, title=""):
 if __name__ == "__main__":
     def main():
         matrix = np.load("shared/author_similarity_matrix.npy")
-        # np.random.seed(1)
+        np.random.seed(args.seed)
         # matrix = np.random.random([5000,5000]).astype(np.float_)
         # # matrix = np.arange(25).reshape([5,5])
         # matrix = (matrix+matrix.T)/2
         indices = np.arange(matrix.shape[0])
         old_matrix = matrix.copy()
+        
+        # random initial state
+        np.random.shuffle(indices)
+        matrix = matrix[indices, :]
+        matrix = matrix[:, indices]
+        # record loss for initial state
         print(loss_gpu(matrix))
+
         mode = 'random'
         num_blocks = 256
         threads_per_block = 128
