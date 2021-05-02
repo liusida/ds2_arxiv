@@ -37,11 +37,25 @@ with open("shared/the_page.html", "w") as f:
 matrix = matrix[indices,:]
 matrix = matrix[:,indices]
 
-import shutil
-shutil.copy2(png_filename, f"shared/bg.png")
-# print(png_filename)
 if False:
-    import matplotlib.pyplot as plt
-    plt.imshow(matrix)
-    plt.show()
+    import shutil
+    shutil.copy2(png_filename, f"shared/bg.png")
+# print(png_filename)
+if True:
+    import cv2
+    png_filename = f"shared/bg.png"
+    im = np.array(matrix / matrix.max() * 255, dtype = np.uint8)
+    im = 255-im
+    border_width = 0
+    a = np.zeros(shape=[im.shape[0], border_width], dtype=np.uint8)
+    im = np.concatenate([a,im,a], axis=1)
+    b = np.zeros(shape=[border_width, border_width+im.shape[0]+border_width ], dtype=np.uint8)
+    im = np.concatenate([b,im,b], axis=0)
+
+    # im_color = cv2.applyColorMap(im, cv2.COLORMAP_HOT)
+    cv2.imwrite(png_filename, im)
+    
+    # import matplotlib.pyplot as plt
+    # plt.imshow(matrix)
+    # plt.show()
 

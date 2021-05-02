@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <?php
-$bgscale = 8.493;
+$bgscale = 8.485;
 ?>
 
 <head>
@@ -19,7 +19,7 @@ $bgscale = 8.493;
 
         #bg {
             position: absolute;
-            top: -15px;
+            top: 6px;
             left: 5px;
             height: <?php echo 4422 * $bgscale ?>px;
             width: <?php echo 4422 * $bgscale ?>px;
