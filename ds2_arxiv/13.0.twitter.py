@@ -8,7 +8,8 @@ local_debug = socket.gethostname()!="star-lab"
 
 def google_search(author):
     author = author.lower()
-    filename = f"data/twitter/{author}.txt"
+    f_author = author.replace(" ", "_")
+    filename = f"data/twitter/{f_author}.txt"
     if os.path.exists(filename):
         return
     search = author.replace(" ", "+")
