@@ -1,9 +1,12 @@
+twitter_keys.py
+
 data/
 wandb/
 tmp_*
 nohup.out
 tmp/
 *cos_sim_after_1024_*_*.npy
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
