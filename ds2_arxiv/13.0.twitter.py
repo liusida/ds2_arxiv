@@ -34,11 +34,11 @@ def google_search(author):
     else:
         print("google search> Oh, no! I've been caught!")
         g_firefox.reset()
-        time.sleep(5)
+        time.sleep(10)
 
 def main():
     df = pd.read_pickle("shared/arxiv_4422.pickle")
-    # df = df.sample(frac=1).reset_index(drop=True)
+    df = df.sample(frac=1).reset_index(drop=True)
 
     for index, row in df.iterrows():
         title = row['title']
