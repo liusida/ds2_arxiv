@@ -17,7 +17,7 @@ for s2_filename in s2_filenames:
 x = list(citation_dist.keys())
 y = list(citation_dist.values())
 
-plt.figure(figsize=[8,4])
+plt.figure(figsize=[4,4])
 plt.scatter(x,y,s=1)
 plt.xscale("log")
 plt.yscale("log")
@@ -26,8 +26,18 @@ plt.ylim((0.5,1e5))
 plt.xlabel("Number of Citations")
 plt.ylabel("Number of Papers")
 plt.tight_layout()
+plt.savefig("tmp/s2_dist_log.pdf")
+plt.savefig("tmp/s2_dist_log.png")
+plt.close()
+
+plt.figure(figsize=[4,4])
+plt.scatter(x,y,s=1)
+plt.xlabel("Number of Citations")
+plt.ylabel("Number of Papers")
+plt.tight_layout()
 plt.savefig("tmp/s2_dist.pdf")
 plt.savefig("tmp/s2_dist.png")
+plt.close()
 
 with open("tmp/s2_dist.txt", "w") as f:
     print(citation_dist, file=f)
