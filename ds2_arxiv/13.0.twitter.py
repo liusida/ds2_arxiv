@@ -51,5 +51,5 @@ def main():
 
 
 if __name__=="__main__":
-    # main()
-    google_search("tsung-hsien wen")
+    main()
+    # google_search("tsung-hsien wen")
