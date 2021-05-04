@@ -28,3 +28,6 @@ plt.ylabel("Number of Papers")
 plt.tight_layout()
 plt.savefig("tmp/s2_dist.pdf")
 plt.savefig("tmp/s2_dist.png")
+
+with open("tmp/s2_dist.txt", "w") as f:
+    print(citation_dist, file=f)
