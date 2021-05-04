@@ -1,4 +1,4 @@
-import socket, os, re
+import socket, os, re, time
 import pandas as pd
 import numpy as np
 from ds2_arxiv.tools.my_firefox import MyFirefox
@@ -19,17 +19,22 @@ def google_search(author):
     g_firefox = MyFirefox(proxy_txt_filename="config/vip.proxy.txt", proxy_disabled=local_debug)
     html = g_firefox.get(url)
     soup = BeautifulSoup(html, 'html.parser')
-
-    line = soup.find('h3', text=lambda t: t and 'Twitter' in t)
-    if line:
-        with open(filename, 'w') as f:
-            print(author, file=f)
-            print(line.text, file=f)
-            print(f"wrote {filename}")
+    search_result = soup.find('div', id='search')
+    if search_result:
+        line = search_result.find('h3', text=lambda t: t and 'Twitter' in t and re.search(r'\(@.+\)', t))
+        if line:
+            with open(filename, 'w') as f:
+                print(author, file=f)
+                print(line.text, file=f)
+                print(f"wrote {filename}")
+        else:
+            with open(bad_filename, 'w') as f:
+                print(html, file=f)
+                print(f"bad {bad_filename}")
     else:
-        with open(bad_filename, 'w') as f:
-            print(html, file=f)
-            print(f"bad {bad_filename}")
+        print("google search> Oh, no! I've been caught!")
+        g_firefox.reset()
+        time.sleep(5)
 
 def main():
     df = pd.read_pickle("shared/arxiv_4422.pickle")
