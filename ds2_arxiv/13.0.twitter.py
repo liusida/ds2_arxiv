@@ -19,8 +19,8 @@ def google_search(author):
     g_firefox = MyFirefox(proxy_txt_filename="config/vip.proxy.txt", proxy_disabled=local_debug)
     html = g_firefox.get(url)
     soup = BeautifulSoup(html, 'html.parser')
-    search_result = soup.find('div', id='search')
-    if search_result:
+    search_result = soup.find('div', {"id":'search'})
+    if search_result is not None:
         line = search_result.find('h3', text=lambda t: t and 'Twitter' in t and re.search(r'\(@.+\)', t))
         if line:
             with open(filename, 'w') as f:
