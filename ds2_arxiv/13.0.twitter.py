@@ -33,7 +33,7 @@ def google_search(author):
 
 def main():
     df = pd.read_pickle("shared/arxiv_4422.pickle")
-    df = df.sample(frac=1).reset_index(drop=True)
+    # df = df.sample(frac=1).reset_index(drop=True)
 
     for index, row in df.iterrows():
         title = row['title']
