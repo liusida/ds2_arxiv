@@ -20,7 +20,7 @@ def google_search(author):
     html = g_firefox.get(url)
     soup = BeautifulSoup(html, 'html.parser')
 
-    line = soup.find('h3', text=lambda t: t and '| Twitter' in t)
+    line = soup.find('h3', text=lambda t: t and 'Twitter' in t)
     if line:
         with open(filename, 'w') as f:
             print(author, file=f)
