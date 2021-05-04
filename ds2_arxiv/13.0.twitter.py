@@ -10,7 +10,8 @@ def google_search(author):
     author = author.lower()
     f_author = author.replace(" ", "_")
     filename = f"data/twitter/{f_author}.txt"
-    if os.path.exists(filename):
+    bad_filename = f"data/twitter_bad/{f_author}.txt"
+    if os.path.exists(filename) or os.path.exists(bad_filename):
         return
     search = author.replace(" ", "+")
     url = f"https://www.google.com/search?q={search}+Twitter+Account"
@@ -25,6 +26,10 @@ def google_search(author):
             print(author, file=f)
             print(line.text, file=f)
             print(f"wrote {filename}")
+    else:
+        with open(bad_filename, 'w') as f:
+            print(author, file=f)
+            print(f"bad {bad_filename}")
 
 def main():
     df = pd.read_pickle("shared/arxiv_4422.pickle")
