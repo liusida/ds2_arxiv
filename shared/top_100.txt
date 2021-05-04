@@ -1,0 +1,400 @@
+https://arxiv.org/abs/1409.0473 	 Neural Machine Translation by Jointly Learning to Align and Translate (Bahdanau, 2015)
+start at: 2014-09-01, cited by 9998
+topics: ['Neural machine translation', 'Encoder', 'Statistical machine translation', 'Artificial neural network', 'Align (company)']
+
+https://arxiv.org/abs/1608.06993 	 Densely Connected Convolutional Networks (Huang, 2017)
+start at: 2016-08-24, cited by 9994
+topics: ['Convolutional neural network', 'Overfitting', 'Computation', 'Experiment', 'Computer vision', 'While', 'Map', 'ImageNet', 'Outline of object recognition', 'Network architecture', 'Performance', 'Mathematical optimization', 'Gradient', 'Feature model', 'Elegant degradation', 'Software propagation', 'Benchmark (computing)', 'Hilbert–Huang transform']
+
+https://arxiv.org/abs/1409.3215 	 Sequence to Sequence Learning with Neural Networks (Sutskever, 2014)
+start at: 2014-09-10, cited by 9994
+topics: ['BLEU', 'Long short-term memory', 'Neural network software', 'Optimization problem', 'End-to-end principle', 'Vocabulary', 'Reversing: Secrets of Reverse Engineering', 'Mathematical optimization', 'Test set', 'Artificial neural network']
+
+https://arxiv.org/abs/1406.1078 	 Learning Phrase Representations using RNN Encoder-Decoder for Statistical Machine Translation (Cho, 2014)
+start at: 2014-06-03, cited by 9994
+topics: ['Statistical machine translation', 'Random neural network', 'Encoder', 'Artificial neural network', 'Recurrent neural network', 'Language model', 'BLEU', 'String (computer science)', 'Natural language', 'Network architecture', 'Linear model', 'Log-linear model', 'Network model', 'Well-formed formula', 'Beta encoder', 'Transcription (software)', 'Speech synthesis']
+
+https://arxiv.org/abs/1310.4546 	 Distributed Representations of Words and Phrases and their Compositionality (Mikolov, 2013)
+start at: 2013-10-16, cited by 9994
+topics: ['Softmax function', 'Programming idiom', 'Chroma subsampling', 'Sampling (signal processing)', 'Speedup']
+
+https://arxiv.org/abs/1201.0490 	 Scikit-learn: Machine Learning in Python (Pedregosa, 2011)
+start at: 2012-01-02, cited by 9993
+topics: ['Machine learning', 'Documentation', 'Python', 'scikit-learn', 'Unsupervised learning', 'High-level programming language', 'High- and low-level', 'Usability', 'BSD', 'Binary file', 'Hypertext Transfer Protocol', 'Consistency model', 'Application programming interface', 'Algorithm', 'General-purpose markup language']
+
+https://arxiv.org/abs/1502.03167 	 Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift (Ioffe, 2015)
+start at: 2015-02-10, cited by 9993
+topics: ['Database normalization', 'ImageNet', 'Dropout (neural networks)', 'Computer vision', 'Neural Networks']
+
+https://arxiv.org/abs/1106.1813 	 SMOTE: Synthetic Minority Over-sampling Technique (Chawla, 2002)
+start at: 2011-06-09, cited by 9993
+topics: ['Sampling (signal processing)', 'Oversampling', 'Naive Bayes classifier', 'Convex hull', 'Ripper', 'C4.5 algorithm', 'Synthetic intelligence', 'Statistical classification', 'Receiver operating characteristic', 'Han unification', 'Experiment', 'Synthetic data']
+
+https://arxiv.org/abs/1408.5093 	 Caffe: Convolutional Architecture for Fast Feature Embedding (Jia, 2014)
+start at: 2014-06-20, cited by 9991
+topics: ['MATLAB', 'CUDA', 'Deep learning', 'Convolutional neural network', 'Python', 'C++', 'Machine learning', 'Computation', 'Seamless3d', 'BSD', 'FITS', 'Graphics processing unit', 'Artificial neural network', 'Algorithm', 'Software deployment', 'Titan', 'General-purpose markup language']
+
+https://arxiv.org/abs/1312.6114 	 Auto-Encoding Variational Bayes (Kingma, 2014)
+start at: 2013-12-20, cited by 9990
+topics: ['Latent variable', 'Variational principle', 'Calculus of variations', 'Approximation algorithm', 'Gradient']
+
+https://arxiv.org/abs/1706.03762 	 Attention Is All You Need (Vaswani, 2017)
+start at: 2017-06-12, cited by 9988
+topics: ['BLEU', 'Transformer', 'Machine translation', 'Encoder', 'Convolution', 'Transduction (machine learning)', 'Recurrent neural network', 'Image', 'Network architecture', 'Input/output', 'TensorFlow', 'Network Abstraction Layer', 'Artificial neural network']
+
+https://arxiv.org/abs/1412.6980 	 Adam: A Method for Stochastic Optimization (Kingma, 2015)
+start at: 2014-12-22, cited by 9988
+topics: ['Stochastic optimization', 'Mathematical optimization', 'Gradient', 'Algorithm', 'Convex optimization', 'Stationary process', 'Regret (decision theory)', 'Algorithmic efficiency', 'Rate of convergence', 'Requirement', 'Sparse matrix', 'Hyper-heuristic', 'First-order predicate']
+
+https://arxiv.org/abs/1502.01852 	 Delving Deep into Rectifiers: Surpassing Human-Level Performance on ImageNet Classification (He, 2015)
+start at: 2015-02-06, cited by 9220
+topics: ['ImageNet', 'Rectifier (neural networks)', 'Overfitting', 'Computer vision', 'Artificial neural network', 'Curve fitting', 'Algorithmic efficiency', 'Computation']
+
+https://arxiv.org/abs/1605.08695 	 TensorFlow: A system for large-scale machine learning (Abadi, 2016)
+start at: 2016-05-27, cited by 9043
+topics: ['TensorFlow', 'Machine learning', 'Dataflow', 'Algorithm', 'Reinforcement learning', 'Programming model', 'Data-flow analysis', 'Fault tolerance', 'Scheduling (computing)', 'Memory management', 'Open-source software', 'Computation', 'Server (computing)', 'Weak consistency', 'Distributed computing', 'Deep learning', 'Repository (version control)', 'Experiment', 'Requirement', 'Mathematical optimization', 'User space', 'Multi-core processor', 'Scalability', 'Immutable object', 'Application-specific integrated circuit', 'Graphics processing unit', 'Central processing unit', 'Map', 'Artificial neural network', 'Processor register']
+
+https://arxiv.org/abs/1404.7828 	 Deep Learning in Neural Networks: An Overview (Schmidhuber, 2015)
+start at: 2014-04-30, cited by 8767
+topics: ['Deep learning', 'Artificial neural network', 'Backpropagation', 'Unsupervised learning', 'Reinforcement learning', 'Supervised learning', 'Pattern recognition', 'Machine learning', 'Evolutionary computation', 'Causal filter', 'Won']
+
+https://arxiv.org/abs/1603.04467 	 TensorFlow: Large-Scale Machine Learning on Heterogeneous Distributed Systems (Abadi, 2016)
+start at: 2016-03-14, cited by 8131
+topics: ['TensorFlow', 'Machine learning', 'Distributed computing', 'Natural language processing', 'Computer vision', 'Speech recognition', 'Information retrieval', 'Robotics', 'Reference implementation', 'Algorithm', 'Information extraction', 'Deep learning', 'Mobile device', 'Open-source software', 'Computation', 'Computer science', 'Application programming interface', 'Graphics processing unit']
+
+https://arxiv.org/abs/1511.06434 	 Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks (Radford, 2016)
+start at: 2015-11-19, cited by 7505
+topics: ['Unsupervised learning', 'Generative adversarial networks', 'Supervised learning', 'Computer vision', 'Discriminator', 'Machine learning']
+
+https://arxiv.org/abs/1603.02754 	 XGBoost: A Scalable Tree Boosting System (Chen, 2016)
+start at: 2016-03-08, cited by 7288
+topics: ['XGBoost', 'Scalability', 'Machine learning', 'Data compression', 'Sparse matrix', 'Shard (database architecture)', 'Data science', 'End-to-end principle', 'Approximation algorithm', 'CPU cache', 'End system']
+
+https://arxiv.org/abs/0711.0189 	 A Tutorial on Spectral Clustering (von Luxburg, 2007)
+start at: 2007-11-01, cited by 7268
+topics: ['Spectral clustering', 'Cluster analysis', 'Algorithm', 'Linear algebra', 'K-means clustering']
+
+https://arxiv.org/abs/1206.5538 	 Representation Learning: A Review and New Perspectives (Bengio, 2013)
+start at: 2012-06-24, cited by 6960
+topics: ['Feature learning', 'Machine learning', 'Nonlinear dimensionality reduction', 'Deep learning', 'Data (computing)', 'Learning Disorders', 'explanation', 'manifold', 'algorithm', 'Inference', 'Review [Publication Type]', 'Computation (action)', 'Generic Drugs']
+
+https://arxiv.org/abs/1412.6572 	 Explaining and Harnessing Adversarial Examples (Goodfellow, 2015)
+start at: 2014-12-19, cited by 6677
+topics: ['Adversary (cryptography)', 'Overfitting', 'Nonlinear system', 'Machine learning', 'MNIST database', 'Artificial neural network', 'Best, worst and average case', 'Test set']
+
+https://arxiv.org/abs/1609.02907 	 Semi-Supervised Classification with Graph Convolutional Networks (Kipf, 2017)
+start at: 2016-09-09, cited by 6276
+topics: ['Knowledge Graph', 'Semi-supervised learning', 'Semiconductor industry', 'Convolutional neural network', 'Convolution', 'Citation graph', 'Order of approximation', 'Supervised learning', 'Experiment', 'Scalability', 'Speedup', 'Machine learning', 'Artificial neural network', 'ENCODE', 'Graph (abstract data type)', 'JACK Audio Connection Kit', 'First-order reduction']
+
+https://arxiv.org/abs/1312.6199 	 Intriguing properties of neural networks (Szegedy, 2014)
+start at: 2013-12-20, cited by 6195
+topics: ['Artificial neural network', 'Deep learning', 'High-level programming language']
+
+https://arxiv.org/abs/1103.0398 	 Natural Language Processing (almost) from Scratch (Collobert, 2011)
+start at: 2011-03-02, cited by 5871
+topics: ['Natural language processing', 'Semantic role labeling', 'Named-entity recognition', 'Part-of-speech tagging', 'Network architecture', 'Artificial neural network', 'Requirement', 'Algorithm', 'Shallow parsing']
+
+https://arxiv.org/abs/1405.4053 	 Distributed Representations of Sentences and Documents (Le, 2014)
+start at: 2014-05-16, cited by 5781
+topics: ['Algorithm', 'Sentiment analysis', 'Machine learning', 'Feature vector', 'Document classification', 'Bag-of-words model in computer vision']
+
+https://arxiv.org/abs/1502.03044 	 Show, Attend and Tell: Neural Image Caption Generation with Visual Attention (Xu, 2015)
+start at: 2015-02-10, cited by 5762
+topics: ['Backpropagation', 'Machine translation', 'Object detection', 'Benchmark (computing)', 'Variational principle']
+
+https://arxiv.org/abs/1511.00561 	 SegNet: A Deep Convolutional Encoder-Decoder Architecture for Image Segmentation (Badrinarayanan, 2017)
+start at: 2015-11-02, cited by 5597
+topics: ['Encoder Device Component', 'Decoder Device Component', 'Upsampling', 'Image segmentation', 'Map', 'Stochastic gradient descent', 'Convolutional neural network', 'Bayesian network', 'Pixel', 'Convolution', 'Benchmark (computing)', 'Network architecture', 'Time complexity', 'Artificial neural network', 'Inference', 'biologic segmentation', 'Image resolution', 'End-to-end principle', 'Nonlinear system', "Whole Earth 'Lectronic Link", 'Architecture as Topic', 'anatomical layer', 'Sparse matrix', 'Computation', 'Entity Name Part Qualifier - adopted', 'Large', 'Neural Network Simulation', 'Convolutional code', 'Small', 'newton per square metre', 'Silo (dataset)', 'Biological Neural Networks', 'Evaluation procedure']
+
+https://arxiv.org/abs/1503.02531 	 Distilling the Knowledge in a Neural Network (Hinton, 2015)
+start at: 2015-03-09, cited by 5394
+topics: ['Artificial neural network', 'Machine learning', 'MNIST database', 'Acoustic model', 'Analysis of algorithms', 'Algorithm', 'Software deployment', 'Acoustic cryptanalysis']
+
+https://arxiv.org/abs/1301.7363 	 Empirical Analysis of Predictive Algorithms for Collaborative Filtering (Breese, 1998)
+start at: 2013-01-30, cited by 5372
+topics: ['Collaborative filtering', 'Bayesian network', 'Algorithm', 'Eric Horvitz', 'Recommender system', 'Decision tree', 'Database', 'Problem domain', 'User (computing)', 'Coefficient', 'Requirement', 'Experiment', 'Cluster analysis', 'Robert', 'Statistical model', 'Evaluation function']
+
+https://arxiv.org/abs/1412.3555 	 Empirical Evaluation of Gated Recurrent Neural Networks on Sequence Modeling (Chung, 2014)
+start at: 2014-12-11, cited by 5359
+topics: ['Recurrent neural network', 'Long short-term memory', 'Artificial neural network', 'Experiment', 'Random neural network']
+
+https://arxiv.org/abs/1207.0580 	 Improving neural networks by preventing co-adaptation of feature detectors (Hinton, 2012)
+start at: 2012-07-03, cited by 5205
+topics: ['Sensor', 'Artificial neural network', 'Feedforward neural network', 'Overfitting', 'Neuron', 'Outline of object recognition', 'Test set', 'Test data', 'Randomness', 'Dropout (neural networks)', 'Benchmark (computing)']
+
+https://arxiv.org/abs/1312.5602 	 Playing Atari with Deep Reinforcement Learning (Mnih, 2013)
+start at: 2013-12-19, cited by 4796
+topics: ['Reinforcement learning', 'Atari', 'Convolutional neural network', 'Deep learning', 'Q-learning', 'Artificial neural network', 'Bellman equation', 'Algorithm', 'Pixel']
+
+https://arxiv.org/abs/1212.5701 	 ADADELTA: An Adaptive Learning Rate Method (Zeiler, 2012)
+start at: 2012-12-22, cited by 4580
+topics: ['Overhead (computing)', 'Stochastic gradient descent', 'Speech recognition', 'MNIST database', 'Yoram Moses', 'Computer cluster', 'YANG', 'Statistical classification']
+
+https://arxiv.org/abs/1607.04606 	 Enriching Word Vectors with Subword Information (Bojanowski, 2017)
+start at: 2016-07-15, cited by 4542
+topics: ['Substring', 'N-gram', 'Text corpus', 'Natural language processing', 'Word embedding', 'Preprocessor', 'Grams', 'Baseline (configuration management)', 'Vocabulary', 'Open-source software', 'Galaxy morphological classification', 'Null character']
+
+https://arxiv.org/abs/1603.05027 	 Identity Mappings in Deep Residual Networks (He, 2016)
+start at: 2016-03-16, cited by 4485
+topics: ['ImageNet', 'Experiment', 'Iteration', 'Graphics processing unit', 'Software propagation', 'Epoch (reference date)', 'Convolutional neural network', 'Keyboard shortcut', 'HTTPS', 'Human body weight', 'Xfig']
+
+https://arxiv.org/abs/1411.1792 	 How transferable are features in deep neural networks? (Yosinski, 2014)
+start at: 2014-11-06, cited by 4453
+topics: ['Deep learning', 'Artificial neural network', 'Convolutional neural network', 'Sensitivity and specificity', 'ImageNet', 'Partial template specialization', 'Mathematical optimization', 'Network performance', 'Experiment', 'Gabor filter']
+
+https://arxiv.org/abs/1509.02971 	 Continuous control with deep reinforcement learning (Lillicrap, 2016)
+start at: 2015-09-09, cited by 4406
+topics: ['Reinforcement learning', 'Algorithm', 'Automated planning and scheduling', 'Network architecture', 'End-to-end principle', 'Q-learning', 'Gradient', 'Pixel']
+
+https://arxiv.org/abs/1912.01703 	 PyTorch: An Imperative Style, High-Performance Deep Learning Library (Paszke, 2019)
+start at: 2019-12-03, cited by 4298
+topics: ['Deep learning', 'Imperative programming']
+
+https://arxiv.org/abs/1411.1784 	 Conditional Generative Adversarial Nets (Mirza, 2014)
+start at: 2014-11-06, cited by 4272
+topics: ['Discriminator', 'Generative model', 'MNIST database', 'Modal logic']
+
+https://arxiv.org/abs/1602.04938 	 "Why Should I Trust You?": Explaining the Predictions of Any Classifier (Ribeiro, 2016)
+start at: 2016-02-16, cited by 4148
+topics: ['Random forest', 'Submodular set function', 'Machine learning', 'Computer vision', 'Black box', 'Optimization problem', 'Experiment', 'Mathematical optimization', 'Artificial neural network', 'Framing (World Wide Web)']
+
+https://arxiv.org/abs/1606.03498 	 Improved Techniques for Training GANs (Salimans, 2016)
+start at: 2016-06-10, cited by 4124
+topics: ['ImageNet', 'Generative adversarial networks', 'Computer vision', 'Semi-supervised learning', 'Supervised learning', 'MNIST database', 'Semiconductor industry', 'Generative model', 'Visual Turing Test', 'Display resolution', 'Control theory', 'Human error', 'Machine learning']
+
+https://arxiv.org/abs/1603.08155 	 Perceptual Losses for Real-Time Style Transfer and Super-Resolution (Johnson, 2016)
+start at: 2016-03-26, cited by 4110
+topics: ['Loss function', 'Autostereogram', 'Mathematical optimization', 'Super-resolution imaging', 'Convolutional neural network', 'Pixel', 'Optimization problem', 'Feedforward neural network', 'Glossary of computer graphics', 'High- and low-level', 'Artificial neural network', 'Real-time clock', 'Real-time transcription', 'Ground truth']
+
+https://arxiv.org/abs/1403.6652 	 DeepWalk: Online Learning of Social Representations (Perozzi, 2014)
+start at: 2014-03-26, cited by 4057
+topics: ['Feature learning', 'Flickr', 'Anomaly detection', 'Deep learning', 'Algorithm', 'Statistical model', 'Language model', 'Multi-label classification', 'Experiment', 'Scalability', 'Baseline (configuration management)', 'Sparse matrix', 'Social network', 'ENCODE']
+
+https://arxiv.org/abs/1607.00653 	 node2vec: Scalable Feature Learning for Networks (Grover, 2016)
+start at: 2016-07-03, cited by 4045
+topics: ['Feature learning', 'Complex network', 'Algorithm', 'Multiclass classification', 'Node - plant part', 'Numerous', 'Muscle Rigidity']
+
+https://arxiv.org/abs/1704.00028 	 Improved Training of Wasserstein GANs (Gulrajani, 2017)
+start at: 2017-03-31, cited by 4010
+topics: ['Discriminator', 'Generative adversarial networks', 'Clipping (computer graphics)', 'Language model', 'Display resolution', 'Instability', 'Gradient', 'Algorithm', 'Converge', 'Optimization problem', 'Tom Proulx', 'Paint Tool SAI', 'Staggered tuning', 'Léon Bottou', 'Loss function']
+
+https://arxiv.org/abs/1602.01783 	 Asynchronous Methods for Deep Reinforcement Learning (Mnih, 2016)
+start at: 2016-02-04, cited by 3846
+topics: ['Reinforcement learning', 'Artificial neural network', 'Deep learning', 'Gradient descent', 'Atari', 'Machine learning', 'Mathematical optimization', 'Multi-core processor', 'Central processing unit', 'Algorithm', 'Graphics processing unit']
+
+https://arxiv.org/abs/1206.2944 	 Practical Bayesian Optimization of Machine Learning Algorithms (Snoek, 2012)
+start at: 2012-06-13, cited by 3687
+topics: ['Bayesian optimization', 'Machine learning', 'Mathematical optimization', 'Algorithm', 'Gaussian process', 'Latent Dirichlet allocation', 'Experiment', 'Convolutional neural network', 'CUDA', 'Artificial neural network', 'Brute-force search', "Cobham's thesis", 'File spanning', 'Amazon Simple Storage Service', 'Optimizing compiler', 'Amazon Web Services', 'Binary prefix', 'Structured support vector machine']
+
+https://arxiv.org/abs/1707.06347 	 Proximal Policy Optimization Algorithms (Schulman, 2017)
+start at: 2017-07-19, cited by 3540
+topics: ['Mathematical optimization', 'Reinforcement learning', 'Sample complexity', 'Trust region', 'Optimization problem', 'Gradient descent', 'Atari', 'Experiment', 'Sampling (signal processing)', 'Robot', 'Times Ascent', 'Algorithm', 'Benchmark (computing)', 'Loss function']
+
+https://arxiv.org/abs/1302.6815 	 Learning Bayesian Networks: The Combination of Knowledge and Statistical Data (Heckerman, 2004)
+start at: 2013-02-27, cited by 3458
+topics: ['Bayesian network', 'Simulated annealing', 'Local search (optimization)', 'Turing completeness', 'Iterative method', 'Heuristic', 'Polynomial', 'Machine learning', 'Search algorithm', 'Information', 'Foremost', 'NP-hardness']
+
+https://arxiv.org/abs/1609.08144 	 Google's Neural Machine Translation System: Bridging the Gap between Human and Machine Translation (Wu, 2016)
+start at: 2016-09-26, cited by 3386
+topics: ['Neural machine translation', 'Production system (computer science)', 'Beam search', 'Delimiter', 'Encoder', 'Long short-term memory', 'Analysis of algorithms', 'Input/output', 'Computation', 'End-to-end principle', 'Parallel computing', 'Bridging (networking)']
+
+https://arxiv.org/abs/1609.03499 	 WaveNet: A Generative Model for Raw Audio (Oord, 2016)
+start at: 2016-09-12, cited by 3352
+topics: ['Generative model', 'Discriminative model', 'Autoregressive model', 'Deep learning', 'Speech synthesis', 'Probabilistic Turing machine', 'Artificial neural network', 'Automatic sounding', 'Super Robot Monkey Team Hyperforce Go!']
+
+https://arxiv.org/abs/1312.4400 	 Network In Network (Lin, 2014)
+start at: 2013-12-16, cited by 3322
+topics: ['Overfitting', 'Multilayer perceptron', 'Map', 'Activation function', 'Artificial neural network', 'Performance', 'Statistical classification', 'Convolution', 'Object detection', 'Nonlinear system', 'MNIST database', 'Deep learning']
+
+https://arxiv.org/abs/1302.4964 	 Estimating Continuous Distributions in Bayesian Classifiers (John, 1995)
+start at: 2013-02-20, cited by 3140
+topics: ['Bayesian network', 'Kernel density estimation', 'Discretization']
+
+https://arxiv.org/abs/1706.06083 	 Towards Deep Learning Models Resistant to Adversarial Attacks (Madry, 2018)
+start at: 2017-06-19, cited by 3071
+topics: ['Deep learning', 'Adversary (cryptography)', 'Robust optimization', 'Concrete security', 'Artificial neural network', 'Mathematical optimization', 'Stepping level', 'First-order predicate']
+
+https://arxiv.org/abs/1211.5063 	 On the difficulty of training Recurrent Neural Networks (Pascanu, 2013)
+start at: 2012-11-21, cited by 3038
+topics: ['Recurrent neural network', 'Gradient', 'Dynamical system', 'Artificial neural network', 'Constraint (mathematics)', 'Neural Networks']
+
+https://arxiv.org/abs/1505.07818 	 Domain-Adversarial Training of Neural Networks (Ganin, 2016)
+start at: 2015-05-28, cited by 3028
+topics: ['Domain adaptation', 'Artificial neural network', 'Stochastic gradient descent', 'Sentiment analysis', 'Backpropagation', 'Effective domain', 'Emergence', 'Computer vision', 'Deep learning', 'Benchmark (computing)', 'Feature learning', 'Neural network software', 'Machine learning']
+
+https://arxiv.org/abs/1703.03400 	 Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks (Finn, 2017)
+start at: 2017-03-09, cited by 2999
+topics: ['Reinforcement learning', 'Gradient descent', 'Algorithm', 'Artificial neural network', 'Computer vision', 'Meta learning (computer science)']
+
+https://arxiv.org/abs/1202.2745 	 Multi-column Deep Neural Networks for Image Classification (Cireşan, 2012)
+start at: 2012-02-13, cited by 2966
+topics: ['Computer vision', 'Artificial neural network', 'Deep learning', 'Traffic sign recognition', 'Machine learning', 'MNIST database', 'Human reliability', 'Data pre-processing', 'Convolutional neural network', 'Benchmark (computing)', 'Column (database)', 'Cerebral cortex', 'anatomical layer', 'Digit structure', 'Graphics', 'Retina', 'Architecture as Topic', 'Mammals']
+
+https://arxiv.org/abs/1506.02626 	 Learning both Weights and Connections for Efficient Neural Networks (Han, 2015)
+start at: 2015-06-08, cited by 2926
+topics: ['Artificial neural network', 'ImageNet', 'Neural Network Simulation', 'Neural network software', 'Image processing', 'Embedded system', 'Experiment', 'Requirement', 'Computation', 'Sparse matrix', 'Mac OS X 10.3 Panther', 'Sensorineural Hearing Loss (disorder)', 'Total Number', 'Prunes', 'Prune preparation', 'Real-time clock', 'Embedding', 'Silo (dataset)', 'Neural Tube Defects', 'Weight']
+
+https://arxiv.org/abs/1706.02216 	 Inductive Representation Learning on Large Graphs (Hamilton, 2017)
+start at: 2017-06-07, cited by 2831
+topics: ['Algorithm', 'Baseline (configuration management)', 'Contextual advertising', 'Interaction', 'Sampling (signal processing)', 'Machine learning', 'Inductive reasoning']
+
+https://arxiv.org/abs/1502.05477 	 Trust Region Policy Optimization (Schulman, 2015)
+start at: 2015-02-19, cited by 2822
+topics: ['Trust region', 'Iterative method', 'Algorithm', 'Approximation', 'Atari', 'Optimizing compiler', 'Experiment', 'Nonlinear system', 'Gradient', 'Frequency-hopping spread spectrum', 'Robot', 'Artificial neural network', 'Mathematical optimization']
+
+https://arxiv.org/abs/1605.07146 	 Wide Residual Networks (Zagoruyko, 2016)
+start at: 2016-05-23, cited by 2821
+topics: ['ImageNet', 'Flow network', 'Dropout (neural networks)', 'Experiment', 'Deep learning', 'Network architecture', 'HTTPS', 'Artificial neural network', 'Benchmark (computing)', 'Period-doubling bifurcation']
+
+https://arxiv.org/abs/1506.02142 	 Dropout as a Bayesian Approximation: Representing Model Uncertainty in Deep Learning (Gal, 2016)
+start at: 2015-06-06, cited by 2788
+topics: ['Dropout (neural networks)', 'Deep learning', 'Computational complexity theory', 'Reinforcement learning', 'Machine learning', 'MNIST database', 'Approximation algorithm', 'Artificial neural network', 'Bernoulli polynomials', 'Nonlinear system', 'Bayesian network', 'Christof Ebert', 'Computation', 'Gaussian process', 'One-to-one (data model)', 'Variational principle', 'Forward error correction', 'Entity–relationship model']
+
+https://arxiv.org/abs/1205.2618 	 BPR: Bayesian Personalized Ranking from Implicit Feedback (Rendle, 2009)
+start at: 2012-05-09, cited by 2769
+topics: ['Personalization', 'Stochastic gradient descent', 'Mathematical optimization', 'Bootstrapping (statistics)', 'Algorithm', 'Experiment', 'Recommender system', 'Sampling (signal processing)', 'Purchasing', 'Bayesian network']
+
+https://arxiv.org/abs/1511.07289 	 Fast and Accurate Deep Network Learning by Exponential Linear Units (ELUs) (Clevert, 2016)
+start at: 2015-11-23, cited by 2718
+topics: ['ImageNet', 'Rectifier (neural networks)', 'Time complexity', 'Activation function', 'Deep learning', 'Vanishing gradient problem', 'Experiment', 'Nonlinear system', 'Converge', 'Computational complexity theory', 'Artificial neural network', 'Information geometry']
+
+https://arxiv.org/abs/1511.04587 	 Accurate Image Super-Resolution Using Very Deep Convolutional Networks (Kim, 2016)
+start at: 2015-11-14, cited by 2696
+topics: ['Super-resolution imaging', 'ImageNet', 'Compression artifact', 'Image restoration', 'Gradient', 'Convolutional neural network', 'Benchmark (computing)', 'Noise reduction', 'Rate of convergence', 'Autostereogram', 'Clipping (computer graphics)', 'Circuit restoration', 'Reinforcement learning']
+
+https://arxiv.org/abs/1412.7062 	 Semantic Image Segmentation with Deep Convolutional Nets and Fully Connected CRFs (Chen, 2015)
+start at: 2014-12-22, cited by 2696
+topics: ['Image segmentation', 'Conditional random field', 'Convolutional neural network', 'Object detection', 'High-level programming language', 'Wavelet', 'Artificial neural network', 'Graphical model', 'Algorithm', 'Computer vision', 'Computation', 'Test set', 'Pixel', 'Graphics processing unit', 'Neural Networks']
+
+https://arxiv.org/abs/1710.10903 	 Graph Attention Networks (Veličković, 2018)
+start at: 2017-10-30, cited by 2680
+topics: ['Artificial neural network', 'TensorFlow', 'Convolution', 'Algorithmic efficiency', 'Cora', 'Citation network', 'Approximation', 'Iteration', 'PubMed', 'CiteSeerX', 'Graph (abstract data type)', 'Fabian Pascal', 'Graphics processing unit', 'Stacking']
+
+https://arxiv.org/abs/1606.09375 	 Convolutional Neural Networks on Graphs with Fast Localized Spectral Filtering (Defferrard, 2016)
+start at: 2016-06-30, cited by 2678
+topics: ['Convolutional neural network', 'Graph (discrete mathematics)', 'Spectral graph theory', 'Computational complexity theory', 'Stationary process', 'MNIST database', 'Social network', 'Experiment', 'Artificial neural network', 'Biological network', 'Deep learning', 'Wavelet', 'Connectome', 'Numerical analysis', 'Guardian Service Processor']
+
+https://arxiv.org/abs/1602.07360 	 SqueezeNet: AlexNet-level accuracy with 50x fewer parameters and <0.5MB model size (Iandola, 2017)
+start at: 2016-02-23, cited by 2656
+topics: ['ImageNet', 'Autonomous car', 'Field-programmable gate array', 'Convolutional neural network', 'Han unification', 'Deep learning', 'Outline of object recognition', 'Computer memory', 'Artificial neural network', 'Sparse', 'Download', 'Compression', 'Logo', 'Architecture as Topic', 'Neural Network Simulation', 'Chimeric antigen receptor', 'Entity–relationship model', 'Small', 'Document Structure Description', 'Compresses (device)']
+
+https://arxiv.org/abs/1503.03578 	 LINE: Large-scale Information Network Embedding (Tang, 2015)
+start at: 2015-03-12, cited by 2630
+topics: ['Stochastic gradient descent', 'Graph embedding', 'Algorithm', 'Social network', 'Citation graph', 'Global network', 'Experiment', 'Optimization problem', 'Sampling (signal processing)', 'Graph (discrete mathematics)', 'Loss function']
+
+https://arxiv.org/abs/1412.4564 	 MatConvNet - Convolutional Neural Networks for MATLAB (Vedaldi, 2015)
+start at: 2014-12-15, cited by 2575
+topics: ['MATLAB', 'ImageNet', 'Convolutional neural network', 'Filter bank', 'Convolution', 'Computation', 'Open-source software', 'Central processing unit', 'Graphics processing unit']
+
+https://arxiv.org/abs/1710.10196 	 Progressive Growing of GANs for Improved Quality, Stability, and Variation (Karras, 2018)
+start at: 2017-10-27, cited by 2553
+topics: ['Discriminator', 'Image quality', 'Unsupervised learning', 'Generative adversarial networks', 'Image resolution']
+
+https://arxiv.org/abs/2010.16061 	 Evaluation: from precision, recall and F-measure to ROC, informedness, markedness and correlation (Powers, 2020)
+start at: 2020-10-10, cited by 2538
+topics: ['Randomness', 'F1 score', 'RAND Tablet', 'Recursion', 'Rand index', 'Precision and recall']
+
+https://arxiv.org/abs/1003.1141 	 From Frequency to Meaning: Vector Space Models of Semantics (Turney, 2010)
+start at: 2010-03-04, cited by 2513
+topics: ['Computer', 'Viable system model', 'The Matrix', 'Open-source software']
+
+https://arxiv.org/abs/1509.01626 	 Character-level Convolutional Networks for Text Classification (Zhang, 2015)
+start at: 2015-09-04, cited by 2501
+topics: ['Document classification', 'Convolutional neural network', 'Deep learning', 'Recurrent neural network', 'Bag-of-words model', 'Effective method', 'N-gram', 'Microsoft Outlook for Mac', 'Digital curation', 'Tesla (microarchitecture)', 'Tf–idf', 'Grams', 'Graphics processing unit', 'Artificial neural network', 'Amazon Web Services']
+
+https://arxiv.org/abs/1301.6705 	 Probabilistic Latent Semantic Analysis (Hofmann, 1999)
+start at: 2013-01-23, cited by 2481
+topics: ['Probabilistic latent semantic analysis', 'Latent class model', 'Information retrieval', 'Overfitting', 'Natural language processing', 'Linear algebra', 'Singular value decomposition', 'Machine learning', 'Experiment', 'Curve fitting', 'Distribution (mathematics)', 'Expectation–maximization algorithm']
+
+https://arxiv.org/abs/1412.6806 	 Striving for Simplicity: The All Convolutional Net (Springenberg, 2015)
+start at: 2014-12-21, cited by 2477
+topics: ['Convolution', 'Convolutional neural network', 'Outline of object recognition', 'Deconvolution', 'ImageNet', 'Computer vision', 'Artificial neural network']
+
+https://arxiv.org/abs/1611.03530 	 Understanding deep learning requires rethinking generalization (Zhang, 2017)
+start at: 2016-11-10, cited by 2475
+topics: ['Deep learning', 'Artificial neural network', 'Generalization error', 'Experiment', 'Computer vision', 'Noise (electronics)', 'Data point', 'Gradient', 'Manifold regularization']
+
+https://arxiv.org/abs/1706.08500 	 GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash Equilibrium (Heusel, 2017)
+start at: 2017-06-26, cited by 2442
+topics: ['Nash equilibrium', 'Converge', 'Maxima and minima', 'Stochastic gradient descent', 'Experiment', 'Generative adversarial networks', 'Discriminator', 'Stochastic optimization', 'Stochastic approximation', 'Mathematical optimization', 'Stationary process', 'Loss function', 'Glossary of computer graphics', 'Benchmark (computing)']
+
+https://arxiv.org/abs/1503.04069 	 LSTM: A Search Space Odyssey (Greff, 2017)
+start at: 2015-03-13, cited by 2440
+topics: ['Long short-term memory', 'Activation function', 'Handwriting recognition', 'Speech recognition', 'Gradient descent', 'Recurrent neural network', 'Computation', 'Machine learning', 'Random search', 'TIMIT', 'Interaction', 'Experiment', 'Algorithmic efficiency', 'Neural Networks', 'Central processing unit', 'Moderate Response', 'Database tuning', 'Attempt', 'Experience', 'Choice Behavior', 'Normal Statistical Distribution', 'Neural Network Simulation', 'Ethanol 0.62 ML/ML Topical Solution', 'Largest']
+
+https://arxiv.org/abs/1509.06461 	 Deep Reinforcement Learning with Double Q-learning (van Hasselt, 2016)
+start at: 2015-09-22, cited by 2419
+topics: ['Reinforcement learning', 'Q-learning', 'Deep learning', 'Algorithm', 'Artificial neural network', 'Atari', 'Approximation error', 'Decision problem', 'Table (information)', 'Artificial intelligence', 'Machine learning', 'Approximation', 'Andrew Barto', 'Expectation–maximization algorithm']
+
+https://arxiv.org/abs/1610.02391 	 Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization (Selvaraju, 2019)
+start at: 2016-10-07, cited by 2374
+topics: ['The Grid Analysis and Display System (GrADS)', 'Backpropagation', 'Convolutional neural network', 'Long short-term memory', 'Computer vision', 'Pixel', 'Deconvolution', 'Question answering', 'Image resolution', 'Emoticon', 'Deep learning', 'Gradient descent']
+
+https://arxiv.org/abs/1611.01578 	 Neural Architecture Search with Reinforcement Learning (Zoph, 2017)
+start at: 2016-11-04, cited by 2369
+topics: ['Reinforcement learning', 'Perplexity', 'Natural language understanding', 'Treebank', 'Test set', 'Baseline (configuration management)', 'Artificial neural network', 'Language model', 'Network architecture', 'Long short-term memory', 'Neural network software', 'Random neural network', 'Recurrent neural network']
+
+https://arxiv.org/abs/1606.03657 	 InfoGAN: Interpretable Representation Learning by Information Maximizing Generative Adversarial Nets (Chen, 2016)
+start at: 2016-06-11, cited by 2351
+topics: ['Mutual information', 'Feature learning', 'MNIST database', 'Semi-supervised learning', 'National Fund for Scientific Research', 'Supervised learning', 'Latent variable', 'Algorithm', 'Information theory', 'Computation', 'Machine learning', 'Code', 'Semiconductor industry', 'Generative adversarial networks', 'Experiment', 'Entity–relationship model']
+
+https://arxiv.org/abs/1607.02533 	 Adversarial examples in the physical world (Kurakin, 2017)
+start at: 2016-07-08, cited by 2342
+topics: ['Machine learning', 'Adversary (cryptography)', 'Threat model', 'Reinforcement learning', 'Computer vision', 'Mobile phone', 'Camera phone', 'Artificial neural network', 'ImageNet', 'Effective method', 'Sensor', 'Printing']
+
+https://arxiv.org/abs/0908.0050 	 Online Learning for Matrix Factorization and Sparse Coding (Mairal, 2010)
+start at: 2009-08-01, cited by 2340
+topics: ['Sparse matrix', 'Machine learning', 'Neural coding', 'Signal processing', 'Principal component analysis', 'Experiment', 'Mathematical optimization', 'Basis set (chemistry)', 'Non-negative matrix factorization', 'Online optimization', 'Approximation', 'Dictionary', 'Algorithm']
+
+https://arxiv.org/abs/1604.07379 	 Context Encoders: Feature Learning by Inpainting (Pathak, 2016)
+start at: 2016-04-25, cited by 2327
+topics: ['Encoder', 'Inpainting', 'Feature learning', 'Convolutional neural network', 'Pixel', 'Unsupervised learning', 'Statistical classification', 'Artificial neural network', 'Algorithm']
+
+https://arxiv.org/abs/1708.07747 	 Fashion-MNIST: a Novel Image Dataset for Benchmarking Machine Learning Algorithms (Xiao, 2017)
+start at: 2017-08-25, cited by 2321
+topics: ['MNIST database', 'Machine learning', 'Algorithm', 'Grayscale', 'Test set', 'Image resolution', 'While']
+
+https://arxiv.org/abs/1707.07012 	 Learning Transferable Architectures for Scalable Image Recognition (Zoph, 2018)
+start at: 2017-07-21, cited by 2316
+topics: ['ImageNet', 'Computer vision', 'FLOPS', 'Computation', 'Artificial neural network', 'Object detection', 'Algorithmic efficiency', 'Mobile device', 'Experiment', 'Stacking']
+
+https://arxiv.org/abs/1606.04080 	 Matching Networks for One Shot Learning (Vinyals, 2016)
+start at: 2016-06-13, cited by 2315
+topics: ['ImageNet', 'Treebank', 'Deep learning', 'Machine learning', 'Language model', 'Algorithm', 'One-shot learning', 'Programming paradigm', 'Map', 'Artificial neural network']
+
+https://arxiv.org/abs/1705.07750 	 Quo Vadis, Action Recognition? A New Model and the Kinetics Dataset (Carreira, 2017)
+start at: 2017-05-22, cited by 2288
+topics: ['Kinesiology', 'ImageNet', 'Status quo bias', 'Convolutional neural network', 'Computer vision', 'Seamless3d', 'Action potential', 'Benchmark (computing)']
+
+https://arxiv.org/abs/1210.5644 	 Efficient Inference in Fully Connected CRFs with Gaussian Edge Potentials (Krähenbühl, 2011)
+start at: 2012-10-20, cited by 2233
+topics: ['Pixel', 'Conditional random field', 'Image segmentation', 'Experiment', 'Approximation algorithm', 'Sparse matrix']
+
+https://arxiv.org/abs/1609.04747 	 An overview of gradient descent optimization algorithms (Ruder, 2016)
+start at: 2016-09-15, cited by 2230
+topics: ['Gradient descent', 'Algorithm', 'Mathematical optimization', 'Black box']
+
+https://arxiv.org/abs/1211.0053 	 The Emerging Field of Signal Processing on Graphs: Extending High-Dimensional Data Analysis to Networks and Other Irregular Domains (Shuman, 2013)
+start at: 2012-10-31, cited by 2206
+topics: ['Signal processing', 'Graph (discrete mathematics)', 'Computational complexity theory', 'Convolution', 'Wavelet transform', 'Directed graph', 'Modulation', 'Dilation (morphology)', 'Fast Fourier transform', 'Coefficient', 'Numerical analysis', 'Computation', 'Decimation (signal processing)', 'Sensor', 'Internationalization and localization', 'Shortest path problem', 'Resistance distance', 'Time series', 'Scalability', 'Data domain', 'Approximation algorithm', 'Sparse matrix', 'Linear algebra', 'Laplacian matrix', 'Clustering high-dimensional data', 'Runge–Kutta methods', 'Polynomial hierarchy', 'LU decomposition', 'Krylov–Bogolyubov theorem']
+
+https://arxiv.org/abs/1105.5444 	 Semantic Similarity in a Taxonomy: An Information-Based Measure and its Application to Problems of Ambiguity in Natural Language (Resnik, 1999)
+start at: 2011-05-26, cited by 2190
+topics: ['Semantic similarity', 'Natural language', 'Algorithm', 'Taxonomy', 'Evolutionary taxonomy', 'Self-information', 'Is-a', 'Benchmark (computing)', 'Judgment']
+
+https://arxiv.org/abs/1701.07875 	 Wasserstein GAN (Arjovsky, 2017)
+start at: 2017-01-26, cited by 2188
+topics: ['Unsupervised learning']
+
+https://arxiv.org/abs/1705.07874 	 A Unified Approach to Interpreting Model Predictions (Lundberg, 2017)
+start at: 2017-05-22, cited by 2160
+topics: ['Game theory', 'Deep learning', 'Existential quantification', 'Utility functions on indivisible goods', 'Unified Framework', 'NIPS', 'Experiment', 'IBM Notes', 'Unification (computer science)', 'Additive model']
+
+https://arxiv.org/abs/1906.08237 	 XLNet: Generalized Autoregressive Pretraining for Language Understanding (Yang, 2019)
+start at: 2019-06-19, cited by 2135
+topics: ['Autoregressive model', 'Sentiment analysis', 'Question answering', 'Transformer', 'Variable shadowing', 'Ranking (information retrieval)', 'Language model', 'Natural language', 'Noise reduction', 'Discrepancy function']
+
+https://arxiv.org/abs/1106.0257 	 Popular Ensemble Methods: An Empirical Study (Maclin, 1999)
+start at: 2011-06-01, cited by 2130
+topics: ['Boosting (machine learning)', 'Decision tree', 'Overfitting', 'Statistical classification', 'Artificial neural network', 'Bootstrap aggregating', 'AdaBoost', 'Signal-to-noise ratio', 'Algorithm', 'Ada']
+
