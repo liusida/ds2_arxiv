@@ -28,7 +28,7 @@ def google_search(author):
             print(f"wrote {filename}")
     else:
         with open(bad_filename, 'w') as f:
-            print(author, file=f)
+            print(html, file=f)
             print(f"bad {bad_filename}")
 
 def main():
