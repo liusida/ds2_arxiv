@@ -14,7 +14,11 @@ def main():
         if not os.path.exists(filename):
             request.urlretrieve(url, filename)
             print(f"{filename}")
-            time.sleep(1)
+        time.sleep(1)
 
 if __name__=="__main__":
-    main()
+    while True:
+        try:
+            main()
+        finally:
+            pass
