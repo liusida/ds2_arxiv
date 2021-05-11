@@ -32,10 +32,49 @@ def google_search(author):
         with open("tmp_caught.html", "w") as f:
             print(soup.text, file=f)
         g_firefox.reset()
-        time.sleep(10)
+        time.sleep(30)
         return
     
     line = search_result.find('h3', text=lambda t: t and 'Twitter' in t and re.search(r'\(@.+\)', t))
+    if line:
+        with open(filename, 'w') as f:
+            print(author, file=f)
+            print(line.text, file=f)
+            print(f"wrote {filename}")
+    else:
+        with open(bad_filename, 'w') as f:
+            print(html, file=f)
+            print(f"bad {bad_filename}")
+
+def bing_search(author):
+    author = author.lower()
+    f_author = author.replace(" ", "_")
+    filename = f"data/twitter/{f_author}.txt"
+    bad_filename = f"data/twitter_bad/{f_author}.html"
+    if os.path.exists(filename) or os.path.exists(bad_filename):
+        return
+    search = author.replace(" ", "%20")
+    url = f"https://www.bing.com/search?q={search}%20Twitter"
+
+    g_firefox = MyFirefox(proxy_txt_filename="config/vip.proxy.txt", proxy_disabled=local_debug)
+    html = g_firefox.get(url)
+    if html is None:
+        print("google search> html is None")
+        g_firefox.reset()
+        time.sleep(10)
+        return
+
+    soup = BeautifulSoup(html, 'html.parser')
+    search_result = soup.find('div', {"id":'b_results'})
+    if search_result is None:
+        print("bing search> Oh, no! I've been caught!")
+        with open("tmp_caught.html", "w") as f:
+            print(soup.text, file=f)
+        g_firefox.reset()
+        time.sleep(10)
+        return
+    
+    line = search_result.find('h2', text=lambda t: t and 'Twitter' in t and re.search(r'\(@.+\)', t))
     if line:
         with open(filename, 'w') as f:
             print(author, file=f)
@@ -62,7 +101,7 @@ def main():
         for _author in _list:
             if _author=="":
                 continue
-            google_search(_author)
+            bing_search(_author)
 
 
 if __name__=="__main__":
