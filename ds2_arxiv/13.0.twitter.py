@@ -30,7 +30,7 @@ def google_search(author):
     if search_result is None:
         print("google search> Oh, no! I've been caught!")
         with open("tmp_caught.html", "w") as f:
-            f.write(soup)
+            print(soup.text, file=f)
         g_firefox.reset()
         time.sleep(10)
         return
