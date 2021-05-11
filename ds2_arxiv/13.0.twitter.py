@@ -59,13 +59,13 @@ def bing_search(author):
     g_firefox = MyFirefox(proxy_txt_filename="config/vip.proxy.txt", proxy_disabled=local_debug)
     html = g_firefox.get(url)
     if html is None:
-        print("google search> html is None")
+        print("bing search> html is None")
         g_firefox.reset()
         time.sleep(10)
         return
 
     soup = BeautifulSoup(html, 'html.parser')
-    search_result = soup.find('div', {"id":'b_results'})
+    search_result = soup.find('ol', {"id":'b_results'})
     if search_result is None:
         print("bing search> Oh, no! I've been caught!")
         with open("tmp_caught.html", "w") as f:
