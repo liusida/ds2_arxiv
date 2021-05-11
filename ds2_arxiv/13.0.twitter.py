@@ -15,7 +15,7 @@ def google_search(author):
     if os.path.exists(filename) or os.path.exists(bad_filename):
         return
     search = author.replace(" ", "+")
-    url = f"https://www.google.com/search?q={search}+Twitter+Account&ei={random.getrandbits(128)}"
+    url = f"https://www.google.com/search?q={search}+Twitter+Account&ei={random.getrandbits(32)}"
 
     g_firefox = MyFirefox(proxy_txt_filename="config/vip.proxy.txt", proxy_disabled=local_debug)
     html = g_firefox.get(url)
