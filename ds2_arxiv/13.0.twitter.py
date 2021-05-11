@@ -29,6 +29,8 @@ def google_search(author):
     search_result = soup.find('div', {"id":'search'})
     if search_result is None:
         print("google search> Oh, no! I've been caught!")
+        with open("tmp_caught.html", "w") as f:
+            f.write(soup)
         g_firefox.reset()
         time.sleep(10)
         return
