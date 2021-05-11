@@ -56,6 +56,7 @@ def bing_search(author):
     search = author.replace(" ", "%20")
     url = f"https://www.bing.com/search?q={search}%20Twitter"
 
+    print(f"getting {url}")
     g_firefox = MyFirefox(proxy_txt_filename="config/vip.proxy.txt", proxy_disabled=local_debug)
     html = g_firefox.get(url)
     if html is None:
@@ -74,16 +75,18 @@ def bing_search(author):
         time.sleep(10)
         return
     
-    line = search_result.find('h2', text=lambda t: t and 'Twitter' in t and re.search(r'\(@.+\)', t))
-    if line:
-        with open(filename, 'w') as f:
-            print(author, file=f)
-            print(line.text, file=f)
-            print(f"wrote {filename}")
-    else:
-        with open(bad_filename, 'w') as f:
-            print(html, file=f)
-            print(f"bad {bad_filename}")
+    h2s = search_result.find_all('h2')
+    for h2 in h2s:
+        t = h2.text
+        if 'Twitter' in t and '@' in t:
+            with open(filename, 'w') as f:
+                print(author, file=f)
+                print(t, file=f)
+                print(f"wrote {filename}")
+            return True
+    with open(bad_filename, 'w') as f:
+        print(html, file=f)
+        print(f"bad {bad_filename}")
 
 def main():
     df = pd.read_pickle("shared/arxiv_4422.pickle")
