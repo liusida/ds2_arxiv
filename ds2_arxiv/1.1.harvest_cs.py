@@ -64,7 +64,7 @@ def main(from_date, to_date):
 
 if __name__=="__main__":
     start_date = datetime.strptime("2021-05-01", '%Y-%m-%d')
-    d_date = timedelta(days=30)
+    d_date = timedelta(days=90)
     while True:
         start_date_string = start_date.strftime('%Y-%m-%d')
         end_date = start_date - d_date
