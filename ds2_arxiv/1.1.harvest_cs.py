@@ -17,8 +17,8 @@ def main(from_date, to_date):
             print('Papers retrieved.')
             break
         except HTTPError:
-            print(f"wait for 3 seconds.")
-            time.sleep(3)
+            print(f"wait for 5 seconds.")
+            time.sleep(5)
         except Exception as e:
             print(f'Other exception {e}')
             break
@@ -52,8 +52,8 @@ def main(from_date, to_date):
             print(f'ERROR! {errors}\n')
             errors +=1
         except HTTPError:
-            print(f"wait for 3 seconds.")
-            time.sleep(3)
+            print(f"wait for 5 seconds.")
+            time.sleep(5)
         except StopIteration:
             print('On iter', iters)
             print('\nDONE!')
