@@ -74,6 +74,7 @@ def main():
                     continue
             if os.path.exists(old_path):
                 shutil.copy(old_path, path)
+                print("copied.")
                 continue
             r = get_remote_content_through_a_proxy(get_citation_url, time_sleep=0)
             if r is None:
