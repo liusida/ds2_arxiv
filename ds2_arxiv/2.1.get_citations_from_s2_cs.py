@@ -1,4 +1,4 @@
-import os, time, re, glob, sys, shutil
+import os, time, re, glob, sys, shutil, random
 import feedparser
 import urllib
 from collections import defaultdict
@@ -41,7 +41,8 @@ def main():
     for __c in _c:
         bad_citation.append(__c.strip())
 
-    filenames = sorted(glob.glob("data/harvest/*.xml"))[::-1]
+    filenames = sorted(glob.glob("data/harvest_202105/*.xml"))[::-1]
+    random.shuffle(filenames)
     g_source_total = len(filenames)
     g_source = 0
 
