@@ -1,4 +1,4 @@
-import os, time, re, glob, sys
+import os, time, re, glob, sys, shutil
 import feedparser
 import urllib
 from collections import defaultdict
@@ -64,6 +64,7 @@ def main():
             arxiv_id = match.group(1)
         if arxiv_id.find(".")!=-1:
             get_citation_url = f"https://api.semanticscholar.org/v1/paper/arXiv:{arxiv_id}"
+            old_path = f"data/citations_s2/{arxiv_id}.json"
             path = f"data/citations_s2_cs/{arxiv_id}.json"
             if arxiv_id in bad_citation:
                 continue
@@ -71,6 +72,9 @@ def main():
                 if os.stat(path).st_size>100:
                     # already cached
                     continue
+            if os.path.exists(old_path):
+                shutil.copy(old_path, path)
+                continue
             r = get_remote_content_through_a_proxy(get_citation_url, time_sleep=0)
             if r is None:
                 # get remote content error
