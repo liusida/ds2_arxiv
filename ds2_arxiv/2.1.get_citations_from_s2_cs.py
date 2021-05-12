@@ -42,7 +42,6 @@ def main():
         bad_citation.append(__c.strip())
 
     filenames = sorted(glob.glob("data/harvest/*.xml"))[::-1]
-    # filenames = sorted(glob.glob("data/harvest_LG_AI/1807.02110.xml"))[::-1]
     g_source_total = len(filenames)
     g_source = 0
 
@@ -58,9 +57,6 @@ def main():
             print(f"Bad record {filename}")
             continue
         record_dict = xmltodict.parse(record_xml, process_namespaces=False)['record']['metadata']['arXiv']
-        categories = record_dict['categories']
-        if categories.find("cs.LG")==-1 and categories.find("cs.AI")==-1:
-            continue
         arxiv_id = record_dict['id']
         match = re.search(r'^(.+)v[0-9]+$', arxiv_id)
         if match:
