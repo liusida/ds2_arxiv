@@ -72,10 +72,11 @@ def main():
                 if os.stat(path).st_size>100:
                     # already cached
                     continue
-            if os.path.exists(old_path):
-                shutil.copy(old_path, path)
-                print("copied.")
-                continue
+            # copy from April, 2021:
+            # if os.path.exists(old_path):
+            #     shutil.copy(old_path, path)
+            #     print("copied.")
+            #     continue
             r = get_remote_content_through_a_proxy(get_citation_url, time_sleep=0)
             if r is None:
                 # get remote content error
