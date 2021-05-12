@@ -13,7 +13,7 @@ from ds2_arxiv.tools.my_proxy import MyProxy
 myproxy = MyProxy(proxy_disabled=local_debug)
 
 os.makedirs("data/citations_s2_202105", exist_ok=True)
-with open(f"shared/s2_bad_citation.txt", "a"):
+with open(f"shared/s2_bad_citation_202105.txt", "a"):
     pass
 
 def get_remote_content_through_a_proxy(url, time_sleep=0.1):
@@ -35,7 +35,7 @@ def get_remote_content_through_a_proxy(url, time_sleep=0.1):
 def main():
     global g_error, g_count, g_source, g_source_total
 
-    with open(f"shared/s2_bad_citation.txt", "r") as f:
+    with open(f"shared/s2_bad_citation_202105.txt", "r") as f:
         _c = f.readlines()
     bad_citation = []
     for __c in _c:
@@ -90,7 +90,7 @@ def main():
                 if r.decode('utf-8').find("Forbidden")!=-1:
                     time.sleep(10)
                 if r.decode('utf-8').find("Paper not found")!=-1:
-                    with open(f"shared/s2_bad_citation.txt", "a") as f:
+                    with open(f"shared/s2_bad_citation_202105.txt", "a") as f:
                         print(arxiv_id, file=f)
                     g_error += 1
                 continue
