@@ -5,7 +5,7 @@ from sickle import Sickle # to retrieve data from the OAI arxiv interface
 from requests import HTTPError
 from datetime import datetime, timedelta
 
-os.makedirs("data/harvest", exist_ok=True)
+os.makedirs("data/harvest_202105", exist_ok=True)
 
 def main(from_date, to_date):
     connection = Sickle('http://export.arxiv.org/oai2')
@@ -34,7 +34,7 @@ def main(from_date, to_date):
             if arxiv_id.find(".")==-1:
                 print(f"Format not right {arxiv_id}")
                 continue
-            path = f"data/harvest/{arxiv_id}.xml"
+            path = f"data/harvest_202105/{arxiv_id}.xml"
             if os.path.exists(path):
                 # print(f"exist {path}")
                 continue
