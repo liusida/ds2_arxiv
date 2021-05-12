@@ -12,7 +12,7 @@ local_debug = socket.gethostname()!="star-lab"
 from ds2_arxiv.tools.my_proxy import MyProxy
 myproxy = MyProxy(proxy_disabled=local_debug)
 
-os.makedirs("data/citations_s2_cs", exist_ok=True)
+os.makedirs("data/citations_s2_202105", exist_ok=True)
 with open(f"shared/s2_bad_citation.txt", "a"):
     pass
 
@@ -66,7 +66,7 @@ def main():
         if arxiv_id.find(".")!=-1:
             get_citation_url = f"https://api.semanticscholar.org/v1/paper/arXiv:{arxiv_id}"
             old_path = f"data/citations_s2/{arxiv_id}.json"
-            path = f"data/citations_s2_cs/{arxiv_id}.json"
+            path = f"data/citations_s2_202105/{arxiv_id}.json"
             if arxiv_id in bad_citation:
                 continue
             if os.path.exists(path):
@@ -107,7 +107,7 @@ def log():
     global g_count, g_n_calls
     g_n_calls += 1
     if g_n_calls%100==0:
-        g_count = len(glob.glob("data/citations_s2_cs/*.json"))
+        g_count = len(glob.glob("data/citations_s2_202105/*.json"))
     # wandb.log({
     #     "count": g_count,
     #     "error": g_error,
@@ -118,7 +118,7 @@ def log():
 if __name__=="__main__":
     # wandb.init(project="get_citation_s2")
     
-    g_count = len(glob.glob("data/citations_s2_cs/*.json"))
+    g_count = len(glob.glob("data/citations_s2_202105/*.json"))
     g_error = 0
     g_source = 0
     g_source_total = 0
