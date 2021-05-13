@@ -12,6 +12,8 @@ os.makedirs(f"data/citations_s2_202105_{args.threshold}", exist_ok=True)
 filenames = glob.glob("data/harvest/*.xml")
 l = len(filenames)
 for i, filename in enumerate(filenames):
+    if i%10000==0:
+        print(f"iter {i}")
     with open(filename, "r") as f:
         record_xml = f.read()
     if len(record_xml)<10:
