@@ -88,6 +88,7 @@ def main():
                 print(f"Error: {r}\n arxiv_id: {arxiv_id}")
                 # myproxy.rotate_proxy(report_bad_proxy=False)
                 if r.decode('utf-8').find("Forbidden")!=-1:
+                    myproxy.current_proxy(reset=True)
                     time.sleep(10)
                 if r.decode('utf-8').find("Paper not found")!=-1:
                     with open(f"shared/s2_bad_citation_202105.txt", "a") as f:

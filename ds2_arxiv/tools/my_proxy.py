@@ -10,8 +10,8 @@ class MyProxy:
         self.bad_proxies = []
         self.proxy_string = f"socks5://{proxy_str}"
         self.proxy = None
-    def current_proxy(self):
-        if self.proxy is None:
+    def current_proxy(self, reset=False):
+        if reset or self.proxy is None:
             if self.proxy_disabled:
                 self.proxy = urllib3.PoolManager()
             else:
