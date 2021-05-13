@@ -78,7 +78,7 @@ def main():
             #     shutil.copy(old_path, path)
             #     print("copied.")
             #     continue
-            r = get_remote_content_through_a_proxy(get_citation_url, time_sleep=0)
+            r = get_remote_content_through_a_proxy(get_citation_url, time_sleep=1)
             if r is None:
                 # get remote content error
                 g_error += 1
