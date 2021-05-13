@@ -40,3 +40,4 @@ for i, filename in enumerate(filenames):
         if not os.path.exists(s2_dest_path):
             print(f"copy {arxiv_id}")
             shutil.copy(s2_filename, s2_dest_path)
+
