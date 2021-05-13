@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-df = pd.read_pickle("shared/compare_s2_g_citation.pickle")
+df = pd.read_pickle("shared/7636_citation.pickle")
 matrix = np.zeros([df.shape[0], df.shape[0]])
 
 df_last_author = pd.unique(df['last_author'])
