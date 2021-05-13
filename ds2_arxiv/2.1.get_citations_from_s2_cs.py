@@ -59,7 +59,7 @@ def main():
             continue
         record_dict = xmltodict.parse(record_xml, process_namespaces=False)['record']['metadata']['arXiv']
         arxiv_id = record_dict['id']
-        print(f"arxiv_id: {arxiv_id}")
+        # print(f"arxiv_id: {arxiv_id}")
         match = re.search(r'^(.+)v[0-9]+$', arxiv_id)
         if match:
             arxiv_id = match.group(1)
