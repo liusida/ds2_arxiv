@@ -9,7 +9,7 @@ target_folder = "arxiv_may"
 
 def step5():
     # This file is copied from the server's folder ${proj}/tmp/seed_94_step_0181*
-    filename = "wandb/run-20210513_194638-1149vjkz/files/tmp/minLA_gpu/seed_0_step_0181"
+    filename = "tmp/minLA_gpu/seed_0_step_0199"
 
     indices = np.load(f"{filename}_indicies.npy")
     matrix = np.load(f"data/matrix_{target_folder}.npy")
@@ -33,16 +33,20 @@ def step5():
             elif int(row['year_arxiv'])<year:
                 year = f"{int(row['year_arxiv'])} or {year}"
 
-            tooltip = f"""<p>{row['title']}</p>
+            title = row['title']
+            title = title.replace('\'', '`')
+            title = title.replace('<', '&lt;')
+
+            tooltip = f"""<p>{title}</p>
             <p><i>{all_authors}</i></p>
             <p>Year {year}</p>
-            <p>Cited by {row['s2']} or {row['g']}</p>
+            <p>Cited by {row['s2']}</p>
             """
-            tooltip = tooltip.replace('\'', '`')
-            tooltip = tooltip.replace('<', '&lt;')
+            # tooltip = tooltip.replace('\'', '`')
+            # tooltip = tooltip.replace('<', '&lt;')
             print(f"""<div class='paper' index='{index}' arxiv_id='{row['arxiv_id']}' tooltip='{tooltip}'>
             {index+1}. <a name='paper_{index+1}'>
-            {row['title']} ({authors}, {int(row['year_arxiv'])})
+            {title} ({authors}, {int(row['year_arxiv'])})
             </div>""", file=f)
 
     # reorder the matrix

@@ -3,7 +3,7 @@ import xmltodict
 from pprint import pprint
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--threshold", type=int, default=100)
+parser.add_argument("--threshold", type=int, default=300)
 args = parser.parse_args()
 
 source_arxiv_folder = f"data/harvest_202105"
