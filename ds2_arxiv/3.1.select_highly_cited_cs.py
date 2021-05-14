@@ -9,7 +9,7 @@ args = parser.parse_args()
 os.makedirs(f"data/harvest_202105_{args.threshold}", exist_ok=True)
 os.makedirs(f"data/citations_s2_202105_{args.threshold}", exist_ok=True)
 
-filenames = glob.glob("data/harvest/*.xml")
+filenames = glob.glob("data/harvest_202105/*.xml")
 l = len(filenames)
 for i, filename in enumerate(filenames):
     if i%10000==0:
