@@ -6,10 +6,14 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--threshold", type=int, default=100)
 args = parser.parse_args()
 
-os.makedirs(f"data/harvest_202105_{args.threshold}", exist_ok=True)
-os.makedirs(f"data/citations_s2_202105_{args.threshold}", exist_ok=True)
+source_arxiv_folder = f"data/harvest_202105"
+arxiv_folder = f"data/arxiv_7636/0.arxiv"
+s2_folder = f"data/arxiv_7636/1.s2"
 
-filenames = glob.glob("data/harvest_202105/*.xml")
+os.makedirs(f"data/arxiv_7636/0.arxiv", exist_ok=True)
+os.makedirs(f"data/arxiv_7636/1.s2", exist_ok=True)
+
+filenames = glob.glob(f"{source_arxiv_folder}/*.xml")
 l = len(filenames)
 for i, filename in enumerate(filenames):
     if i%10000==0:
@@ -23,7 +27,7 @@ for i, filename in enumerate(filenames):
     record_dict = xmltodict.parse(record_xml, process_namespaces=False)['record']['metadata']['arXiv']
     arxiv_id = filename.split("/")[-1].split(".xml")[0]
 
-    s2_filename = f"data/citations_s2_202105/{arxiv_id}.json"
+    s2_filename = f"{s2_folder}/{arxiv_id}.json"
     if not os.path.exists(s2_filename):
         # print(f"Error: {s2_filename} doesn't exist.")
         continue
@@ -34,11 +38,11 @@ for i, filename in enumerate(filenames):
         s2_info = json.load(f)
     num_citations = len(s2_info['citations'])
     if num_citations>=args.threshold:
-        dest_path = f"data/harvest_202105_{args.threshold}/{arxiv_id}.xml"
+        dest_path = f"{arxiv_folder}/{arxiv_id}.xml"
         if not os.path.exists(dest_path):
             print(f"copy to {dest_path}")
             shutil.copy(filename, dest_path)
-        s2_dest_path = f"data/citations_s2_202105_{args.threshold}/{arxiv_id}.json"
+        s2_dest_path = f"{s2_folder}/{arxiv_id}.json"
         if not os.path.exists(s2_dest_path):
             print(f"copy to {s2_dest_path}")
             shutil.copy(s2_filename, s2_dest_path)
