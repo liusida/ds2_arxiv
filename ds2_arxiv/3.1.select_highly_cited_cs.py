@@ -7,6 +7,7 @@ parser.add_argument("--threshold", type=int, default=100)
 args = parser.parse_args()
 
 source_arxiv_folder = f"data/harvest_202105"
+source_s2_folder = f"data/citations_s2_202105"
 arxiv_folder = f"data/arxiv_may/0.arxiv"
 s2_folder = f"data/arxiv_may/1.s2"
 
@@ -27,7 +28,7 @@ for i, filename in enumerate(filenames):
     record_dict = xmltodict.parse(record_xml, process_namespaces=False)['record']['metadata']['arXiv']
     arxiv_id = filename.split("/")[-1].split(".xml")[0]
 
-    s2_filename = f"{s2_folder}/{arxiv_id}.json"
+    s2_filename = f"{source_s2_folder}/{arxiv_id}.json"
     if not os.path.exists(s2_filename):
         # print(f"Error: {s2_filename} doesn't exist.")
         continue
