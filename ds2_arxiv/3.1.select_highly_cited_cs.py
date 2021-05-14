@@ -7,11 +7,11 @@ parser.add_argument("--threshold", type=int, default=100)
 args = parser.parse_args()
 
 source_arxiv_folder = f"data/harvest_202105"
-arxiv_folder = f"data/arxiv_7636/0.arxiv"
-s2_folder = f"data/arxiv_7636/1.s2"
+arxiv_folder = f"data/arxiv_may/0.arxiv"
+s2_folder = f"data/arxiv_may/1.s2"
 
-os.makedirs(f"data/arxiv_7636/0.arxiv", exist_ok=True)
-os.makedirs(f"data/arxiv_7636/1.s2", exist_ok=True)
+os.makedirs(arxiv_folder, exist_ok=True)
+os.makedirs(s2_folder, exist_ok=True)
 
 filenames = glob.glob(f"{source_arxiv_folder}/*.xml")
 l = len(filenames)
