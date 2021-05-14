@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import cv2
 
-target_folder = "arxiv_7636"
+target_folder = "arxiv_may"
 
 def step5():
     # This file is copied from the server's folder ${proj}/tmp/seed_94_step_0181*

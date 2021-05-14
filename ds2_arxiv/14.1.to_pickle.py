@@ -7,7 +7,7 @@ import xmltodict
 import pandas as pd
 from ds2_arxiv.tools.names import compare_two_names
 
-target_folder = "arxiv_7636"
+target_folder = "arxiv_may"
 
 def step1():
     if not os.path.exists(f"data/{target_folder}"):

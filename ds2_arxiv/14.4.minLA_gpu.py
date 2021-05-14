@@ -21,7 +21,7 @@ import wandb
 #TODO:
 # Can detect_and_swap_gpu and loss_gpu use sparse matrix as input? or use indices as input?
 
-target_folder = "arxiv_7636"
+target_folder = "arxiv_may"
 
 @cuda.jit
 def _detect_gpu(matrix, vec, rng_states):

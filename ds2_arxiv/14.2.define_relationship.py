@@ -5,7 +5,7 @@
 import pandas as pd
 import numpy as np
 
-target_folder = "arxiv_7636"
+target_folder = "arxiv_may"
 
 def step2():
     df = pd.read_pickle(f"data/{target_folder}.pickle")
