@@ -1,0 +1,57 @@
+#intro {
+    font-size: 20px;
+}
+#intro .title {
+    font-weight: bold;
+}
+#intro .img {
+    padding-left: 100px;
+}
+#intro .img img {
+    border: 1px solid black;
+}
+
+#list {
+    padding-top: 20px;
+    padding-left: 0px;
+    margin-left: 500px;
+    position: relative;
+}
+
+#list div {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin-left: 0px;
+    padding-left: 0px;
+    line-height: 13px;
+    font-size: 8px;
+    white-space: nowrap;
+    background-color: white;
+    cursor: pointer;
+}
+
+#arxiv_tooltip {
+    border: 1px solid black;
+    background-color: white;
+    position: absolute;
+    top: -1000px;
+    left: -1000px;
+    width: 500px;
+    /* height: 200px; */
+    padding: 20px;
+}
+
+#arrow {
+    color: red;
+    font-size: 20px;
+    position: absolute;
+    top: -1000px;
+    left: 0px;
+}
+#word-cloud-word-list {
+    display: none;
+}
+#word-cloud text {
+    cursor: pointer;
+}
