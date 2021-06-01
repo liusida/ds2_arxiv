@@ -56,7 +56,7 @@ def main():
         # print(f"arxiv_id: {arxiv_id}")
         match = re.search(r'[0-9]+\.[0-9]+', arxiv_id)
         if match:
-            arxiv_id = match.group(1)
+            arxiv_id = match.group(0)
             get_citation_url = f"https://api.semanticscholar.org/v1/paper/arXiv:{arxiv_id}"
             old_path = f"data/citations_s2/{arxiv_id}.json"
             path = f"data/citations_s2_paperswithcode/{arxiv_id}.json"
