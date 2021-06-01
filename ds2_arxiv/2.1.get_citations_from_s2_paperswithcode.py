@@ -42,6 +42,7 @@ def main():
     with open('data/papers-with-abstracts.json', 'rb') as f:
         papers = json.load(f)
 
+    random.shuffle(papers)
     g_source_total = len(papers)
     g_source = 0
 
