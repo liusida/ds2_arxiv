@@ -18,17 +18,16 @@
             /* border: 1px solid red; */
             position: relative;
             overflow: hidden;
-            /* height: 53300px; */
-            height: 200000px;
+            height: <?php echo 3016 * $bgscale + 12000 ?>px;
         }
         #bg {
             position: absolute;
             top: 6px;
             left: 5px;
-            height: <?php echo 12243 * $bgscale ?>px;
-            width: <?php echo 12243 * $bgscale ?>px;
+            height: <?php echo 3016 * $bgscale ?>px;
+            width: <?php echo 3016 * $bgscale ?>px;
             background-image: url('bg.png');
-            background-size: <?php echo 12243 * $bgscale ?>px <?php echo 7636 * $bgscale ?>px;
+            background-size: <?php echo 3016 * $bgscale ?>px <?php echo 3016 * $bgscale ?>px;
             transform-origin: top left;
             transform: rotate(45deg);
             z-index: -1;
