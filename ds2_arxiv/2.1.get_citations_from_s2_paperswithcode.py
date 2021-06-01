@@ -1,9 +1,7 @@
 import os, time, re, glob, sys, shutil, random
-import feedparser
 import urllib
 from collections import defaultdict
 import json
-import xmltodict # to convert the raw metadata from xml format to dict
 
 # # import wandb
 import socket
@@ -41,7 +39,7 @@ def main():
     for __c in _c:
         bad_citation.append(__c.strip())
 
-    with open('papers-with-abstracts.json', 'rb') as f:
+    with open('data/papers-with-abstracts.json', 'rb') as f:
         papers = json.load(f)
 
     g_source_total = len(papers)
@@ -52,13 +50,13 @@ def main():
         if g_source%1000==0:
             print(f"{g_source}/{g_source_total} processed. ")
 
-        record_dict = paper
-        arxiv_id = record_dict['arxiv_id']
+        arxiv_id = paper['arxiv_id']
+        if arxiv_id is None:
+            continue
         # print(f"arxiv_id: {arxiv_id}")
         match = re.search(r'[0-9]+\.[0-9]+', arxiv_id)
         if match:
             arxiv_id = match.group(1)
-        if arxiv_id.find(".")!=-1:
             get_citation_url = f"https://api.semanticscholar.org/v1/paper/arXiv:{arxiv_id}"
             old_path = f"data/citations_s2/{arxiv_id}.json"
             path = f"data/citations_s2_paperswithcode/{arxiv_id}.json"
@@ -73,7 +71,7 @@ def main():
                 shutil.copy(old_path, path)
                 print("copied.")
                 continue
-            r = get_remote_content_through_a_proxy(get_citation_url, time_sleep=0.1)
+            r = get_remote_content_through_a_proxy(get_citation_url, time_sleep=1)
             if r is None:
                 # get remote content error
                 g_error += 1
@@ -104,6 +102,7 @@ def log():
     g_n_calls += 1
     if g_n_calls%100==0:
         g_count = len(glob.glob("data/citations_s2_paperswithcode/*.json"))
+        print(f"g_count: {g_count}")
     # wandb.log({
     #     "count": g_count,
     #     "error": g_error,
